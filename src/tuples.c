@@ -6,14 +6,14 @@
 /*   By: gvitor-s <gvitor-s>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 19:35:53 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/04 20:31:59 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/05/05 20:00:09 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "tuples_utils.h"
 
-const float	*tuple(const float x, const float y, const float z,
-		const float type)
+t_tuple	tuple(t_cordinate x, t_cordinate y, t_cordinate z, t_cordinate type)
 {
 	float	*tpe;
 
@@ -27,12 +27,22 @@ const float	*tuple(const float x, const float y, const float z,
 	return (tpe);
 }
 
-const float	*point(const float x, const float y, const float z)
+t_point	point(t_cordinate x, t_cordinate y, t_cordinate z)
 {
 	return (tuple(x, y, z, 1));
 }
 
-const float	*vector(const float x, const float y, const float z)
+t_vector	vector(t_cordinate x, t_cordinate y, t_cordinate z)
 {
 	return (tuple(x, y, z, 0));
+}
+
+t_vector	normalize(t_tuple t)
+{
+	return (scalar_multiplication(t, 1 / magnitude(t)));
+}
+
+float	dot_product(t_vector v1, t_vector v2)
+{
+	return (v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]);
 }
