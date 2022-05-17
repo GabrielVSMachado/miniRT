@@ -180,3 +180,33 @@ Test(dot_product, expected_12) {
 	free((void*)v1);
 	free((void*)v2);
 }
+
+Test(cross_product, expected_vector_z) {
+	t_vector v1 = vector(1, 2, 3);
+	t_vector v2 = vector(2, 3.0, 4);
+	t_vector z = vector(-1, 2, -1);
+	t_vector result = cross_product(v1, v2);
+
+	for (int i = 0; i < 3; i++) {
+		cr_assert_eq(assert_float(z[i], result[i]), 1);
+	}
+	free((void*)v1);
+	free((void*)v2);
+	free((void*)z);
+	free((void*)result);
+}
+
+Test(cross_product, expected_vector_f) {
+	t_vector v1 = vector(1, 2, 3);
+	t_vector v2 = vector(2, 3.0, 4);
+	t_vector f = vector(1, -2, 1);
+	t_vector result = cross_product(v2, v1);
+
+	for (int i = 0; i < 3; i++) {
+		cr_assert_eq(assert_float(f[i], result[i]), 1);
+	}
+	free((void*)v1);
+	free((void*)v2);
+	free((void*)f);
+	free((void*)result);
+}

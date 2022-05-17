@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:19:30 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/05 19:39:17 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:32:22 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_tuple		sub_tuple(t_tuple t1, t_tuple t2);
 t_tuple		negate_tuple(t_tuple t);
 t_tuple		scalar_multiplication(t_tuple t, float n);
 t_vector	normalize(t_tuple t);
+t_vector	cross_product(t_vector v1, t_vector v2);
 float		magnitude(t_tuple v);
 float		dot_product(t_vector v1, t_vector v2);
 #endif

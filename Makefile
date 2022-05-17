@@ -19,6 +19,7 @@ override define SRC
 	main.c
 	tuples.c
 	tuples_operations.c
+	cross_product_tuples.c
 endef
 
 override define SRC_TEST
