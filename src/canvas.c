@@ -31,7 +31,6 @@ struct s_canvas	*canvas(int width, int height)
 	}
 	img->width = width;
 	img->height = height;
-	img->line_lenght = sizeof(unsigned int) * width;
 	return (img);
 }
 
@@ -45,13 +44,13 @@ void	write_pixel(struct s_canvas *cv, int x, int y, t_color color)
 	c[1] = color[1] * 255;
 	c[0] = color[2] * 255;
 	c[3] = 0;
-	cv->img[y + x] = *(unsigned int*)c;
+	cv->img[y * cv->width + x] = *(unsigned int*)c;
 }
 
 t_color	pixel_at(struct s_canvas *cv, int x, int y)
 {
 	unsigned char	c[4];
 
-	*(unsigned int*)c = cv->img[y + x];
+	*(unsigned int*)c = cv->img[y * cv->width + x];
 	return (color(c[2] / 255., c[1] / 255., c[0] / 255.));
 }

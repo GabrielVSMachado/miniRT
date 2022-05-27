@@ -39,6 +39,8 @@ t_vector	vector(t_cordinate x, t_cordinate y, t_cordinate z)
 
 t_vector	normalize(t_tuple t)
 {
+	if (t[0] == 0 && t[1] == 0 && t[2] == 0)
+		return tuple(0, 0, 0, 0);
 	return (scalar_multiplication(t, 1 / magnitude(t)));
 }
 

@@ -2,12 +2,6 @@
 #include "../src/utils_canvas.h"
 #include <stdio.h>
 
-Test(canvas, expected_a_memory_with_canvas) {
-	struct s_canvas	*cv = canvas(10, 20);
-	cr_assert(cv != NULL);
-	cr_assert_eq(cv->line_lenght, sizeof(unsigned int) * 10);
-}
-
 Test(write_pixel, expected_the_pixel_with_color_red) {
 	struct s_canvas *cv = canvas(10, 20);
 	write_pixel(cv, 2, 3, color(1, 0, 0));
