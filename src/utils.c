@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrix.h                                           :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 15:19:24 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/30 16:05:25 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/05/30 15:56:52 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/05/30 16:00:07 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATRIX_H
-# define MATRIX_H
+#include <math.h>
+#include <stdbool.h>
 
-# include "tuples_utils.h"
-# include <stdbool.h>
+#define EPISLON 0.00001
 
-typedef struct s_matrix
+bool	assert_float_eq(const float f1, const float f2)
 {
-	t_tuple			*mtx;
-	unsigned int	shape[2];
-
-}	t_matrix;
-
-t_matrix	*matrix(t_tuple form[], unsigned int shape[2]);
-void		destroy_matrix(t_matrix **M);
-bool		assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2);
-#endif
+	if (fabsf(f1 - f2) < EPISLON)
+		return (true);
+	return (false);
+}

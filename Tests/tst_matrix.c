@@ -3,6 +3,7 @@
 #include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
 #include <criterion/internal/test.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 Test(matrix, expected_a_square_matrix_4) {
@@ -17,7 +18,7 @@ Test(matrix, expected_a_square_matrix_4) {
 		{13.5, 14.5, 15.5, 16.5}};
 	for (int i = 0; i < (int)M->shape[0]; i++) {
 		for (int j = 0; j < (int)M->shape[1]; j++) {
-			cr_assert_float_eq(mt[i][j], M->M[i][j], 0.00001);
+			cr_assert_float_eq(mt[i][j], M->mtx[i][j], 0.00001);
 		}
 	}
 	destroy_matrix(&M);
@@ -31,7 +32,7 @@ Test(matrix, expected_a_square_matrix_2)
 	float mt[2][2] = {{1., 2.}, {5.5, 6.5}};
 	for (int i = 0; i < (int)M->shape[0]; i++) {
 		for (int j = 0; j < (int)M->shape[1]; j++) {
-			cr_assert_float_eq(mt[i][j], M->M[i][j], 0.00001);
+			cr_assert_float_eq(mt[i][j], M->mtx[i][j], 0.00001);
 		}
 	}
 	destroy_matrix(&M);
@@ -46,8 +47,40 @@ Test(matrix, expected_a_square_matrix_3) {
 	float	mt[3][3] = {{15.5, 14.5, 13.5}, {1, 2, 3}, {4, 13.5, 5}};
 	for (int i = 0; i < (int)M->shape[0]; i++) {
 		for (int j = 0; j < (int)M->shape[1]; j++) {
-			cr_assert_float_eq(mt[i][j], M->M[i][j], 0.00001);
+			cr_assert_float_eq(mt[i][j], M->mtx[i][j], 0.00001);
 		}
 	}
 	destroy_matrix(&M);
+}
+
+Test(eq_matrixes, expected_two_square_matrixes_4_to_be_eqs) {
+	t_matrix	*m1 = matrix((t_tuple []){
+			tuple(1, 2, 3, 4),
+			tuple(5, 6, 7, 8),
+			tuple(9, 8, 7, 6),
+			tuple(5, 4, 3, 2)
+			}, (unsigned int []){4, 4});
+	t_matrix	*m2 = matrix((t_tuple []){
+			tuple(1, 2, 3, 4),
+			tuple(5, 6, 7, 8),
+			tuple(9, 8, 7, 6),
+			tuple(5, 4, 3, 2)
+			}, (unsigned int []){4, 4});
+	cr_assert(assert_t_matrix_eq(m1, m2) == true);
+	destroy_matrix(&m1);
+	destroy_matrix(&m2);
+}
+
+Test(eq_matrixes, expected_two_square_matrix_2_to_not_be_eqs) {
+	t_matrix	*m1 = matrix((t_tuple []){
+			tuple(1, 3, 0, 0),
+			tuple(5, 6, 0, 0)
+			}, (unsigned int []){2, 2});
+	t_matrix	*m2 = matrix((t_tuple []){
+			tuple(1, 3, 0, 0),
+			tuple(6, 5, 0, 0)
+			}, (unsigned int []){2, 2});
+	cr_assert(assert_t_matrix_eq(m1, m2) == false);
+	destroy_matrix(&m1);
+	destroy_matrix(&m2);
 }
