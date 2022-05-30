@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tuples.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gvitor-s <gvitor-s>                        +#+  +:+       +#+        */
+/*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 19:35:53 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/05 20:00:09 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/05/30 15:06:20 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/05/30 15:06:23 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_vector	vector(t_cordinate x, t_cordinate y, t_cordinate z)
 t_vector	normalize(t_tuple t)
 {
 	if (t[0] == 0 && t[1] == 0 && t[2] == 0)
-		return tuple(0, 0, 0, 0);
+		return (tuple(0, 0, 0, 0));
 	return (scalar_multiplication(t, 1 / magnitude(t)));
 }
 

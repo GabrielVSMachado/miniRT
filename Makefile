@@ -33,6 +33,7 @@ override define SRC
 	cross_product_tuples.c
 	colors.c
 	canvas.c
+	matrix.c
 endef
 
 override define SRC_TEST
@@ -40,6 +41,7 @@ override define SRC_TEST
 	tst_tuples.c
 	tst_colors.c
 	tst_canvas.c
+	tst_matrix.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
