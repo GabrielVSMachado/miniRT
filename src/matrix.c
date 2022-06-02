@@ -36,8 +36,7 @@ t_matrix	*matrix(t_tuple form[], unsigned int shape[2])
 	m = (t_matrix *)malloc(sizeof(t_matrix));
 	if (!m)
 		return (NULL);
-	m->mtx = memset(malloc(sizeof(t_tuple) * shape[0]), 0,
-			sizeof(t_tuple) * shape[0]);
+	m->mtx = malloc(sizeof(t_tuple) * shape[0]);
 	if (!m->mtx)
 		return (free(m), NULL);
 	i = -1;
@@ -65,4 +64,38 @@ bool	assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2)
 				return (false);
 	}
 	return (true);
+}
+
+static float	calc_line_column_sigma(t_matrix const *m1,
+		t_matrix const *m2, int line, int column)
+{
+	int		i;
+	float	total;
+
+	i = -1;
+	total = 0;
+	while (++i < (int)m1->shape[1])
+		total += m1->mtx[line][i] * m2->mtx[i][column];
+	return (total);
+}
+
+t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2)
+{
+	t_matrix	*prd;
+	int			i;
+	int			j;
+
+	if (m1->shape[1] != m2->shape[0])
+		return (NULL);
+	prd = matrix((t_tuple []){NULL, NULL, NULL, NULL},
+			(unsigned int []){m1->shape[0], m2->shape[1]});
+	i = -1;
+	while (++i < (int)prd->shape[0])
+	{
+		prd->mtx[i] = tuple(0, 0, 0, 0);
+		j = -1;
+		while (++j < (int)prd->shape[1])
+			((float *)prd->mtx[i])[j] = calc_line_column_sigma(m1, m2, i, j);
+	}
+	return (prd);
 }

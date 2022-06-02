@@ -84,3 +84,25 @@ Test(eq_matrixes, expected_two_square_matrix_2_to_not_be_eqs) {
 	destroy_matrix(&m1);
 	destroy_matrix(&m2);
 }
+
+Test(matrix_product, expected_result_from_matrixes_product_eq_expected_value){
+	t_matrix *m1 = matrix((t_tuple []){
+			tuple(1, 2, 3, 0),
+			tuple(4, 5, 6, 0)
+			}, (unsigned int []){2, 3});
+	t_matrix *m2 = matrix((t_tuple []){
+			tuple(1, 4, 0, 0),
+			tuple(2, 5, 0, 0),
+			tuple(3, 6, 0, 0)
+			}, (unsigned int []){3, 2});
+	t_matrix	*expected_value = matrix((t_tuple []){
+			tuple(14, 32, 0, 0),
+			tuple(32, 77, 0, 0)
+			}, (unsigned int []){2, 2});
+	t_matrix	*result = matrixs_product(m1, m2);
+	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
+	destroy_matrix(&result);
+	destroy_matrix(&expected_value);
+	destroy_matrix(&m1);
+	destroy_matrix(&m2);
+}
