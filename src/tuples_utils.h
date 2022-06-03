@@ -13,7 +13,7 @@
 #ifndef TUPLES_UTILS_H
 # define TUPLES_UTILS_H
 
-typedef const float *	t_tuple;
+typedef float *			t_tuple;
 typedef const float		t_cordinate;
 typedef t_tuple			t_point; // t_tuple with last value equal 1
 typedef t_tuple			t_vector; // t_tuple with last value equal 0

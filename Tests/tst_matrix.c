@@ -106,3 +106,41 @@ Test(matrix_product, expected_result_from_matrixes_product_eq_expected_value){
 	destroy_matrix(&m1);
 	destroy_matrix(&m2);
 }
+
+Test(transposing, expected_matrix_transposing_from_m) {
+	t_matrix	*m = matrix((t_tuple []){
+			tuple(1, 2, 3, 4),
+			tuple(5, 6, 7, 8)
+			}, (unsigned int []){2, 4});
+	t_matrix	*expected_value = matrix((t_tuple []){
+			tuple(1, 5, 0, 0),
+			tuple(2, 6, 0, 0),
+			tuple(3, 7, 0, 0),
+			tuple(4, 8, 0, 0)
+			}, (unsigned int []){4,2});
+	t_matrix *result = tranposing(m);
+	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
+	destroy_matrix(&m);
+	destroy_matrix(&expected_value);
+	destroy_matrix(&result);
+}
+
+Test(tranposing, expected_matrix_transposing_from_m1) {
+	t_matrix	*expected_value = matrix((t_tuple []){
+			tuple(1, 0, 0, 0),
+			tuple(0, 1, 0, 0),
+			tuple(0, 0, 1, 0),
+			tuple(0, 0, 0, 1)
+			}, (unsigned int []){4,4});
+	t_matrix	*m = matrix((t_tuple []){
+			tuple(1, 0, 0, 0),
+			tuple(0, 1, 0, 0),
+			tuple(0, 0, 1, 0),
+			tuple(0, 0, 0, 1)
+			}, (unsigned int []){4,4});
+	t_matrix	*t = tranposing(m);
+	cr_assert(assert_t_matrix_eq(t, expected_value) == true);
+	destroy_matrix(&t);
+	destroy_matrix(&m);
+	destroy_matrix(&expected_value);
+}

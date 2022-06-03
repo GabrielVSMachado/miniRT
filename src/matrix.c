@@ -17,17 +17,6 @@
 #include <stdbool.h>
 #include "miniRT.h"
 
-void	destroy_matrix(t_matrix **m)
-{
-	int	_;
-
-	_ = -1;
-	while (++_ < (int)(*m)->shape[0])
-		free((void *)(*m)->mtx[_]);
-	free((*m)->mtx);
-	free(*m);
-}
-
 t_matrix	*matrix(t_tuple form[], unsigned int shape[2])
 {
 	t_matrix	*m;
@@ -95,7 +84,26 @@ t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2)
 		prd->mtx[i] = tuple(0, 0, 0, 0);
 		j = -1;
 		while (++j < (int)prd->shape[1])
-			((float *)prd->mtx[i])[j] = calc_line_column_sigma(m1, m2, i, j);
+			prd->mtx[i][j] = calc_line_column_sigma(m1, m2, i, j);
 	}
 	return (prd);
+}
+
+t_matrix	*tranposing(t_matrix *m)
+{
+	t_matrix	*t;
+	int			i;
+	int			j;
+
+	t = matrix((t_tuple []){NULL, NULL, NULL, NULL},
+			(unsigned int []){m->shape[1], m->shape[0]});
+	i = -1;
+	while (++i < (int)m->shape[1])
+	{
+		t->mtx[i] = tuple(0, 0, 0, 0);
+		j = -1;
+		while (++j < (int)m->shape[0])
+			t->mtx[i][j] = m->mtx[j][i];
+	}
+	return (t);
 }

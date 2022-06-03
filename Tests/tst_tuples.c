@@ -21,7 +21,7 @@ Test(point, expected_a_array_with_numbers_equals_params_passed) {
 }
 
 Test(vector, expected_a_array_with_numbers_equals_params_passed) {
-	const float *tupl = point(4.3, -4.2, 3.1);
+	float *tupl = point(4.3, -4.2, 3.1);
 	float expected_values[] = {4.3, -4.2, 3.1, 1.0};
 
 	for (int i = 0; i < 4; i++) {
@@ -31,11 +31,11 @@ Test(vector, expected_a_array_with_numbers_equals_params_passed) {
 }
 
 Test(add_vectors, expected_sum_of_vectors_a_and_b)	{
-	const float *vector1 = vector(3, -2, 5);
-	const float *vector2 = vector(-2, 3, 1);
-	const float	expected_values[] = {1.0, 1.0, 6, 0};
+	float *vector1 = vector(3, -2, 5);
+	float *vector2 = vector(-2, 3, 1);
+	float	expected_values[] = {1.0, 1.0, 6, 0};
 
-	const float *sum = add_tuples(vector1, vector2);
+	float *sum = add_tuples(vector1, vector2);
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(sum[i], expected_values[i]), 1);
 	}
@@ -44,11 +44,11 @@ Test(add_vectors, expected_sum_of_vectors_a_and_b)	{
 
 Test(sub_vectors, expected_sub_of_vectors_a_and_b)
 {
-	const float *v1 = vector(3, 2, 1);
-	const float *v2 = vector(5, 6, 7);
-	const float expected_values[] = {-2, -4, -6, 0};
+	float *v1 = vector(3, 2, 1);
+	float *v2 = vector(5, 6, 7);
+	float expected_values[] = {-2, -4, -6, 0};
 
-	const float *sub = sub_tuple(v1, v2);
+	float *sub = sub_tuple(v1, v2);
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(sub[i],expected_values[i]), 1);
 	}
@@ -58,11 +58,11 @@ Test(sub_vectors, expected_sub_of_vectors_a_and_b)
 }
 
 Test(sub_points, expected_vector) {
-	const float *p1 = point(3, 2, 1);
-	const float *p2 = point(5, 6, 7);
-	const float expected_values[] = {-2, -4, -6, 0};
+	float *p1 = point(3, 2, 1);
+	float *p2 = point(5, 6, 7);
+	float expected_values[] = {-2, -4, -6, 0};
 
-	const float *v1 = sub_tuple(p1, p2);
+	float *v1 = sub_tuple(p1, p2);
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(v1[i],expected_values[i]), 1);
 	}
@@ -73,11 +73,11 @@ Test(sub_points, expected_vector) {
 
 Test(sub_vector_from_point, expected_sub_of_vectors_a_and_b)
 {
-	const float *p1 = point(3, 2, 1);
-	const float *v2 = vector(5, 6, 7);
-	const float expected_values[] = {-2, -4, -6, 1};
+	float *p1 = point(3, 2, 1);
+	float *v2 = vector(5, 6, 7);
+	float expected_values[] = {-2, -4, -6, 1};
 
-	const float *sub = sub_tuple(p1, v2);
+	float *sub = sub_tuple(p1, v2);
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(sub[i],expected_values[i]), 1);
 	}
@@ -87,8 +87,8 @@ Test(sub_vector_from_point, expected_sub_of_vectors_a_and_b)
 }
 
 Test(negate_vectors, expected_oposite_vector) {
-	const float *v = vector(3, 2, 1);
-	const float *nv = negate_tuple(v);
+	float *v = vector(3, 2, 1);
+	float *nv = negate_tuple(v);
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(nv[i], 0 - v[i]), 1);
 	}
@@ -97,9 +97,9 @@ Test(negate_vectors, expected_oposite_vector) {
 }
 
 Test(scalar_multiplication, one_vector_by_2) {
-	const float *t1 = vector(2, 1, 4);
-	const float *result = scalar_multiplication(t1, 2);
-	const float expected_values[] = {4, 2, 8, 0};
+	float *t1 = vector(2, 1, 4);
+	float *result = scalar_multiplication(t1, 2);
+	float expected_values[] = {4, 2, 8, 0};
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(result[i], expected_values[i]), 1);
 	}
@@ -108,9 +108,9 @@ Test(scalar_multiplication, one_vector_by_2) {
 }
 
 Test(scalar_multiplication, one_vector_by_half) {
-	const float *t1 = vector(2, 1, 4);
-	const float *result = scalar_multiplication(t1, 0.5);
-	const float expected_values[] = {1, 0.5, 2.0, 0};
+	float *t1 = vector(2, 1, 4);
+	float *result = scalar_multiplication(t1, 0.5);
+	float expected_values[] = {1, 0.5, 2.0, 0};
 	for (int i = 0; i < 4; i++) {
 		cr_assert_eq(assert_float(result[i], expected_values[i]), 1);
 	}
@@ -119,14 +119,14 @@ Test(scalar_multiplication, one_vector_by_half) {
 }
 
 Test(magnitude, expected_values_magnitude_1) {
-	const float *v = vector(1, 0, 0);
+	float *v = vector(1, 0, 0);
 	float result = magnitude(v);
 	cr_assert_eq(assert_float(result, 1), 1);
 	free((void*)v);
 }
 
 Test(magnitude, expected_value_magnitude_sqrt_of_14) {
-	const float *v = vector(1, 2, 3);
+	float *v = vector(1, 2, 3);
 	float result = magnitude(v);
 	float expected_value = sqrtf(14);
 	cr_assert_eq(assert_float(result, expected_value), 1);
