@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 20:54:30 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/30 16:04:24 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:28:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2)
 		return (NULL);
 	prd = matrix((t_tuple []){NULL, NULL, NULL, NULL},
 			(unsigned int []){m1->shape[0], m2->shape[1]});
+	if (!prd)
+		return (NULL);
 	i = -1;
 	while (++i < (int)prd->shape[0])
 	{
@@ -97,6 +99,8 @@ t_matrix	*tranposing(t_matrix *m)
 
 	t = matrix((t_tuple []){NULL, NULL, NULL, NULL},
 			(unsigned int []){m->shape[1], m->shape[0]});
+	if (!t)
+		return (NULL);
 	i = -1;
 	while (++i < (int)m->shape[1])
 	{

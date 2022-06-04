@@ -35,6 +35,7 @@ override define SRC
 	canvas.c
 	matrix.c
 	utils.c
+	utils_matrices.c
 endef
 
 override define SRC_TEST

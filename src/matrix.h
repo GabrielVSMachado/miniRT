@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:19:24 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/30 16:05:25 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:32:24 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ void		destroy_matrix(t_matrix **M);
 bool		assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2);
 t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2);
 t_matrix	*tranposing(t_matrix *m);
+float		determinant_2(t_matrix *m);
+t_matrix	*submatrix(t_matrix *m, int line, int column);
 #endif

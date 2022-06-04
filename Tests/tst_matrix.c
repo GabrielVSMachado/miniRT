@@ -144,3 +144,52 @@ Test(tranposing, expected_matrix_transposing_from_m1) {
 	destroy_matrix(&m);
 	destroy_matrix(&expected_value);
 }
+
+Test(determinant_2, expected_value_17) {
+	t_matrix *m = matrix((t_tuple []){
+			tuple(1, 5, 0, 0),
+			tuple(-3, 2, 0, 0)
+			}, (unsigned int []){2, 2});
+	cr_assert_float_eq(determinant_2(m), 17., 0.00001);
+	destroy_matrix(&m);
+}
+
+Test(submatrices, expected_square_matrix2_from_square_matrix3){
+	t_matrix	*m3 = matrix((t_tuple []){
+			tuple(1, 2, 3, 0),
+			tuple(4, 5, 6, 0),
+			tuple(7, 8, 9, 0)
+			}, (unsigned int []){3, 3});
+	t_matrix *result = submatrix(m3, 0, 2);
+	t_matrix *expected_value = matrix((t_tuple []){
+			tuple(4, 5, 0, 0),
+			tuple(7, 8, 0, 0)
+			}, (unsigned int []){2, 2});
+	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
+	cr_assert_eq(result->shape[0], 2);
+	cr_assert_eq(result->shape[1], 2);
+	destroy_matrix(&m3);
+	destroy_matrix(&result);
+	destroy_matrix(&expected_value);
+}
+
+Test(submatrices, expected_matrix3_from_square_matrix4) {
+	t_matrix *m4 = matrix((t_tuple []){
+			tuple(1, 2, 3, 2),
+			tuple(4, 5, 6, 3),
+			tuple(7, 8, 9, 4),
+			tuple(10, 28, 34, 12)
+			}, (unsigned int []){4, 4});
+	t_matrix *result = submatrix(m4, 1, 2);
+	t_matrix *expected_value = matrix((t_tuple []){
+			tuple(1, 2, 2, 0),
+			tuple(7, 8, 4, 0),
+			tuple(10, 28, 12, 0)
+			}, (unsigned int []){3, 3});
+	cr_assert(assert_t_matrix_eq(expected_value, result) == true);
+	cr_assert_float_eq(result->shape[0], 3, 0.00001);
+	cr_assert_float_eq(result->shape[1], 3, 0.00001);
+	destroy_matrix(&expected_value);
+	destroy_matrix(&m4);
+	destroy_matrix(&result);
+}
