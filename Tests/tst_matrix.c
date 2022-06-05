@@ -229,3 +229,28 @@ Test(cofactor, expected_value_of_cofactor_of_A_1_0) {
 	cr_assert_float_eq(expected_value, result, 0.00001);
 	destroy_matrix(&A);
 }
+
+Test(determinant, expected_the_determinat_of_matrix_A3) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(1, 2, 6, 0),
+			tuple(-5, 8, -4, 0),
+			tuple(2, 6, 4, 0)
+			}, (unsigned int []){3, 3});
+	float result = determinant(A);
+	float expected_value = -196;
+	cr_assert_float_eq(result, expected_value, 0.00001);
+	destroy_matrix(&A);
+}
+
+Test(determinant, expected_the_determinat_of_matrix_A4) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(-2, -8, 3, 5),
+			tuple(-3, 1, 7, 3),
+			tuple(1, 2, -9, 6),
+			tuple(-6, 7, 7, -9)
+			}, (unsigned int []){4, 4});
+	float result = determinant(A);
+	float expected_value = -4071;
+	cr_assert_float_eq(result, expected_value, 0.00001);
+	destroy_matrix(&A);
+}

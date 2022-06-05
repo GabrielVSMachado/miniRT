@@ -30,6 +30,7 @@ t_matrix	*submatrix(t_matrix *m, int line, int column);
 float		determinant_2(t_matrix *m);
 float		minor(t_matrix *m, int line, int column);
 float		cofactor(t_matrix *m, int line, int column);
+float		determinant(t_matrix *m);
 void		destroy_matrix(t_matrix **M);
 bool		assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2);
 #endif

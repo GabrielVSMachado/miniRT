@@ -62,10 +62,32 @@ float	minor(t_matrix *m, int line, int column)
 
 float	cofactor(t_matrix *m, int line, int column)
 {
-	float	determinant;
-	int		sum;
+	float		dtm_of_minor;
+	int			sum;
+	t_matrix	*tmp;
 
-	determinant = minor(m, line, column);
+	if (m->shape[0] == 4 && m->shape[1] == 4)
+	{
+		tmp = submatrix(m, line, column);
+		dtm_of_minor = determinant(tmp);
+		destroy_matrix(&tmp);
+	}
+	else
+		dtm_of_minor = minor(m, line, column);
 	sum = line + column;
-	return (determinant * !(sum % 2) - determinant * (sum % 2));
+	return (dtm_of_minor * !(sum % 2) - dtm_of_minor * (sum % 2));
+}
+
+float	determinant(t_matrix *m)
+{
+	float	dtm;
+	int		j;
+
+	if (m->shape[0] == 2 && m->shape[1] == 2)
+		return (determinant_2(m));
+	dtm = 0;
+	j = -1;
+	while (++j < (int)m->shape[1])
+		dtm += m->mtx[0][j] * cofactor(m, 0, j);
+	return (dtm);
 }
