@@ -26,7 +26,7 @@ t_tuple	sub_tuple(t_tuple t1, t_tuple t2)
 
 t_tuple	negate_tuple(t_tuple t)
 {
-	return (tuple(0 - t[0], 0 - t[1], 0 - t[2], 0 - t[3]));
+	return (tuple(-t[0], -t[1], -t[2], -t[3]));
 }
 
 t_tuple	scalar_multiplication(t_tuple t, float n)

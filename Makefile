@@ -36,6 +36,7 @@ override define SRC
 	matrix.c
 	utils.c
 	utils_matrices.c
+	inverse_matrix.c
 endef
 
 override define SRC_TEST

@@ -254,3 +254,82 @@ Test(determinant, expected_the_determinat_of_matrix_A4) {
 	cr_assert_float_eq(result, expected_value, 0.00001);
 	destroy_matrix(&A);
 }
+
+Test(inversed_matrix, expected_inversed_matrix_of_A)
+{
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(-5, 2, 6, -8),
+			tuple(1, -5, 1, 8),
+			tuple(7, 7, -6, -7),
+			tuple(1, -3, 7, 4)
+			}, (unsigned int []){4, 4});
+	t_matrix	*result = inverse(A);
+	t_matrix	*expected_value = matrix((t_tuple []){
+			tuple(0.21805, 0.45113, 0.24060, -0.04511),
+			tuple(-0.80827, -1.45677, -0.44361, 0.52068),
+			tuple(-0.07895, -0.22368, -0.05263, 0.19737),
+			tuple(-0.52256, -0.81391, -0.30075, 0.30639)
+			}, (unsigned int []){4, 4});
+	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
+	destroy_matrix(&A);
+	destroy_matrix(&result);
+	destroy_matrix(&expected_value);
+}
+
+Test(inverse, expected_inversed_matrix_of_A1)
+{
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(8, -5, 9, 2),
+			tuple(7, 5, 6, 1),
+			tuple(-6, 0, 9, 6),
+			tuple(-3, 0, -9, -4)
+			}, (unsigned int []){4, 4});
+	t_matrix	*result = inverse(A);
+	t_matrix	*expected_value = matrix((t_tuple []){
+			tuple(-0.15385, -0.15385, -0.28205, -0.53846),
+			tuple(-0.07692, 0.12308, 0.02564, 0.03077),
+			tuple(0.35897, 0.35897, 0.43590, 0.92308),
+			tuple(-0.69231, -0.69231, -0.76923, -1.92308)
+			}, (unsigned int []){4, 4});
+	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
+	destroy_matrix(&A);
+	destroy_matrix(&result);
+	destroy_matrix(&expected_value);
+}
+
+Test(inverse, expected_null_value)
+{
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(-4, 2, -2, 3),
+			tuple(9, 6, 2, 6),
+			tuple(0, -5, 1, -5),
+			tuple(0, 0, 0, 0)
+			}, (unsigned int []){4, 4});
+	t_matrix	*result = inverse(A);
+	cr_assert_null(result);
+	destroy_matrix(&A);
+}
+
+Test(inverse, expected_matrix_A) {
+	t_matrix *A = matrix((t_tuple []){
+			tuple(3, -9, 7, 3),
+			tuple(3, -8, 2, -9),
+			tuple(-4, 4, 4, 1),
+			tuple(-6, 5, -1, 1)
+			}, (unsigned int []){4, 4});
+	t_matrix *B = matrix((t_tuple []){
+			tuple(8, 2, 2, 2),
+			tuple(3, -1, 7, 0),
+			tuple(7, 0, 5, 4),
+			tuple(6, -2, 0, 5)
+			}, (unsigned int []){4, 4});
+	t_matrix *C = matrixs_product(A, B);
+	t_matrix *iB = inverse(B);
+	t_matrix *D = matrixs_product(C, iB);
+	cr_assert(assert_t_matrix_eq(D, A) == true);
+	destroy_matrix(&A);
+	destroy_matrix(&B);
+	destroy_matrix(&C);
+	destroy_matrix(&D);
+	destroy_matrix(&iB);
+}
