@@ -48,3 +48,24 @@ t_matrix	*submatrix(t_matrix *m, int line, int column)
 	}
 	return (sub);
 }
+
+float	minor(t_matrix *m, int line, int column)
+{
+	t_matrix	*tmp;
+	float		determinant;
+
+	tmp = submatrix(m, line, column);
+	determinant = determinant_2(tmp);
+	destroy_matrix(&tmp);
+	return (determinant);
+}
+
+float	cofactor(t_matrix *m, int line, int column)
+{
+	float	determinant;
+	int		sum;
+
+	determinant = minor(m, line, column);
+	sum = line + column;
+	return (determinant * !(sum % 2) - determinant * (sum % 2));
+}

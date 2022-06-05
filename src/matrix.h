@@ -24,10 +24,12 @@ typedef struct s_matrix
 }	t_matrix;
 
 t_matrix	*matrix(t_tuple form[], unsigned int shape[2]);
-void		destroy_matrix(t_matrix **M);
-bool		assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2);
 t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2);
 t_matrix	*tranposing(t_matrix *m);
-float		determinant_2(t_matrix *m);
 t_matrix	*submatrix(t_matrix *m, int line, int column);
+float		determinant_2(t_matrix *m);
+float		minor(t_matrix *m, int line, int column);
+float		cofactor(t_matrix *m, int line, int column);
+void		destroy_matrix(t_matrix **M);
+bool		assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2);
 #endif

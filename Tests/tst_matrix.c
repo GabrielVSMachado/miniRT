@@ -193,3 +193,39 @@ Test(submatrices, expected_matrix3_from_square_matrix4) {
 	destroy_matrix(&m4);
 	destroy_matrix(&result);
 }
+
+Test(minor, expected_determinat_from_submatrix_of_A) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(3, 5, 0, 0),
+			tuple(2, -1, -7, 0),
+			tuple(6, -1, 5, 0)
+			}, (unsigned int []){3, 3});
+	float result = minor(A, 1, 0);
+	float expected_value = 25;
+	cr_assert_float_eq(result, expected_value, 0.00001);
+	destroy_matrix(&A);
+}
+
+Test(cofactor, expected_value_of_cofactor_of_A_0_0) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(3, 5, 0, 0),
+			tuple(2, -1, -7, 0),
+			tuple(6, -1, 5, 0)
+			}, (unsigned int []){3, 3});
+	float expected_value = -12;
+	float result = cofactor(A, 0, 0);
+	cr_assert_float_eq(expected_value, result, 0.00001);
+	destroy_matrix(&A);
+}
+
+Test(cofactor, expected_value_of_cofactor_of_A_1_0) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(3, 5, 0, 0),
+			tuple(2, -1, -7, 0),
+			tuple(6, -1, 5, 0)
+			}, (unsigned int []){3, 3});
+	float expected_value = -25;
+	float result = cofactor(A, 1, 0);
+	cr_assert_float_eq(expected_value, result, 0.00001);
+	destroy_matrix(&A);
+}
