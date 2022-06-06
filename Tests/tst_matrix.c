@@ -333,3 +333,19 @@ Test(inverse, expected_matrix_A) {
 	destroy_matrix(&D);
 	destroy_matrix(&iB);
 }
+
+Test(inverse, check_if_the_tranposing_of_the_inverse_is_eq_the_inverse_of_the_transposed) {
+	t_matrix	*A = matrix((t_tuple []){
+			tuple(8, -5, 9, 2),
+			tuple(7, 5, 6, 1),
+			tuple(-6, 0, 9, 6),
+			tuple(-3, 0, -9, -4)
+			}, (unsigned int []){4, 4});
+	t_matrix	*tranposed_inversed = tranposing(inverse(A));
+	t_matrix	*inversed_transposed = inverse(tranposing(A));
+	cr_assert(
+			assert_t_matrix_eq(tranposed_inversed, inversed_transposed) == true);
+	destroy_matrix(&A);
+	destroy_matrix(&tranposed_inversed);
+	destroy_matrix(&inversed_transposed);
+}

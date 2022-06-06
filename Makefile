@@ -37,6 +37,7 @@ override define SRC
 	utils.c
 	utils_matrices.c
 	inverse_matrix.c
+	transformations.c
 endef
 
 override define SRC_TEST
@@ -45,6 +46,7 @@ override define SRC_TEST
 	tst_colors.c
 	tst_canvas.c
 	tst_matrix.c
+	tst_tranformations.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
