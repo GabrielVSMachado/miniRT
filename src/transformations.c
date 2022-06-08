@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 13:44:25 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/06 15:17:07 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/06/08 15:47:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "tuples_utils.h"
 #include <math.h>
 
-t_matrix	*translation(t_cordinate x, t_cordinate y, t_cordinate z)
+t_matrix	*translate(t_cordinate x, t_cordinate y, t_cordinate z)
 {
 	return (
 		matrix((t_tuple []){
@@ -26,7 +26,7 @@ t_matrix	*translation(t_cordinate x, t_cordinate y, t_cordinate z)
 	);
 }
 
-t_matrix	*scalating(t_cordinate x, t_cordinate y, t_cordinate z)
+t_matrix	*scale(t_cordinate x, t_cordinate y, t_cordinate z)
 {
 	return (
 		matrix((t_tuple []){

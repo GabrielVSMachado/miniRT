@@ -39,6 +39,7 @@ override define SRC
 	utils_matrices.c
 	inverse_matrix.c
 	transformations.c
+	shearing.c
 endef
 
 override define SRC_TEST
