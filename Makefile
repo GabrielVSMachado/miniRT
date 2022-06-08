@@ -1,3 +1,4 @@
+MAKEFLAGS += -j
 override NAME = miniRT
 TEST = test
 RM = rm -rf

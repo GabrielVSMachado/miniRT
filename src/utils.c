@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "matrix.h"
+#include "tuples_utils.h"
 
 #define EPISLON 0.00001
 
@@ -33,4 +34,16 @@ void	destroy_matrix(t_matrix **m)
 		free((void *)(*m)->mtx[_]);
 	free((*m)->mtx);
 	free(*m);
+}
+
+t_matrix	*mpoint(t_cordinate	x, t_cordinate y, t_cordinate z)
+{
+	return (
+		matrix((t_tuple []){
+			tuple(x, 0, 0, 0),
+			tuple(y, 0, 0, 0),
+			tuple(z, 0, 0, 0),
+			tuple(1, 0, 0, 0)
+		}, (unsigned int []){4, 1})
+	);
 }
