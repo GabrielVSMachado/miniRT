@@ -13,7 +13,7 @@ Test(translation, expected_a_point) {
 			tuple(5, 0, 0, 0),
 			tuple(1, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(trans, m);
+	t_matrix	*result = matrices_product(trans, m);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(2, 0, 0, 0),
 			tuple(1, 0, 0, 0),
@@ -36,7 +36,7 @@ Test(translation, expected_a_point2) {
 			tuple(5, 0, 0, 0),
 			tuple(1, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(itrans, p);
+	t_matrix	*result = matrices_product(itrans, p);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(-8, 0, 0, 0),
 			tuple(7, 0, 0, 0),
@@ -59,7 +59,7 @@ Test(translation, expected_value_eq_vector) {
 			tuple(0, 0, 0, 0)
 			}, (unsigned int []){4, 1});
 	t_matrix	*trans = translate(5, -3, 2);
-	t_matrix	*result = matrixs_product(trans, v);
+	t_matrix	*result = matrices_product(trans, v);
 	cr_assert(assert_t_matrix_eq(result, v) == true);
 	destroy_matrix(&v);
 	destroy_matrix(&trans);
@@ -74,7 +74,7 @@ Test(scaling, expected_the_point_scaled_by_the_matrix_A) {
 			tuple(8, 0, 0, 0),
 			tuple(1, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(A, p);
+	t_matrix	*result = matrices_product(A, p);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(-8, 0, 0, 0),
 			tuple(18, 0, 0, 0),
@@ -96,7 +96,7 @@ Test(scaling, expected_the_vector_scaled_by_the_matrix_A) {
 			tuple(8, 0, 0, 0),
 			tuple(0, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(A, p);
+	t_matrix	*result = matrices_product(A, p);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(-8, 0, 0, 0),
 			tuple(18, 0, 0, 0),
@@ -119,7 +119,7 @@ Test(scaling, expected_the_point_shrink_by_the_matrix_A)
 			tuple(8, 0, 0, 0),
 			tuple(1, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(A, p);
+	t_matrix	*result = matrices_product(A, p);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(-2, 0, 0, 0),
 			tuple(2, 0, 0, 0),
@@ -141,7 +141,7 @@ Test(scaling, try_reflect_a_point_in_x_axis) {
 			tuple(4, 0, 0, 0),
 			tuple(1, 0, 0, 0)
 			}, (unsigned int []){4, 1});
-	t_matrix	*result = matrixs_product(scl, p);
+	t_matrix	*result = matrices_product(scl, p);
 	t_matrix	*expected_value = matrix((t_tuple []){
 			tuple(-2, 0, 0, 0),
 			tuple(3, 0, 0, 0),
@@ -158,7 +158,7 @@ Test(scaling, try_reflect_a_point_in_x_axis) {
 Test(rotation_axis_x, expected_point_after_rotation_in_half_way_to_axis_z) {
 	t_matrix	*rt = rotation_x(M_PI_4);
 	t_matrix	*p = mpoint(0, 1, 0);
-	t_matrix	*result = matrixs_product(rt, p);
+	t_matrix	*result = matrices_product(rt, p);
 	t_matrix	*expected_value = mpoint(0, M_SQRT2/2,  M_SQRT2/2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&result);
@@ -171,7 +171,7 @@ Test(rotation_axis_x, expected_point_after_rotation_in_axis_z)
 {
 	t_matrix	*rt = rotation_x(M_PI_2);
 	t_matrix	*p = mpoint(0, 1, 0);
-	t_matrix	*result = matrixs_product(rt, p);
+	t_matrix	*result = matrices_product(rt, p);
 	t_matrix	*expected_value = mpoint(0, 0, 1);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&result);
@@ -186,7 +186,7 @@ Test(rotation_axis_x, expected_point_after_rotation_in_axis_x)
 	t_matrix	*p = mpoint(0, 1, 0);
 	t_matrix	*rt = rotation_x(M_PI_4);
 	t_matrix	*irt = inverse(rt);
-	t_matrix	*result = matrixs_product(irt, p);
+	t_matrix	*result = matrices_product(irt, p);
 	t_matrix	*expected_value = mpoint(0, M_SQRT2/2, -M_SQRT2/2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&p);
@@ -200,7 +200,7 @@ Test(rotation_axis_y, rotating_a_point_a_positive_half_quarter_of_y_axis)
 {
 	t_matrix	*rt = rotation_y(M_PI_4);
 	t_matrix	*p = mpoint(0, 0, 1);
-	t_matrix	*result = matrixs_product(rt, p);
+	t_matrix	*result = matrices_product(rt, p);
 	t_matrix	*expected_value = mpoint(M_SQRT2/2, 0, M_SQRT2/2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&p);
@@ -213,7 +213,7 @@ Test(rotation_axis_y, rotating_a_point_a_negative_half_quarter_of_y_axis){
 	t_matrix	*rt = rotation_y(M_PI_4);
 	t_matrix	*irt = inverse(rt);
 	t_matrix	*p = mpoint(0, 0, 1);
-	t_matrix	*result = matrixs_product(irt, p);
+	t_matrix	*result = matrices_product(irt, p);
 	t_matrix	*expected_value = mpoint(-M_SQRT2/2, 0, M_SQRT2/2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&p);
@@ -226,7 +226,7 @@ Test(rotation_axis_y, rotating_a_point_a_negative_half_quarter_of_y_axis){
 Test(rotation_axis_y, rotating_a_point_by_half_quarter) {
 	t_matrix	*rt = rotation_y(M_PI_4);
 	t_matrix	*p = mpoint(1, 0, 0);
-	t_matrix	*result = matrixs_product(rt, p);
+	t_matrix	*result = matrices_product(rt, p);
 	t_matrix	*expected_value = mpoint(M_SQRT2/2, 0, -M_SQRT2/2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&p);
@@ -239,7 +239,7 @@ Test(rotation_axis_y, rotating_a_point_by_half_quarter) {
 Test(rotation_axis_z, rotation_a_point_by_half_quarte) {
 	t_matrix	*rt = rotation_z(M_PI_4);
 	t_matrix	*p = mpoint(0, 1, 0);
-	t_matrix	*result = matrixs_product(rt, p);
+	t_matrix	*result = matrices_product(rt, p);
 	t_matrix	*expected_value = mpoint(-M_SQRT2/2, M_SQRT2/2, 0);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&rt);
@@ -252,7 +252,7 @@ Test(rotation_axis_z, rotation_a_point_by_half_quarte_to_inversed_way) {
 	t_matrix	*rt = rotation_z(M_PI_4);
 	t_matrix	*irt = inverse(rt);
 	t_matrix	*p = mpoint(0, 1, 0);
-	t_matrix	*result = matrixs_product(irt, p);
+	t_matrix	*result = matrices_product(irt, p);
 	t_matrix	*expected_value = mpoint(M_SQRT2/2, M_SQRT2/2, 0);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&rt);
@@ -265,7 +265,7 @@ Test(rotation_axis_z, rotation_a_point_by_half_quarte_to_inversed_way) {
 Test(shearing, shearing1) {
 	t_matrix	*sh = shearing((int []){1, 0, 0, 0, 0, 0});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(5, 3, 4);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -277,7 +277,7 @@ Test(shearing, shearing1) {
 Test(shearing, shearing2) {
 	t_matrix	*sh = shearing((int []){0, 1, 0, 0, 0, 0});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(6, 3, 4);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -289,7 +289,7 @@ Test(shearing, shearing2) {
 Test(shearing, shearing3) {
 	t_matrix	*sh = shearing((int []){0, 0, 1, 0, 0, 0});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(2, 5, 4);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -301,7 +301,7 @@ Test(shearing, shearing3) {
 Test(shearing, shearing4) {
 	t_matrix	*sh = shearing((int []){0, 0, 0, 1, 0, 0});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(2, 7, 4);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -313,7 +313,7 @@ Test(shearing, shearing4) {
 Test(shearing, shearing5) {
 	t_matrix	*sh = shearing((int []){0, 0, 0, 0, 1, 0});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(2, 3, 6);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -325,7 +325,7 @@ Test(shearing, shearing5) {
 Test(shearing, shearing6) {
 	t_matrix	*sh = shearing((int []){0, 0, 0, 0, 0, 1});
 	t_matrix	*p = mpoint(2, 3, 4);
-	t_matrix	*result = matrixs_product(sh, p);
+	t_matrix	*result = matrices_product(sh, p);
 	t_matrix	*expected_value = mpoint(2, 3, 7);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&sh);
@@ -351,7 +351,7 @@ Test(composing_transformations, individual_apply_transformation) {
 	};
 	t_matrix	*result;
 	for (int i = 0; i < 3; i++) {
-		result = matrixs_product(tmp[i], p);
+		result = matrices_product(tmp[i], p);
 		cr_assert(assert_t_matrix_eq(result, expected_value[i]) == true);
 		destroy_matrix(&p);
 		p = result;
@@ -372,12 +372,12 @@ Test(composing_transformations, composing_transformations) {
 	};
 	t_matrix	*composed_transformation;
 	t_matrix	*tmp;
-	composed_transformation = matrixs_product(transf[1], transf[0]);
+	composed_transformation = matrices_product(transf[1], transf[0]);
 	tmp = composed_transformation;
-	composed_transformation = matrixs_product(transf[2],
+	composed_transformation = matrices_product(transf[2],
 			composed_transformation);
 	destroy_matrix(&tmp);
-	t_matrix	*result = matrixs_product(composed_transformation, p);
+	t_matrix	*result = matrices_product(composed_transformation, p);
 	t_matrix	*expected_value = mpoint(15, 0, 7);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&composed_transformation);

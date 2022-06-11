@@ -18,7 +18,6 @@
 struct s_canvas
 {
 	unsigned int	*img;
-	int				line_lenght;
 	int				width;
 	int				height;
 };

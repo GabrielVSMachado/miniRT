@@ -68,7 +68,7 @@ static float	calc_line_column_sigma(t_matrix const *m1,
 	return (total);
 }
 
-t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2)
+t_matrix	*matrices_product(t_matrix *m1, t_matrix *m2)
 {
 	t_matrix	*prd;
 	int			i;

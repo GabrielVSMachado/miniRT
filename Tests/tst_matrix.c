@@ -99,7 +99,7 @@ Test(matrix_product, expected_result_from_matrixes_product_eq_expected_value){
 			tuple(14, 32, 0, 0),
 			tuple(32, 77, 0, 0)
 			}, (unsigned int []){2, 2});
-	t_matrix	*result = matrixs_product(m1, m2);
+	t_matrix	*result = matrices_product(m1, m2);
 	cr_assert(assert_t_matrix_eq(result, expected_value) == true);
 	destroy_matrix(&result);
 	destroy_matrix(&expected_value);
@@ -323,9 +323,9 @@ Test(inverse, expected_matrix_A) {
 			tuple(7, 0, 5, 4),
 			tuple(6, -2, 0, 5)
 			}, (unsigned int []){4, 4});
-	t_matrix *C = matrixs_product(A, B);
+	t_matrix *C = matrices_product(A, B);
 	t_matrix *iB = inverse(B);
-	t_matrix *D = matrixs_product(C, iB);
+	t_matrix *D = matrices_product(C, iB);
 	cr_assert(assert_t_matrix_eq(D, A) == true);
 	destroy_matrix(&A);
 	destroy_matrix(&B);

@@ -24,7 +24,7 @@ typedef struct s_matrix
 }	t_matrix;
 
 t_matrix	*matrix(t_tuple form[], unsigned int shape[2]);
-t_matrix	*matrixs_product(t_matrix *m1, t_matrix *m2);
+t_matrix	*matrices_product(t_matrix *m1, t_matrix *m2);
 t_matrix	*tranposing(t_matrix *m);
 t_matrix	*translate(t_cordinate x, t_cordinate y, t_cordinate z);
 t_matrix	*scale(t_cordinate x, t_cordinate y, t_cordinate z);
