@@ -40,6 +40,8 @@ override define SRC
 	inverse_matrix.c
 	transformations.c
 	shearing.c
+	raycast.c
+	sphere.c
 endef
 
 override define SRC_TEST
@@ -49,6 +51,7 @@ override define SRC_TEST
 	tst_canvas.c
 	tst_matrix.c
 	tst_tranformations.c
+	tst_raycast.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
