@@ -42,6 +42,8 @@ override define SRC
 	shearing.c
 	raycast.c
 	sphere.c
+	intersections.c
+	utils_intersection.c
 endef
 
 override define SRC_TEST

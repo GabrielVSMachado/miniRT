@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:02:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/11 18:29:23 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:55:25 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,5 @@ typedef struct s_sphere
 	unsigned int	r;
 }	t_sphere;
 
-typedef struct s_xs
-{
-	unsigned int	count;
-	float			psec[2];
-}	t_xs;
-
-t_xs		*intersect(t_sphere *s, t_ray *r);
 t_sphere	*sphere(void);
 #endif

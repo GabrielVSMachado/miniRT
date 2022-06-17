@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../src/raycast.h"
 #include "../src/sphere.h"
+#include "../src/intersections.h"
 
 # define  EPISLON 0.00001
 
@@ -61,53 +62,92 @@ Test(position, expected_position_4f5_3_4, .init=init_position, .fini=finish){
 }
 
 static	t_sphere	*s;
+static	t_xs		*head;
 
 void	init_intersect(void){
 	s = sphere();
+	head = malloc(sizeof(struct s_xs));
+	head->count = 0;
+	head->fnode = NULL;
 }
 
 void	finish_intersect(void) {
-	free(s);
-	destroy_ray(&r);
+	if (r)
+		destroy_ray(&r);
+	destroy_intersections(&head);
 }
 
 Test(intersect, expected_values_4_and_6_in_struct_xs, .init=init_intersect,.fini=finish_intersect){
 	r = ray(point(0, 0, -5), vector(0, 0, 1));
-	t_xs	*result = intersect(s, r);
-	cr_assert_eq(result->count, 2);
-	cr_assert_float_eq(result->psec[0], 4.0, EPISLON);
-	cr_assert_float_eq(result->psec[1], 6.0, EPISLON);
-	free(result);
+	intersect(s, r, head);
+	cr_assert_eq(head->count, 2);
+	cr_assert_float_eq(head->fnode->t, 4.0, EPISLON);
+	cr_assert_float_eq(head->fnode->next->t, 6.0, EPISLON);
 }
 
 Test(intersect, ray_instersects_a_sphere_at_a_tangent, .init=init_intersect, .fini=finish_intersect) {
 	r = ray(point(0, 1, -5), vector(0, 0, 1));
-	t_xs	*result = intersect(s, r);
-	cr_assert_eq(result->count, 1);
-	cr_assert_float_eq(result->psec[0], 5.0, EPISLON);
-	cr_assert_float_eq(result->psec[1], 5.0, EPISLON);
-	free(result);
+	intersect(s, r, head);
+	cr_assert_float_eq(head->fnode->t, 5.0, EPISLON);
+	cr_assert_null(head->fnode->next);
 }
 
 Test(intersect, ray_misses_a_sphere, .init=init_intersect, .fini=finish_intersect) {
 	r = ray(point(0, 2, -5), vector(0, 0, 1));
-	t_xs	*result = intersect(s, r);
-	cr_assert_null(result);
-	free(result);
+	intersect(s, r, head);
+	cr_assert_null(head->fnode);
 }
 
 Test(intersect, ray_originates_inside_a_sphere, .init=init_intersect, .fini=finish_intersect) {
 	r = ray(point(0, 0, 0), vector(0, 0, 1));
-	t_xs	*result = intersect(s, r);
-	cr_assert_float_eq(result->psec[0], -1.0, EPISLON);
-	cr_assert_float_eq(result->psec[1], 1.0, EPISLON);
-	free(result);
+	intersect(s, r, head);
+	cr_assert_eq(head->count, 2);
+	cr_assert_float_eq(head->fnode->t, -1.0, EPISLON);
+	cr_assert_float_eq(head->fnode->next->t, 1.0, EPISLON);
 }
 
 Test(intersect, ray_originates_after_a_sphere, .init=init_intersect, .fini=finish_intersect) {
 	r = ray(point(0, 0, 5), vector(0, 0, 1));
-	t_xs	*result = intersect(s, r);
-	cr_assert_float_eq(result->psec[0], -6.0, EPISLON);
-	cr_assert_float_eq(result->psec[1], -4.0, EPISLON);
-	free(result);
+	intersect(s, r, head);
+	cr_assert_float_eq(head->fnode->t, -6.0, EPISLON);
+	cr_assert_float_eq(head->fnode->next->t, -4.0, EPISLON);
+}
+
+Test(intersections, expected_a_list_with_two_intersections,
+		.init=init_intersect, .fini=finish_intersect) {
+	t_sphere	*s2 = sphere();
+	intersections(head, intersection(1.0, s));
+	intersections(head, intersection(2.5, s2));
+	cr_assert_not_null(head->fnode);
+	cr_assert_not_null(head->fnode->next);
+}
+
+Test(hit, expected_the_first_value_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	intersections(head, intersection(1.0, s));
+	intersections(head, intersection(2.0, s));
+	t_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 1.0, EPISLON);
+}
+
+Test(hit, expected_the_second_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	intersections(head, intersection(-1.0, s));
+	intersections(head, intersection(1.0, s));
+	t_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 1.0, EPISLON);
+}
+
+Test(hit, expected_the_last_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	intersections(head, intersection(-1.0, s));
+	intersections(head, intersection(-2.0, s));
+	t_intersect	*result = hit(head);
+	cr_assert_null(result);
+}
+
+Test(hit, hit_the_lowest_non_negative, .init=init_intersect, .fini=finish_intersect) {
+	intersections(head, intersection(4.0, s));
+	intersections(head, intersection(5.0, s));
+	intersections(head, intersection(-1.0, s));
+	intersections(head, intersection(3.0, s));
+	t_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 3.0, EPISLON);
 }
