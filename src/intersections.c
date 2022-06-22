@@ -17,24 +17,41 @@
 #include <stdlib.h>
 #include "intersections.h"
 
-void	intersect(t_sphere *s, t_ray *r, t_xs *head)
+static float	calc_discriminant(float constants[], t_ray *r)
 {
-	int		count;
+	float	a;
 	float	b;
 	float	c;
-	float	discriminant;
 
-	b = dot_product(r->direction, r->origin);
-	c = dot_product(r->origin, r->origin) - s->r;
-	discriminant = powf(b, 2) - c;
+	a = dot_product(r->direction, r->direction);
+	b = 2 * dot_product(r->direction, r->origin);
+	c = dot_product(r->origin, r->origin) - 1;
+	constants[0] = a;
+	constants[1] = b;
+	return (powf(b, 2) - 4 * a * c);
+}
+
+void	intersect(t_sphere *s, t_ray *r, t_xs *head)
+{
+	float		discriminant;
+	float		constants[2];
+	t_ray		*tmp;
+	t_matrix	*inv_sph_transform;
+
+	inv_sph_transform = inverse(s->transform);
+	tmp = transform(r, inv_sph_transform);
+	discriminant = calc_discriminant(constants, tmp);
+	destroy_matrix(&inv_sph_transform);
+	destroy_ray(&tmp);
 	if (discriminant < 0)
 		return ;
-	count = 2 * (discriminant > 0) + (discriminant == 0);
-	head->count += count;
 	discriminant = sqrtf(discriminant);
-	intersections(head, intersection(-b - discriminant, s));
-	if (count == 2)
-		intersections(head, intersection(-b + discriminant, s));
+	head->count += 2 * (discriminant > 0) + (discriminant == 0);
+	intersections(head, intersection(
+			(-constants[1] - discriminant) / (2 * constants[0]), s));
+	if (discriminant)
+		intersections(head, intersection(
+				(-constants[1] + discriminant) / (2 * constants[0]), s));
 }
 
 static t_intersect	*last_instersection(t_intersect *head)

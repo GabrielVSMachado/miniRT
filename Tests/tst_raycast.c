@@ -151,3 +151,75 @@ Test(hit, hit_the_lowest_non_negative, .init=init_intersect, .fini=finish_inters
 	t_intersect	*result = hit(head);
 	cr_assert_float_eq(result->t, 3.0, EPISLON);
 }
+
+static t_ray	*r;
+
+void	init_raytranform(void) {
+	r = ray(point(1, 2, 3), vector(0, 1, 0));
+}
+
+void	fini_raytransform(void) {
+	destroy_ray(&r);
+}
+
+Test(transform_ray, translating_ray, .init=init_raytranform, .fini=fini_raytransform) {
+	t_matrix	*t = translate(3, 4, 5);
+	t_ray		*result = transform(r, t);
+	t_point		expected_value =  point(4, 6, 8);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result->origin[i], expected_value[i], EPISLON);
+	}
+	destroy_matrix(&t);
+	destroy_ray(&result);
+}
+
+Test(transform_ray, scaling_ray, .init=init_raytranform, .fini=fini_raytransform)
+{
+	t_matrix	*t = scale(2, 3, 4);
+	t_ray		*result = transform(r, t);
+	t_ray		*expected_value = ray(point(2, 6, 12), vector(0, 3, 0));
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result->origin[i],
+				expected_value->origin[i], EPISLON);
+		cr_assert_float_eq(result->direction[i],
+				expected_value->direction[i], EPISLON);
+	}
+	destroy_matrix(&t);
+	destroy_ray(&result);
+	destroy_ray(&expected_value);
+}
+
+void	init_final_intersect(void) {
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	s = sphere();
+	head = malloc(sizeof(struct s_xs));
+	head->count = 0;
+	head->fnode = NULL;
+}
+
+void	fini_final_intersect(void) {
+	destroy_sphere(&s);
+	destroy_ray(&r);
+	destroy_intersections(&head);
+	r = NULL;
+	s = NULL;
+	head = NULL;
+}
+
+Test(fina_intersect, intersecting_a_scaled_sphere_with_a_ray, .init=init_final_intersect,
+		.fini=fini_final_intersect) {
+	set_transform(s, scale(2, 2, 2));
+	intersect(s, r, head);
+	cr_assert_eq(head->count, 2);
+	//printf("%.5f %.5f\n", head->fnode->t, head->fnode->next->t);
+	cr_assert_float_eq(head->fnode->t, 3, EPISLON);
+	cr_assert_float_eq(head->fnode->next->t, 7, EPISLON);
+}
+
+Test(fina_intersect, intersecting_a_translated_sphere_with_a_ray, .init=init_final_intersect,
+		.fini=fini_final_intersect) {
+	set_transform(s, translate(5, 0, 0));
+	intersect(s, r, head);
+	cr_assert_eq(head->count, 0);
+	cr_assert_null(head->fnode);
+}

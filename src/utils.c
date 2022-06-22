@@ -47,3 +47,15 @@ t_matrix	*mpoint(t_cordinate	x, t_cordinate y, t_cordinate z)
 		}, (unsigned int []){4, 1})
 	);
 }
+
+t_matrix	*identity(void)
+{
+	return (
+		matrix((t_tuple []){
+			tuple(1, 0, 0, 0),
+			tuple(0, 1, 0, 0),
+			tuple(0, 0, 1, 0),
+			tuple(0, 0, 0, 1)
+		}, (unsigned int []){4, 4})
+	);
+}

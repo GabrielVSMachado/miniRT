@@ -35,6 +35,7 @@ t_matrix	*shearing(int value[6]);
 t_matrix	*submatrix(t_matrix *m, int line, int column);
 t_matrix	*inverse(t_matrix *m);
 t_matrix	*mpoint(t_cordinate	x, t_cordinate y, t_cordinate z);
+t_matrix	*identity(void);
 float		determinant_2(t_matrix *m);
 float		minor(t_matrix *m, int line, int column);
 float		cofactor(t_matrix *m, int line, int column);

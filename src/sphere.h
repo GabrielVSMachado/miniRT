@@ -18,9 +18,10 @@
 
 typedef struct s_sphere
 {
-	t_point			center;
-	unsigned int	r;
+	t_matrix		*transform;
 }	t_sphere;
 
 t_sphere	*sphere(void);
+void		destroy_sphere(t_sphere **s);
+void		set_transform(t_sphere *s, t_matrix *t);
 #endif

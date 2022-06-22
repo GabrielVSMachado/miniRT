@@ -28,8 +28,16 @@ t_ray	*ray(t_point origin, t_vector direction)
 	r = malloc(sizeof(t_ray));
 	if (!r)
 		return (NULL);
-	r->origin = point(origin[0], origin[1], origin[2]);
-	r->direction = vector(direction[0], direction[1], direction[2]);
+	if (!origin || !direction)
+	{
+		r->origin = NULL;
+		r->direction = NULL;
+	}
+	else
+	{
+		r->origin = point(origin[0], origin[1], origin[2]);
+		r->direction = vector(direction[0], direction[1], direction[2]);
+	}
 	return (r);
 }
 
@@ -42,4 +50,34 @@ t_point	position(t_ray const *r, const float t)
 	result = add_tuples(tmp, r->origin);
 	free(tmp);
 	return (result);
+}
+
+static t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t)
+{
+	float	tmp[4];
+	int		row;
+	t_tuple	*mtx;
+
+	row = -1;
+	mtx = m->mtx;
+	while (++row < 4)
+	{
+		tmp[row] = mtx[row][0] * t[0]
+			+ mtx[row][1] * t[1]
+			+ mtx[row][2] * t[2]
+			+ mtx[row][3] * t[3];
+	}
+	return (tuple(tmp[0], tmp[1], tmp[2], tmp[3]));
+}
+
+t_ray	*transform(t_ray *r, t_matrix *t)
+{
+	t_ray	*new_ray;
+
+	new_ray = ray(NULL, NULL);
+	if (!new_ray)
+		return (NULL);
+	new_ray->origin = prod_matrix_tuple(t, r->origin);
+	new_ray->direction = prod_matrix_tuple(t, r->direction);
+	return (new_ray);
 }

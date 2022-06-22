@@ -12,6 +12,7 @@
 
 #include "sphere.h"
 #include <stdlib.h>
+#include "matrix.h"
 
 t_sphere	*sphere(void)
 {
@@ -20,7 +21,22 @@ t_sphere	*sphere(void)
 	s = malloc(sizeof(t_sphere));
 	if (!s)
 		return (NULL);
-	s->center = 0;
-	s->r = 1;
+	s->transform = identity();
 	return (s);
+}
+
+void	destroy_sphere(t_sphere **s)
+{
+	destroy_matrix(&(*s)->transform);
+	free(*s);
+	*s = NULL;
+}
+
+void	set_transform(t_sphere *s, t_matrix *t)
+{
+	t_matrix	*product;
+
+	product = matrices_product(t, s->transform);
+	destroy_matrix(&s->transform);
+	s->transform = product;
 }
