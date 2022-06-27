@@ -25,4 +25,5 @@ struct s_canvas
 struct s_canvas	*canvas(int width, int height);
 void			write_pixel(struct s_canvas *cv, int x, int y, t_color color);
 t_color			pixel_at(struct s_canvas *cv, int x, int y);
+void			destroy_canvas(struct s_canvas **cv);
 #endif

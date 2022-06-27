@@ -41,4 +41,5 @@ t_intersect	*intersection(float t, t_sphere *obj);
 void		intersections(t_xs *head, t_intersect *new);
 void		destroy_intersections(t_xs **head);
 t_intersect	*hit(t_xs *head);
+t_xs		*init_xs(void);
 #endif

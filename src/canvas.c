@@ -54,3 +54,10 @@ t_color	pixel_at(struct s_canvas *cv, int x, int y)
 	*(unsigned int *)c = cv->img[y * cv->width + x];
 	return (color(c[2] / 255., c[1] / 255., c[0] / 255.));
 }
+
+void	destroy_canvas(struct s_canvas **cv)
+{
+	free((*cv)->img);
+	free(*cv);
+	*cv = NULL;
+}

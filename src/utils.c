@@ -13,6 +13,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "intersections.h"
 #include "matrix.h"
 #include "tuples_utils.h"
 
@@ -58,4 +59,16 @@ t_matrix	*identity(void)
 			tuple(0, 0, 0, 1)
 		}, (unsigned int []){4, 4})
 	);
+}
+
+t_xs	*init_xs(void)
+{
+	t_xs	*head;
+
+	head = malloc(sizeof(struct s_xs));
+	if (!head)
+		return (NULL);
+	head->count = 0;
+	head->fnode = NULL;
+	return (head);
 }
