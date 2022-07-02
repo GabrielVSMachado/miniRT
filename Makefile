@@ -44,6 +44,7 @@ override define SRC
 	sphere.c
 	intersections.c
 	utils_intersection.c
+	reflection.c
 endef
 
 override define SRC_TEST
@@ -54,6 +55,8 @@ override define SRC_TEST
 	tst_matrix.c
 	tst_tranformations.c
 	tst_raycast.c
+	tst_normals.c
+	tst_reflection.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

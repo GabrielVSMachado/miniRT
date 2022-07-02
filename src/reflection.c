@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   reflection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 15:06:06 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 14:57:30 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/02 13:54:00 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/02 15:10:11 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "tuples_utils.h"
+#include <stdlib.h>
 
-# include <stdbool.h>
-# include "tuples_utils.h"
+t_vector	reflect(t_vector velocity, t_vector normal)
+{
+	t_tuple		tmp;
+	t_vector	result;
 
-t_vector	reflect(t_vector velocity, t_vector normal);
-bool		assert_float_eq(const float f1, const float f2);
-#endif
+	tmp = scalar_multiplication(normal, 2. * dot_product(velocity, normal));
+	result = sub_tuple(velocity, tmp);
+	free(tmp);
+	return (result);
+}
