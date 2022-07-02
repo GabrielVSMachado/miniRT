@@ -18,10 +18,11 @@
 
 typedef struct s_sphere
 {
-	t_matrix		*transform;
+	t_matrix	*transform;
 }	t_sphere;
 
 t_sphere	*sphere(void);
 void		destroy_sphere(t_sphere **s);
 void		set_transform(t_sphere *s, t_matrix *t);
+t_vector	normal_at(t_sphere *s, t_point p);
 #endif

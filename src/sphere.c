@@ -13,6 +13,8 @@
 #include "sphere.h"
 #include <stdlib.h>
 #include "matrix.h"
+#include "raycast.h"
+#include "tuples_utils.h"
 
 t_sphere	*sphere(void)
 {
@@ -39,4 +41,25 @@ void	set_transform(t_sphere *s, t_matrix *t)
 	product = matrices_product(t, s->transform);
 	destroy_matrix(&s->transform);
 	s->transform = product;
+}
+
+t_vector	normal_at(t_sphere *s, t_point world_point)
+{
+	t_vector	obj_normal;
+	t_vector	world_normal;
+	t_matrix	*tmp;
+	t_matrix	*mt;
+	t_vector	normal;
+
+	mt = inverse(s->transform);
+	obj_normal = prod_matrix_tuple(mt, world_point);
+	obj_normal[3] = 0;
+	tmp = tranposing(mt);
+	destroy_matrix(&mt);
+	mt = tmp;
+	world_normal = prod_matrix_tuple(mt, obj_normal);
+	world_normal[3] = 0;
+	normal = normalize(world_normal);
+	free(world_normal);
+	return (normal);
 }

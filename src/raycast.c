@@ -52,7 +52,7 @@ t_point	position(t_ray const *r, const float t)
 	return (result);
 }
 
-static t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t)
+t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t)
 {
 	float	tmp[4];
 	int		row;
