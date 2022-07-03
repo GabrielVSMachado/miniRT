@@ -45,6 +45,8 @@ override define SRC
 	intersections.c
 	utils_intersection.c
 	reflection.c
+	lights.c
+	material.c
 endef
 
 override define SRC_TEST
@@ -57,6 +59,7 @@ override define SRC_TEST
 	tst_raycast.c
 	tst_normals.c
 	tst_reflection.c
+	tst_lights.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

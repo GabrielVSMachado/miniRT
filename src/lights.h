@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.h                                           :+:      :+:    :+:   */
+/*   lights.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/11 16:02:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 16:18:20 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/02 15:43:22 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/02 20:57:19 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPHERE_H
-# define SPHERE_H
+#ifndef LIGHTS_H
+# define LIGHTS_H
 
-# include "raycast.h"
 # include "tuples_utils.h"
-# include "lights.h"
+# include "utils_colors.h"
+# include "material.h"
 
-typedef struct s_sphere
+typedef struct s_point_light
 {
-	t_matrix			*transform;
-	struct s_material	*m;
-}	t_sphere;
+	t_point	position;
+	t_color	intensity;
+}	t_light;
 
-t_sphere	*sphere(void);
-void		destroy_sphere(t_sphere **s);
-void		set_transform(t_sphere *s, t_matrix *t);
-t_vector	normal_at(t_sphere *s, t_point p);
+t_light				*point_light(t_color intensity, t_point position);
+void				destroy_light(t_light **l);
+t_color				lighting(
+						struct s_material *m, t_light *l, t_point position,
+						t_vector eye_normalv[2]);
 #endif

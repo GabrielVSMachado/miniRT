@@ -6,12 +6,14 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:58:14 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/16 13:55:51 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/02 16:18:55 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sphere.h"
 #include <stdlib.h>
+#include "ft_string.h"
+#include "lights.h"
 #include "matrix.h"
 #include "raycast.h"
 #include "tuples_utils.h"
@@ -24,6 +26,8 @@ t_sphere	*sphere(void)
 	if (!s)
 		return (NULL);
 	s->transform = identity();
+	s->m = material();
+	s->m->ambient = 1.;
 	return (s);
 }
 

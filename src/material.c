@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.h                                           :+:      :+:    :+:   */
+/*   material.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/11 16:02:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 16:18:20 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/02 20:55:33 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/02 20:56:04 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPHERE_H
-# define SPHERE_H
+#include <stdlib.h>
+#include "material.h"
 
-# include "raycast.h"
-# include "tuples_utils.h"
-# include "lights.h"
-
-typedef struct s_sphere
+struct s_material	*material(void)
 {
-	t_matrix			*transform;
 	struct s_material	*m;
-}	t_sphere;
 
-t_sphere	*sphere(void);
-void		destroy_sphere(t_sphere **s);
-void		set_transform(t_sphere *s, t_matrix *t);
-t_vector	normal_at(t_sphere *s, t_point p);
-#endif
+	m = malloc(sizeof(struct s_material));
+	if (!m)
+		return (NULL);
+	m->ambient = 0.1;
+	m->diffuse = 0.9;
+	m->specular = 0.9;
+	m->shininess = 200.0;
+	m->c = color(1, 1, 1);
+	return (m);
+}
+
+void	destroy_material(struct s_material **m)
+{
+	free((*m)->c);
+	free(*m);
+	*m = NULL;
+}
