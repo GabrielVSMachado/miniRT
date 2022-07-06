@@ -27,7 +27,6 @@ t_sphere	*sphere(void)
 		return (NULL);
 	s->transform = identity();
 	s->m = material();
-	s->m->ambient = 1.;
 	return (s);
 }
 

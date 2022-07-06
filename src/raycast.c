@@ -28,16 +28,12 @@ t_ray	*ray(t_point origin, t_vector direction)
 	r = malloc(sizeof(t_ray));
 	if (!r)
 		return (NULL);
-	if (!origin || !direction)
-	{
-		r->origin = NULL;
-		r->direction = NULL;
-	}
-	else
-	{
+	r->origin = NULL;
+	r->direction = NULL;
+	if (origin)
 		r->origin = point(origin[0], origin[1], origin[2]);
+	if (direction)
 		r->direction = vector(direction[0], direction[1], direction[2]);
-	}
 	return (r);
 }
 

@@ -37,9 +37,18 @@ struct s_canvas	*canvas(int width, int height)
 void	write_pixel(struct s_canvas *cv, int x, int y, t_color color)
 {
 	unsigned char	c[4];
+	int				i;
 
 	if (x >= cv->width || y >= cv->height)
 		return ;
+	i = -1;
+	while (++i < 4)
+	{
+		if (color[i] < 0)
+			color[i] = 0;
+		else if (color[i] > 1)
+			color[i] = 1;
+	}
 	c[2] = color[0] * 255;
 	c[1] = color[1] * 255;
 	c[0] = color[2] * 255;
