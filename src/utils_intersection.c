@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 21:19:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/16 22:27:47 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:44:59 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	destroy_intersections(t_xs **head)
 {
 	t_intersect	*tmp;
 
-	while ((*head)->fnode)
+	while (*head && (*head)->fnode)
 	{
 		tmp = (*head)->fnode->next;
 		free((*head)->fnode);

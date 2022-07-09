@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 16:20:48 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 21:32:08 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/05 22:46:01 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,11 @@ t_light	*point_light(t_color intensity, t_point position)
 
 void	destroy_light(t_light **l)
 {
-	free((*l)->intensity);
-	free((*l)->position);
-	free(*l);
-	*l = NULL;
+	if (*l)
+	{
+		free((*l)->intensity);
+		free((*l)->position);
+		free(*l);
+		*l = NULL;
+	}
 }

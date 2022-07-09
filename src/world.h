@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   world.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 15:06:06 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/09 13:04:28 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/05 22:07:23 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/05 22:29:24 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef WORLD_H
+# define WORLD_H
 
-# include <stdbool.h>
-# include "tuples_utils.h"
 # include "intersections.h"
+# include "lights.h"
+# include "raycast.h"
 
-t_vector	reflect(t_vector velocity, t_vector normal);
-bool		assert_float_eq(const float f1, const float f2);
-void		bubblesort(t_xs *head);
+struct s_world
+{
+	t_xs		*obj;
+	t_light		*light_src;
+};
+
+struct s_world	*init_world(t_light *light, t_xs *head);
+t_xs			*intersect_world(struct s_world *w, t_ray *r);
 #endif

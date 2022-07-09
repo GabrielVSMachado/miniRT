@@ -47,11 +47,14 @@ override define SRC
 	reflection.c
 	lights.c
 	material.c
+	world.c
+	bubblesort.c
 endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
 	tst_tuples.c
+	tst_bubblesort.c
 	tst_colors.c
 	tst_canvas.c
 	tst_matrix.c
@@ -60,6 +63,7 @@ override define SRC_TEST
 	tst_normals.c
 	tst_reflection.c
 	tst_lights.c
+	tst_world.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
