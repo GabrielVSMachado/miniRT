@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:53:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/16 22:20:44 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 19:52:39 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_intersect	*hit(t_xs *head)
 	t_intersect	*ht;
 	t_intersect	*low_non_negative;
 
+	if (!head->fnode)
+		return (NULL);
 	ht = head->fnode;
 	low_non_negative = ht;
 	while (ht)

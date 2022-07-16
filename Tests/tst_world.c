@@ -59,3 +59,59 @@ Test(world, intersect_world, .init=default_world, .fini=fini_world)
 		tmp = tmp->next;
 	}
 }
+
+Test(prepare_computations, shading_an_intersection, .init=default_world, .fini=fini_world)
+{
+	t_ray *r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_intersect	*intersec = intersection(4, world->obj->fnode->obj);
+	struct s_comps *comps = prepare_computations(intersec, r);
+	t_color		c = shade_hit(world, comps);
+	float		expected[] = {0.38066, 0.47583, 0.2855};
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(c[i], expected[i], EPISLON);
+	}
+}
+
+Test(prepare_computations, shading_an_intersection_from_inside, .init=default_world, .fini=fini_world)
+{
+	t_ray *r = ray(point(0, 0, 0), vector(0, 0, 1));
+	world->light_src = point_light(color(1, 1, 1), point(0, 0.25, 0));
+	t_intersect	*intersec = intersection(0.5, world->obj->fnode->next->obj);
+	struct s_comps	*comps = prepare_computations(intersec, r);
+	t_color			result = shade_hit(world, comps);
+	float			expected[] = {0.90498, 0.90498, 0.90498};
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result[i], expected[i], EPISLON);
+	}
+}
+
+Test(color_at, the_color_when_a_ray_misses, .init=default_world, .fini=fini_world)
+{
+	t_ray *r = ray(point(0, 0, -5), vector(0, 1, 0));
+	t_color	result = color_at(world, r);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result[i], 0, EPISLON);
+	}
+}
+
+Test(color_at, the_color_when_a_ray_hit, .init=default_world, .fini=fini_world)
+{
+	t_ray	*r = ray(point(0, 0, -5), vector(0, 0, 1));
+	t_color	result = color_at(world, r);
+	t_color expected = color(0.38066, 0.47583, 0.2855);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result[i], expected[i], EPISLON);
+	}
+}
+
+Test(color_at, the_color_with_an_intersection_behind_the_ray, .init=default_world, .fini=fini_world)
+{
+	world->obj->fnode->obj->m->ambient = 1;
+	world->obj->fnode->next->obj->m->ambient = 1;
+	t_color expected = world->obj->fnode->next->obj->m->c;
+	t_ray *r = ray(point(0, 0, 0.75), vector(0, 0, -1));
+	t_color result = color_at(world, r);
+	for (int i = 0; i < 3; ++i) {
+		cr_assert_float_eq(result[i], expected[i], EPISLON);
+	}
+}

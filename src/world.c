@@ -6,15 +6,21 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/09 13:04:53 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/11 19:49:16 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
+#include "computations.h"
 #include "intersections.h"
 #include "lights.h"
 #include "miniRT.h"
 #include "raycast.h"
+#include "sphere.h"
+#include "tuples_utils.h"
+#include "utils_colors.h"
+#include <math.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 struct s_world	*init_world(t_light *light, t_xs *head)
@@ -45,4 +51,36 @@ t_xs	*intersect_world(struct s_world *w, t_ray *r)
 	}
 	bubblesort(head);
 	return (head);
+}
+
+t_color	shade_hit(struct s_world *w, struct s_comps *comps)
+{
+	return (
+		lighting(
+			comps->obj->m,
+			w->light_src,
+			comps->point,
+			(t_vector []){comps->eyev, comps->normalv})
+	);
+}
+
+t_color	color_at(struct s_world *w, t_ray *r)
+{
+	t_xs			*head;
+	t_intersect		*hitnode;
+	struct s_comps	*comps;
+	t_color			c;
+
+	head = intersect_world(w, r);
+	hitnode = hit(head);
+	if (hitnode)
+	{
+		comps = prepare_computations(hitnode, r);
+		c = shade_hit(w, comps);
+		destroy_intersections(&head);
+		destroy_comps(&comps);
+		return (c);
+	}
+	destroy_intersections(&head);
+	return (color(0, 0, 0));
 }

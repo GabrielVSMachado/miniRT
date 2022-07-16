@@ -34,6 +34,7 @@ override define SRC
 	cross_product_tuples.c
 	colors.c
 	canvas.c
+	computations.c
 	matrix.c
 	utils.c
 	utils_matrices.c
@@ -53,6 +54,7 @@ endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
+	tst_computations.c
 	tst_tuples.c
 	tst_bubblesort.c
 	tst_colors.c
