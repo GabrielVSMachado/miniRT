@@ -32,6 +32,7 @@ override define SRC
 	tuples.c
 	tuples_operations.c
 	cross_product_tuples.c
+	view_transformation.c
 	colors.c
 	canvas.c
 	computations.c
@@ -54,6 +55,7 @@ endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
+	tst_view_transformation.c
 	tst_computations.c
 	tst_tuples.c
 	tst_bubblesort.c
