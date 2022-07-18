@@ -51,6 +51,7 @@ override define SRC
 	material.c
 	world.c
 	bubblesort.c
+	camera.c
 endef
 
 override define SRC_TEST
@@ -68,6 +69,7 @@ override define SRC_TEST
 	tst_reflection.c
 	tst_lights.c
 	tst_world.c
+	tst_camera.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)
