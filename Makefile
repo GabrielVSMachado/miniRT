@@ -1,4 +1,3 @@
-MAKEFLAGS += j
 override NAME = miniRT
 TEST = test
 RM = rm -rf
@@ -30,6 +29,7 @@ endef
 override define SRC
 	main.c
 	tuples.c
+	render.c
 	tuples_operations.c
 	cross_product_tuples.c
 	view_transformation.c

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/11 19:49:35 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/21 23:24:26 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,30 @@
 #include "world.h"
 #include <ft_string.h>
 #include <stdlib.h>
+
+static void	cpyobjs(struct s_comps *comp, t_intersect *i)
+{
+	unsigned int		counter;
+	t_matrix			*tmp;
+
+	comp->obj->m->ambient = i->obj->m->ambient;
+	comp->obj->m->diffuse = i->obj->m->diffuse;
+	comp->obj->m->shininess = i->obj->m->shininess;
+	comp->obj->m->specular = i->obj->m->specular;
+	ft_memcpy(comp->obj->m->c, i->obj->m->c, sizeof(float) * 4);
+	counter = 0;
+	tmp = comp->obj->transform;
+	while (counter < i->obj->transform->shape[0])
+	{
+		tmp->mtx[counter][0] = i->obj->transform->mtx[counter][0];
+		tmp->mtx[counter][1] = i->obj->transform->mtx[counter][1];
+		tmp->mtx[counter][2] = i->obj->transform->mtx[counter][2];
+		tmp->mtx[counter][3] = i->obj->transform->mtx[counter][3];
+		++counter;
+	}
+	tmp->shape[0] = i->obj->transform->shape[0];
+	tmp->shape[1] = i->obj->transform->shape[1];
+}
 
 struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 {
@@ -23,7 +47,8 @@ struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 	if (!comput)
 		return (NULL);
 	comput->t = i->t;
-	comput->obj = ft_memcpy(sphere(), i->obj, sizeof(t_sphere));
+	comput->obj = sphere();
+	cpyobjs(comput, i);
 	comput->point = position(r, comput->t);
 	comput->eyev = negate_tuple(r->direction);
 	comput->normalv = normal_at(comput->obj, comput->point);
