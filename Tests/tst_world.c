@@ -24,7 +24,7 @@ Test(world, create_a_world_with_null_values, .fini=fini_world)
 	cr_assert_null(world->obj);
 }
 
-void	default_world(void)
+static void	default_world(void)
 {
 	light = point_light(color(1, 1, 1), point(-10, 10, -10));
 	t_xs		*head = init_xs();

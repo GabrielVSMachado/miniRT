@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 20:45:42 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/28 20:45:47 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/23 11:20:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	write_pixel(struct s_canvas *cv, int x, int y, t_color color)
 	if (x >= cv->width || y >= cv->height)
 		return ;
 	i = -1;
-	while (++i < 4)
+	while (++i < 3)
 	{
 		if (color[i] < 0)
 			color[i] = 0;

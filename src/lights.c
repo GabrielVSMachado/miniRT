@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 16:20:48 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/05 22:46:01 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/23 18:41:13 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,64 +18,64 @@
 #include <math.h>
 #include <stdlib.h>
 
-static void	destroy_used_memory(t_color *adse, t_vector *lrtv)
+static void	destroy_used_memory(struct s_utils_lighting *util)
 {
-	int	i;
-
-	i = -1;
-	while (++i < 4)
-		free(adse[i]);
-	i = -1;
-	while (++i < 3)
-		free(lrtv[i]);
+	free(util->ambient);
+	free(util->diffuse);
+	free(util->effective_color);
+	free(util->specular);
+	free(util->left);
+	free(util->right);
 }
 
-static void	init_variables(t_color *adse, t_light *light,
-		struct s_material *material, t_vector *lrtv)
+static void	init_variables(struct s_utils_lighting *util, t_light *light,
+		struct s_material *material)
 {
-	lrtv[0] = NULL;
-	lrtv[1] = NULL;
-	lrtv[2] = NULL;
-	adse[3] = color(
+	util->left = NULL;
+	util->right = NULL;
+	util->light_dot_normal = 0;
+	util->reflect_dot_eye = 0;
+	util->effective_color = color(
 			light->intensity[0] * material->c[0],
 			light->intensity[1] * material->c[1],
 			light->intensity[2] * material->c[2]
 			);
-	adse[0] = scalar_multiplication(adse[3], material->ambient);
-	adse[1] = color(0, 0, 0);
-	adse[2] = color(0, 0, 0);
+	util->ambient = scalar_multiplication(
+			util->effective_color,
+			material->ambient);
+	util->diffuse = color(0, 0, 0);
+	util->specular = color(0, 0, 0);
 }
 
-t_color	lighting(
-		struct s_material *m,
-		t_light	*l,
-		t_point position, t_vector eye_normalv[2])
+t_color	lighting(struct s_parameters_lighting *p)
 {
-	t_color		adser[5];
-	float		dot[2];
-	t_vector	lrtv[3];
+	struct s_utils_lighting	util;
+	t_vector				tmp;
+	t_color					result;
 
-	init_variables(adser, l, m, lrtv);
-	lrtv[2] = sub_tuple(l->position, position);
-	lrtv[0] = normalize(lrtv[2]);
-	dot[0] = dot_product(lrtv[0], eye_normalv[1]);
-	if (free(lrtv[2]), dot[0] >= 0)
+	if (p->in_shadow)
+		return (color(p->m->ambient, p->m->ambient, p->m->ambient));
+	init_variables(&util, p->light, p->m);
+	tmp = sub_tuple(p->light->position, p->position);
+	util.left = normalize(tmp);
+	util.light_dot_normal = dot_product(util.left, p->eyev);
+	if (free(tmp), util.light_dot_normal >= 0)
 	{
-		free(adser[1]);
-		adser[1] = scalar_multiplication(adser[3], m->diffuse * dot[0]);
-		lrtv[2] = negate_tuple(lrtv[0]);
-		lrtv[1] = reflect(lrtv[2], eye_normalv[1]);
-		dot[1] = dot_product(lrtv[1], eye_normalv[0]);
-		if (dot[1] > 0)
+		free(util.diffuse);
+		util.diffuse = scalar_multiplication(util.effective_color, p->m->diffuse * util.light_dot_normal);
+		tmp = negate_tuple(util.left);
+		util.right = reflect(tmp, p->normalv);
+		util.reflect_dot_eye = dot_product(util.right, p->eyev);
+		if (util.reflect_dot_eye > 0)
 		{
-			free(adser[2]);
-			adser[2] = scalar_multiplication(l->intensity,
-					powf(dot[1], m->shininess) * m->specular);
+			free(util.specular);
+			util.specular = scalar_multiplication(p->light->intensity,
+					powf(util.reflect_dot_eye, p->m->shininess) * p->m->specular);
 		}
 	}
-	lrtv[2] = add_tuples(adser[0], adser[1]);
-	adser[4] = add_tuples(lrtv[2], adser[2]);
-	return (destroy_used_memory(adser, lrtv), adser[4]);
+	tmp = add_tuples(util.ambient, util.diffuse);
+	result = add_tuples(tmp, util.specular);
+	return (free(tmp), destroy_used_memory(&util), result);
 }
 
 t_light	*point_light(t_color intensity, t_point position)

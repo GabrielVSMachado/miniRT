@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   shadows.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 22:42:31 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 18:43:42 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/23 16:57:23 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/23 18:45:56 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-# define RENDER_H
+#ifndef SHADOWS_H
+# define SHADOWS_H
 
-# include "camera.h"
+# include <stdbool.h>
 # include "world.h"
+# include "tuples_utils.h"
 
-struct s_canvas	*render(t_camera *cam, struct s_world *w);
+bool	in_shadowed(struct s_world *w, t_point p);
 #endif

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:43:22 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 20:57:19 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/23 18:46:19 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "tuples_utils.h"
 # include "utils_colors.h"
 # include "material.h"
+# include <stdbool.h>
 
 typedef struct s_point_light
 {
@@ -23,9 +24,30 @@ typedef struct s_point_light
 	t_color	intensity;
 }	t_light;
 
+struct s_utils_lighting
+{
+	t_color		ambient;
+	t_color		diffuse;
+	t_color		specular;
+	t_color		effective_color;
+	t_vector	left;
+	t_vector	right;
+	float		light_dot_normal;
+	float		reflect_dot_eye;
+};
+
+struct s_parameters_lighting
+{
+	struct s_material	*m;
+	t_light				*light;
+	t_point				position;
+	t_vector			eyev;
+	t_vector			normalv;
+	bool				in_shadow;	
+};
+
 t_light				*point_light(t_color intensity, t_point position);
 void				destroy_light(t_light **l);
-t_color				lighting(
-						struct s_material *m, t_light *l, t_point position,
-						t_vector eye_normalv[2]);
+t_color				lighting(struct s_parameters_lighting *p);
+
 #endif

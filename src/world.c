@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/11 19:49:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/23 18:45:18 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,14 @@ t_xs	*intersect_world(struct s_world *w, t_ray *r)
 t_color	shade_hit(struct s_world *w, struct s_comps *comps)
 {
 	return (
-		lighting(
-			comps->obj->m,
-			w->light_src,
-			comps->point,
-			(t_vector []){comps->eyev, comps->normalv})
-	);
+		lighting(&(struct s_parameters_lighting){
+			.m = comps->obj->m,
+			.light = w->light_src,
+			.position = comps->point,
+			.eyev = comps->eyev,
+			.normalv = comps->normalv,
+			.in_shadow = false})
+			);
 }
 
 t_color	color_at(struct s_world *w, t_ray *r)
