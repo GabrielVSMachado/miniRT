@@ -27,6 +27,8 @@ static void	default_world(void)
 	s1->m->diffuse = 0.7;
 	s1->m->specular = 0.2;
 	set_transform(s2, scale(0.5, 0.5, 0.5));
+	s1->inverse_transform = inverse(s1->transform);
+	s2->inverse_transform = inverse(s2->transform);
 	intersections(head, intersection(0, s1));
 	intersections(head, intersection(0, s2));
 	world = init_world(light, head);
@@ -103,6 +105,8 @@ Test(shade_hit, is_given_a_intersection_in_shadow)
 	t_sphere    *s2 = sphere();
 	set_transform(s2, translate(0, 0, 10));
 	t_xs        *head = init_xs();
+	s1->inverse_transform = inverse(s1->transform);
+	s2->inverse_transform = inverse(s2->transform);
 	intersections(head, intersection(0, s1));
 	intersections(head, intersection(0, s2));
 	world = init_world(light, head);

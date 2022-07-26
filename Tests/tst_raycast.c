@@ -66,6 +66,7 @@ static	t_xs		*head;
 
 void	init_intersect(void){
 	s = sphere();
+	s->inverse_transform = inverse(s->transform);
 	head = malloc(sizeof(struct s_xs));
 	head->count = 0;
 	head->fnode = NULL;
@@ -116,6 +117,7 @@ Test(intersect, ray_originates_after_a_sphere, .init=init_intersect, .fini=finis
 Test(intersections, expected_a_list_with_two_intersections,
 		.init=init_intersect, .fini=finish_intersect) {
 	t_sphere	*s2 = sphere();
+	s2->inverse_transform = inverse(s2->transform);
 	intersections(head, intersection(1.0, s));
 	intersections(head, intersection(2.5, s2));
 	cr_assert_not_null(head->fnode);
@@ -192,6 +194,7 @@ Test(transform_ray, scaling_ray, .init=init_raytranform, .fini=fini_raytransform
 void	init_final_intersect(void) {
 	r = ray(point(0, 0, -5), vector(0, 0, 1));
 	s = sphere();
+	s->inverse_transform = inverse(s->transform);
 	head = malloc(sizeof(struct s_xs));
 	head->count = 0;
 	head->fnode = NULL;
@@ -209,16 +212,18 @@ void	fini_final_intersect(void) {
 Test(fina_intersect, intersecting_a_scaled_sphere_with_a_ray, .init=init_final_intersect,
 		.fini=fini_final_intersect) {
 	set_transform(s, scale(2, 2, 2));
+	s->inverse_transform = inverse(s->transform);
 	intersect(s, r, head);
 	cr_assert_eq(head->count, 2);
 	//printf("%.5f %.5f\n", head->fnode->t, head->fnode->next->t);
-	cr_assert_float_eq(head->fnode->t, 3, EPISLON);
-	cr_assert_float_eq(head->fnode->next->t, 7, EPISLON);
+	cr_assert_float_eq(head->fnode->t, 3., EPISLON);
+	cr_assert_float_eq(head->fnode->next->t, 7., EPISLON);
 }
 
 Test(fina_intersect, intersecting_a_translated_sphere_with_a_ray, .init=init_final_intersect,
 		.fini=fini_final_intersect) {
 	set_transform(s, translate(5, 0, 0));
+	s->inverse_transform = inverse(s->transform);
 	intersect(s, r, head);
 	cr_assert_eq(head->count, 0);
 	cr_assert_null(head->fnode);

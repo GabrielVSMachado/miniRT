@@ -19,7 +19,7 @@ Test(prepare_computations, precomputing_the_state_of_an_intersection)
 	for (int j = 0; j < 3; j++) {
 		cr_assert_float_eq(result->obj->m->c[j], i->obj->m->c[j], EPISLON);
 	}
-	float	expected[] = {0, 0, -1};
+	double	expected[] = {0, 0, -1};
 	for (int i = 0; i < 3; i++)
 	{
 		cr_assert_float_eq(result->eyev[i], expected[i], EPISLON);

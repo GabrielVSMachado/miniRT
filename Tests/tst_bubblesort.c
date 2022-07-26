@@ -15,7 +15,7 @@ Test(bubbleSort, expected_sorted_list_with_three_elements)
 	intersections(head, intersection(8, NULL));
 	bubblesort(head);
 	int i = 0;
-	float expected[] = {1, 2, 8};
+	double expected[] = {1, 2, 8};
 	for (t_intersect *tmp = head->fnode; tmp; tmp = tmp->next) {
 		cr_assert_float_eq(tmp->t, expected[i], EPISLON);
 		++i;
@@ -31,7 +31,7 @@ Test(bubblesort, expected_sorted_list_with_four)
 	intersections(head, intersection(6.5, NULL));
 	bubblesort(head);
 	int i = 0;
-	float expected[] = {4, 4.5, 5.5, 6.5};
+	double expected[] = {4, 4.5, 5.5, 6.5};
 	for (t_intersect *tmp = head->fnode; tmp; tmp = tmp->next) {
 		cr_assert_float_eq(tmp->t, expected[i], EPISLON);
 		++i;

@@ -62,8 +62,8 @@ Test(camera, constructing_a_ray_when_the_camera_is_transformed)
 	transform_camera(cam, matrices_product(rotation_y(M_PI_4),
 				translate(0, -2, 5)));
 	t_ray *r = ray_for_pixel(cam, 100, 50);
-	float	expected_direction[] = {M_SQRT2 / 2., 0, -M_SQRT2 / 2.};
-	float	expected_origin[] = {0, 2, -5};
+	double	expected_direction[] = {M_SQRT2 / 2., 0, -M_SQRT2 / 2.};
+	double	expected_origin[] = {0, 2, -5};
 	for (int i = 0; i < 3; ++i) {
 		cr_assert_float_eq(r->origin[i], expected_origin[i], EPISLON);
 		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);

@@ -12,7 +12,7 @@ Test(matrix, expected_a_square_matrix_4) {
 	t_tuple	t3 = tuple(9, 10, 11, 12);
 	t_tuple	t4 = tuple(13.5, 14.5, 15.5, 16.5);
 	t_matrix *M = matrix((t_tuple[]){t1, t2, t3, t4}, (unsigned int[]){4, 4});
-	float mt[4][4] = {{1., 2., 3., 4.},
+	double mt[4][4] = {{1., 2., 3., 4.},
 		{5.5, 6.5, 7.5, 8.5},
 		{9, 10, 11, 12},
 		{13.5, 14.5, 15.5, 16.5}};
@@ -29,7 +29,7 @@ Test(matrix, expected_a_square_matrix_2)
 	t_tuple	t1 = tuple(1, 2, 0, 0);
 	t_tuple	t2 = tuple(5.5, 6.5, 0, 0);
 	t_matrix	*M = matrix((t_tuple []){t1, t2}, (unsigned int[]){2, 2});
-	float mt[2][2] = {{1., 2.}, {5.5, 6.5}};
+	double mt[2][2] = {{1., 2.}, {5.5, 6.5}};
 	for (int i = 0; i < (int)M->shape[0]; i++) {
 		for (int j = 0; j < (int)M->shape[1]; j++) {
 			cr_assert_float_eq(mt[i][j], M->mtx[i][j], 0.00001);
@@ -44,7 +44,7 @@ Test(matrix, expected_a_square_matrix_3) {
 			tuple(1, 2, 3, 0),
 			tuple(4, 13.5, 5, 0)
 			}, (unsigned int[]){3, 3});
-	float	mt[3][3] = {{15.5, 14.5, 13.5}, {1, 2, 3}, {4, 13.5, 5}};
+	double	mt[3][3] = {{15.5, 14.5, 13.5}, {1, 2, 3}, {4, 13.5, 5}};
 	for (int i = 0; i < (int)M->shape[0]; i++) {
 		for (int j = 0; j < (int)M->shape[1]; j++) {
 			cr_assert_float_eq(mt[i][j], M->mtx[i][j], 0.00001);
@@ -200,8 +200,8 @@ Test(minor, expected_determinat_from_submatrix_of_A) {
 			tuple(2, -1, -7, 0),
 			tuple(6, -1, 5, 0)
 			}, (unsigned int []){3, 3});
-	float result = minor(A, 1, 0);
-	float expected_value = 25;
+	double result = minor(A, 1, 0);
+	double expected_value = 25;
 	cr_assert_float_eq(result, expected_value, 0.00001);
 	destroy_matrix(&A);
 }
@@ -212,8 +212,8 @@ Test(cofactor, expected_value_of_cofactor_of_A_0_0) {
 			tuple(2, -1, -7, 0),
 			tuple(6, -1, 5, 0)
 			}, (unsigned int []){3, 3});
-	float expected_value = -12;
-	float result = cofactor(A, 0, 0);
+	double expected_value = -12;
+	double result = cofactor(A, 0, 0);
 	cr_assert_float_eq(expected_value, result, 0.00001);
 	destroy_matrix(&A);
 }
@@ -224,8 +224,8 @@ Test(cofactor, expected_value_of_cofactor_of_A_1_0) {
 			tuple(2, -1, -7, 0),
 			tuple(6, -1, 5, 0)
 			}, (unsigned int []){3, 3});
-	float expected_value = -25;
-	float result = cofactor(A, 1, 0);
+	double expected_value = -25;
+	double result = cofactor(A, 1, 0);
 	cr_assert_float_eq(expected_value, result, 0.00001);
 	destroy_matrix(&A);
 }
@@ -236,8 +236,8 @@ Test(determinant, expected_the_determinat_of_matrix_A3) {
 			tuple(-5, 8, -4, 0),
 			tuple(2, 6, 4, 0)
 			}, (unsigned int []){3, 3});
-	float result = determinant(A);
-	float expected_value = -196;
+	double result = determinant(A);
+	double expected_value = -196;
 	cr_assert_float_eq(result, expected_value, 0.00001);
 	destroy_matrix(&A);
 }
@@ -249,8 +249,8 @@ Test(determinant, expected_the_determinat_of_matrix_A4) {
 			tuple(1, 2, -9, 6),
 			tuple(-6, 7, 7, -9)
 			}, (unsigned int []){4, 4});
-	float result = determinant(A);
-	float expected_value = -4071;
+	double result = determinant(A);
+	double expected_value = -4071;
 	cr_assert_float_eq(result, expected_value, 0.00001);
 	destroy_matrix(&A);
 }

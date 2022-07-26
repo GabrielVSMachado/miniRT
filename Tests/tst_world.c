@@ -36,6 +36,8 @@ static void	default_world(void)
 	s1->m->diffuse = 0.7;
 	s1->m->specular = 0.2;
 	set_transform(s2, scale(0.5, 0.5, 0.5));
+	s1->inverse_transform = inverse(s1->transform);
+	s2->inverse_transform = inverse(s2->transform);
 	intersections(head, intersection(0, s1));
 	intersections(head, intersection(0, s2));
 	world = init_world(light, head);
@@ -51,7 +53,7 @@ Test(world, intersect_world, .init=default_world, .fini=fini_world)
 {
 	t_ray	*r = ray(point(0, 0, -5), vector(0, 0, 1));
 	t_xs	*result = intersect_world(world, r);
-	float	expected_values[] = {4, 4.5, 5.5, 6};
+	double	expected_values[] = {4, 4.5, 5.5, 6};
 	t_intersect *tmp = result->fnode;
 	cr_assert_eq(result->count, 4);
 	for (int i = 0; i < 4; i++) {
@@ -66,7 +68,7 @@ Test(prepare_computations, shading_an_intersection, .init=default_world, .fini=f
 	t_intersect	*intersec = intersection(4, world->obj->fnode->obj);
 	struct s_comps *comps = prepare_computations(intersec, r);
 	t_color		c = shade_hit(world, comps);
-	float		expected[] = {0.38066, 0.47583, 0.2855};
+	double		expected[] = {0.38066, 0.47583, 0.2855};
 	for (int i = 0; i < 3; i++) {
 		cr_assert_float_eq(c[i], expected[i], EPISLON);
 	}
@@ -79,7 +81,7 @@ Test(prepare_computations, shading_an_intersection_from_inside, .init=default_wo
 	t_intersect	*intersec = intersection(0.5, world->obj->fnode->next->obj);
 	struct s_comps	*comps = prepare_computations(intersec, r);
 	t_color			result = shade_hit(world, comps);
-	float			expected[] = {0.90498, 0.90498, 0.90498};
+	double			expected[] = {0.90498, 0.90498, 0.90498};
 	for (int i = 0; i < 3; i++) {
 		cr_assert_float_eq(result[i], expected[i], EPISLON);
 	}
