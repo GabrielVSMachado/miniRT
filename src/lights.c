@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 16:20:48 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 18:41:13 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/24 13:43:55 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	destroy_used_memory(struct s_utils_lighting *util)
 	free(util->diffuse);
 	free(util->effective_color);
 	free(util->specular);
-	free(util->left);
-	free(util->right);
+	free(util->lightv);
+	free(util->reflectv);
 }
 
 static void	init_variables(struct s_utils_lighting *util, t_light *light,
 		struct s_material *material)
 {
-	util->left = NULL;
-	util->right = NULL;
+	util->lightv = NULL;
+	util->reflectv = NULL;
 	util->light_dot_normal = 0;
 	util->reflect_dot_eye = 0;
 	util->effective_color = color(
@@ -57,15 +57,15 @@ t_color	lighting(struct s_parameters_lighting *p)
 		return (color(p->m->ambient, p->m->ambient, p->m->ambient));
 	init_variables(&util, p->light, p->m);
 	tmp = sub_tuple(p->light->position, p->position);
-	util.left = normalize(tmp);
-	util.light_dot_normal = dot_product(util.left, p->eyev);
+	util.lightv = normalize(tmp);
+	util.light_dot_normal = dot_product(util.lightv, p->normalv);
 	if (free(tmp), util.light_dot_normal >= 0)
 	{
 		free(util.diffuse);
 		util.diffuse = scalar_multiplication(util.effective_color, p->m->diffuse * util.light_dot_normal);
-		tmp = negate_tuple(util.left);
-		util.right = reflect(tmp, p->normalv);
-		util.reflect_dot_eye = dot_product(util.right, p->eyev);
+		tmp = negate_tuple(util.lightv);
+		util.reflectv = reflect(tmp, p->normalv);
+		util.reflect_dot_eye = dot_product(util.reflectv, p->eyev);
 		if (util.reflect_dot_eye > 0)
 		{
 			free(util.specular);

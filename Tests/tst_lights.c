@@ -18,15 +18,15 @@ static void	destroy_used_memory(struct s_utils_lighting *util)
 	free(util->diffuse);
 	free(util->effective_color);
 	free(util->specular);
-	free(util->left);
-	free(util->right);
+	free(util->lightv);
+	free(util->reflectv);
 }
 
 static void	init_variables(struct s_utils_lighting *util, t_light *light,
 		struct s_material *material)
 {
-	util->left = NULL;
-	util->right = NULL;
+	util->lightv = NULL;
+	util->reflectv = NULL;
 	util->light_dot_normal = 0;
 	util->reflect_dot_eye = 0;
 	util->effective_color = color(
@@ -50,15 +50,15 @@ static inline t_color	lighting_(
 
 	init_variables(&util, l, m);
 	tmp = sub_tuple(l->position, position);
-	util.left = normalize(tmp);
-	util.light_dot_normal = dot_product(util.left, eye_normalv[1]);
+	util.lightv = normalize(tmp);
+	util.light_dot_normal = dot_product(util.lightv, eye_normalv[1]);
 	if (free(tmp), util.light_dot_normal >= 0)
 	{
 		free(util.diffuse);
 		util.diffuse = scalar_multiplication(util.effective_color, m->diffuse * util.light_dot_normal);
-		tmp = negate_tuple(util.left);
-		util.right = reflect(tmp, eye_normalv[1]);
-		util.reflect_dot_eye = dot_product(util.right, eye_normalv[0]);
+		tmp = negate_tuple(util.lightv);
+		util.reflectv = reflect(tmp, eye_normalv[1]);
+		util.reflect_dot_eye = dot_product(util.reflectv, eye_normalv[0]);
 		if (util.reflect_dot_eye > 0)
 		{
 			free(util.specular);

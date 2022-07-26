@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/21 23:24:26 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/25 21:13:49 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	cpyobjs(struct s_comps *comp, t_intersect *i)
 struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 {
 	struct s_comps	*comput;
+	t_tuple			tmp;
 
 	comput = malloc(sizeof(struct s_comps));
 	if (!comput)
@@ -52,10 +53,13 @@ struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 	comput->point = position(r, comput->t);
 	comput->eyev = negate_tuple(r->direction);
 	comput->normalv = normal_at(comput->obj, comput->point);
-	comput->inside = dot_product(comput->eyev, comput->normalv) < 0;
-	comput->normalv[0] += -2 * comput->normalv[0] * (comput->inside == true);
-	comput->normalv[1] += -2 * comput->normalv[1] * (comput->inside == true);
-	comput->normalv[2] += -2 * comput->normalv[2] * (comput->inside == true);
+	comput->inside = dot_product(comput->normalv, comput->eyev) < 0;
+	comput->normalv[0] += -2.0 * comput->normalv[0] * (comput->inside == true);
+	comput->normalv[1] += -2.0 * comput->normalv[1] * (comput->inside == true);
+	comput->normalv[2] += -2.0 * comput->normalv[2] * (comput->inside == true);
+	tmp = scalar_multiplication(comput->normalv, EPSILON);
+	comput->over_point = add_tuples(comput->point, tmp);
+	free(tmp);
 	return (comput);
 }
 
@@ -65,6 +69,7 @@ void	destroy_comps(struct s_comps **comps)
 	free((*comps)->eyev);
 	free((*comps)->point);
 	free((*comps)->normalv);
+	free((*comps)->over_point);
 	free(*comps);
 	*comps = NULL;
 }

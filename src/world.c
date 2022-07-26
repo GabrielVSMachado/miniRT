@@ -6,10 +6,11 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 18:45:18 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/25 19:24:38 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shadows.h"
 #include "world.h"
 #include "computations.h"
 #include "intersections.h"
@@ -62,7 +63,7 @@ t_color	shade_hit(struct s_world *w, struct s_comps *comps)
 			.position = comps->point,
 			.eyev = comps->eyev,
 			.normalv = comps->normalv,
-			.in_shadow = false})
+			.in_shadow = in_shadowed(w, comps->over_point)})
 			);
 }
 

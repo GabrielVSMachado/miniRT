@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:43:22 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 18:46:19 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/24 13:40:44 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ struct s_utils_lighting
 	t_color		diffuse;
 	t_color		specular;
 	t_color		effective_color;
-	t_vector	left;
-	t_vector	right;
+	t_vector	lightv;
+	t_vector	reflectv;
 	float		light_dot_normal;
 	float		reflect_dot_eye;
 };
