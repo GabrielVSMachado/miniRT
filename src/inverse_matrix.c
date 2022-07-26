@@ -39,7 +39,7 @@ t_matrix	*inverse(t_matrix *m)
 	t_matrix	*tcm;
 	t_matrix	*inversed;
 	int			i;
-	float		dtm;
+	double		dtm;
 
 	dtm = determinant(m);
 	if (!dtm)

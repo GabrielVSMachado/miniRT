@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:53:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/11 19:52:39 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/25 21:39:24 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 #include <stdlib.h>
 #include "intersections.h"
 
-static float	calc_discriminant(float constants[], t_ray *r)
+static double	calc_discriminant(double constants[], t_ray *r)
 {
-	float	a;
-	float	b;
-	float	c;
+	double	a;
+	double	b;
+	double	c;
 
 	a = dot_product(r->direction, r->direction);
 	b = 2 * dot_product(r->direction, r->origin);
@@ -33,15 +33,12 @@ static float	calc_discriminant(float constants[], t_ray *r)
 
 void	intersect(t_sphere *s, t_ray *r, t_xs *head)
 {
-	float		discriminant;
-	float		constants[2];
+	double		discriminant;
+	double		constants[2];
 	t_ray		*tmp;
-	t_matrix	*inv_sph_transform;
 
-	inv_sph_transform = inverse(s->transform);
-	tmp = transform(r, inv_sph_transform);
+	tmp = transform(r, s->inverse_transform);
 	discriminant = calc_discriminant(constants, tmp);
-	destroy_matrix(&inv_sph_transform);
 	destroy_ray(&tmp);
 	if (discriminant < 0)
 		return ;

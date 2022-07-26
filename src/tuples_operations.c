@@ -29,12 +29,12 @@ t_tuple	negate_tuple(t_tuple t)
 	return (tuple(-t[0], -t[1], -t[2], -t[3]));
 }
 
-t_tuple	scalar_multiplication(t_tuple t, float n)
+t_tuple	scalar_multiplication(t_tuple t, double n)
 {
 	return (tuple(t[0] * n, t[1] * n, t[2] * n, t[3] * n));
 }
 
-float	magnitude(t_tuple v)
+double	magnitude(t_tuple v)
 {
 	return (sqrtf(powf(v[0], 2) + powf(v[1], 2) + powf(v[2], 2)));
 }

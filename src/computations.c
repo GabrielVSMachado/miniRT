@@ -24,7 +24,7 @@ static void	cpyobjs(struct s_comps *comp, t_intersect *i)
 	comp->obj->m->diffuse = i->obj->m->diffuse;
 	comp->obj->m->shininess = i->obj->m->shininess;
 	comp->obj->m->specular = i->obj->m->specular;
-	ft_memcpy(comp->obj->m->c, i->obj->m->c, sizeof(float) * 4);
+	ft_memcpy(comp->obj->m->c, i->obj->m->c, sizeof(double) * 4);
 	counter = 0;
 	tmp = comp->obj->transform;
 	while (counter < i->obj->transform->shape[0])

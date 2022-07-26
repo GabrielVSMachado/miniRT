@@ -28,7 +28,7 @@ void	destroy_intersections(t_xs **head)
 	*head = NULL;
 }
 
-t_intersect	*intersection(float t, t_sphere *obj)
+t_intersect	*intersection(double t, t_sphere *obj)
 {
 	t_intersect	*result;
 

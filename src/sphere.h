@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 16:02:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 16:18:20 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/25 21:38:48 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef struct s_sphere
 {
 	t_matrix			*transform;
+	t_matrix			*inverse_transform;
 	struct s_material	*m;
 }	t_sphere;
 

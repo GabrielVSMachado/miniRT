@@ -17,7 +17,7 @@
 
 typedef struct s_intersect
 {
-	float				t;
+	double				t;
 	int					typeobj;
 	t_sphere			*obj;
 	struct s_intersect	*next;
@@ -37,7 +37,7 @@ enum	e_type_obj
 };
 
 void		intersect(t_sphere *s, t_ray *r, t_xs *head);
-t_intersect	*intersection(float t, t_sphere *obj);
+t_intersect	*intersection(double t, t_sphere *obj);
 void		intersections(t_xs *head, t_intersect *new);
 void		destroy_intersections(t_xs **head);
 t_intersect	*hit(t_xs *head);

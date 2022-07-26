@@ -18,6 +18,6 @@
 # include "intersections.h"
 
 t_vector	reflect(t_vector velocity, t_vector normal);
-bool		assert_float_eq(const float f1, const float f2);
+bool		assert_double_eq(const double f1, const double f2);
 void		bubblesort(t_xs *head);
 #endif

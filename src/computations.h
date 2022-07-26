@@ -20,7 +20,7 @@
 
 struct s_comps
 {
-	float		t;
+	double		t;
 	t_sphere	*obj;
 	t_point		point;
 	t_point		over_point;

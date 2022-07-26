@@ -49,17 +49,17 @@ bool	assert_t_matrix_eq(t_matrix const *m1, t_matrix const *m2)
 	{
 		j = -1;
 		while (++j < (int)m2->shape[1])
-			if (!assert_float_eq(m1->mtx[i][j], m2->mtx[i][j]))
+			if (!assert_double_eq(m1->mtx[i][j], m2->mtx[i][j]))
 				return (false);
 	}
 	return (true);
 }
 
-static float	calc_line_column_sigma(t_matrix const *m1,
+static double	calc_line_column_sigma(t_matrix const *m1,
 		t_matrix const *m2, int line, int column)
 {
 	int		i;
-	float	total;
+	double	total;
 
 	i = -1;
 	total = 0;

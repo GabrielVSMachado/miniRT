@@ -32,8 +32,8 @@ struct s_utils_lighting
 	t_color		effective_color;
 	t_vector	lightv;
 	t_vector	reflectv;
-	float		light_dot_normal;
-	float		reflect_dot_eye;
+	double		light_dot_normal;
+	double		reflect_dot_eye;
 };
 
 struct s_parameters_lighting

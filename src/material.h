@@ -18,10 +18,10 @@
 struct s_material
 {
 	t_color	c;
-	float	ambient;
-	float	diffuse;
-	float	specular;
-	float	shininess;
+	double	ambient;
+	double	diffuse;
+	double	specular;
+	double	shininess;
 };
 
 struct s_material	*material(void);

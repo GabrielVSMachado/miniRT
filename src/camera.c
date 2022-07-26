@@ -17,11 +17,11 @@
 #include <math.h>
 #include <stdlib.h>
 
-t_camera	*camera(int hsize, int vsize, float field_of_view)
+t_camera	*camera(int hsize, int vsize, double field_of_view)
 {
 	t_camera	*new;
-	float		half_view;
-	float		aspect;
+	double		half_view;
+	double		aspect;
 
 	new = (t_camera *)malloc(sizeof(struct s_camera));
 	if (!new)
@@ -30,7 +30,7 @@ t_camera	*camera(int hsize, int vsize, float field_of_view)
 	new->vsize = vsize;
 	new->field_of_view = field_of_view;
 	half_view = tanf(new->field_of_view / 2.);
-	aspect = (float)new->hsize / new->vsize;
+	aspect = (double)new->hsize / new->vsize;
 	new->half_heigh = (aspect >= 1) * (half_view / aspect)
 		+ (aspect < 1) * half_view;
 	new->half_width = (aspect >= 1) * half_view

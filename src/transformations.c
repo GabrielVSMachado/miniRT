@@ -38,7 +38,7 @@ t_matrix	*scale(t_cordinate x, t_cordinate y, t_cordinate z)
 	);
 }
 
-t_matrix	*rotation_x(float rd)
+t_matrix	*rotation_x(double rd)
 {
 	return (
 		matrix((t_tuple []){
@@ -50,7 +50,7 @@ t_matrix	*rotation_x(float rd)
 	);
 }
 
-t_matrix	*rotation_y(float rd)
+t_matrix	*rotation_y(double rd)
 {
 	return (
 		matrix((t_tuple []){
@@ -62,7 +62,7 @@ t_matrix	*rotation_y(float rd)
 	);
 }
 
-t_matrix	*rotation_z(float rd)
+t_matrix	*rotation_z(double rd)
 {
 	return (
 		matrix((t_tuple []){

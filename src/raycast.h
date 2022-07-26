@@ -24,7 +24,7 @@ typedef struct s_ray
 
 t_ray	*ray(t_point origin, t_vector direction);
 void	destroy_ray(t_ray	**r);
-t_point	position(t_ray const *r, const float t);
+t_point	position(t_ray const *r, const double t);
 t_ray	*transform(t_ray *r, t_matrix	*transform);
 t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t);
 #endif

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 15:58:14 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 16:18:55 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/25 21:40:05 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_sphere	*sphere(void)
 	if (!s)
 		return (NULL);
 	s->transform = identity();
+	s->inverse_transform = NULL;
 	s->m = material();
 	return (s);
 }

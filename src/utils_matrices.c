@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-float	determinant_2(t_matrix *m)
+double	determinant_2(t_matrix *m)
 {
 	return (m->mtx[0][0] * m->mtx[1][1] - m->mtx[1][0] * m->mtx[0][1]);
 }
@@ -49,10 +49,10 @@ t_matrix	*submatrix(t_matrix *m, int line, int column)
 	return (sub);
 }
 
-float	minor(t_matrix *m, int line, int column)
+double	minor(t_matrix *m, int line, int column)
 {
 	t_matrix	*tmp;
-	float		determinant;
+	double		determinant;
 
 	tmp = submatrix(m, line, column);
 	determinant = determinant_2(tmp);
@@ -60,9 +60,9 @@ float	minor(t_matrix *m, int line, int column)
 	return (determinant);
 }
 
-float	cofactor(t_matrix *m, int line, int column)
+double	cofactor(t_matrix *m, int line, int column)
 {
-	float		dtm_of_minor;
+	double		dtm_of_minor;
 	int			sum;
 	t_matrix	*tmp;
 
@@ -78,9 +78,9 @@ float	cofactor(t_matrix *m, int line, int column)
 	return (dtm_of_minor * !(sum % 2) - dtm_of_minor * (sum % 2));
 }
 
-float	determinant(t_matrix *m)
+double	determinant(t_matrix *m)
 {
-	float	dtm;
+	double	dtm;
 	int		j;
 
 	if (m->shape[0] == 2 && m->shape[1] == 2)

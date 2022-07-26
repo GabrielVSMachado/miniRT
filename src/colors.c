@@ -12,7 +12,7 @@
 
 #include "utils_colors.h"
 
-t_color	color(const float r, const float g, const float b)
+t_color	color(const double r, const double g, const double b)
 {
 	return (tuple(r, g, b, -1));
 }

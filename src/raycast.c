@@ -33,7 +33,7 @@ t_ray	*ray(t_point origin, t_vector direction)
 	return (r);
 }
 
-t_point	position(t_ray const *r, const float t)
+t_point	position(t_ray const *r, const double t)
 {
 	t_vector	tmp;
 	t_point		result;
@@ -46,7 +46,7 @@ t_point	position(t_ray const *r, const float t)
 
 t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t)
 {
-	float	tmp[4];
+	double	tmp[4];
 	int		row;
 	t_tuple	*mtx;
 

@@ -13,8 +13,8 @@
 #ifndef TUPLES_UTILS_H
 # define TUPLES_UTILS_H
 
-typedef float *			t_tuple;
-typedef const float		t_cordinate;
+typedef double *			t_tuple;
+typedef const double		t_cordinate;
 typedef t_tuple			t_point; // t_tuple with last value equal 1
 typedef t_tuple			t_vector; // t_tuple with last value equal 0
 
@@ -25,9 +25,9 @@ t_vector	vector(t_cordinate x, t_cordinate y, t_cordinate z);
 t_tuple		add_tuples(t_tuple t1, t_tuple t2);
 t_tuple		sub_tuple(t_tuple t1, t_tuple t2);
 t_tuple		negate_tuple(t_tuple t);
-t_tuple		scalar_multiplication(t_tuple t, float n);
+t_tuple		scalar_multiplication(t_tuple t, double n);
 t_vector	normalize(t_tuple t);
 t_vector	cross_product(t_vector v1, t_vector v2);
-float		magnitude(t_tuple v);
-float		dot_product(t_vector v1, t_vector v2);
+double		magnitude(t_tuple v);
+double		dot_product(t_vector v1, t_vector v2);
 #endif

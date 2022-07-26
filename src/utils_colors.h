@@ -17,7 +17,7 @@
 
 typedef t_tuple	t_color;
 
-t_color	color(const float r, const float g, const float b);
+t_color	color(const double r, const double g, const double b);
 t_color	add_colors(t_color c1, t_color c2);
 t_color	sub_colors(t_color c1, t_color c2);
 t_color	colors_product(t_color c1, t_color c2);
