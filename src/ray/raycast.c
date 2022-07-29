@@ -6,13 +6,13 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 14:54:51 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/11 15:00:35 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:37:25 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raycast.h"
-#include "tuples_utils.h"
 #include <stdlib.h>
+#include "../vectors/vectors.h"
 
 void	destroy_ray(t_ray **r)
 {
@@ -42,24 +42,6 @@ t_point	position(t_ray const *r, const double t)
 	result = add_tuples(tmp, r->origin);
 	free(tmp);
 	return (result);
-}
-
-t_tuple	prod_matrix_tuple(t_matrix *m, t_tuple t)
-{
-	double	tmp[4];
-	int		row;
-	t_tuple	*mtx;
-
-	row = -1;
-	mtx = m->mtx;
-	while (++row < 4)
-	{
-		tmp[row] = mtx[row][0] * t[0]
-			+ mtx[row][1] * t[1]
-			+ mtx[row][2] * t[2]
-			+ mtx[row][3] * t[3];
-	}
-	return (tuple(tmp[0], tmp[1], tmp[2], tmp[3]));
 }
 
 t_ray	*transform(t_ray *r, t_matrix *t)

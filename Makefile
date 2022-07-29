@@ -24,6 +24,7 @@ override LDFLAGS = -L$(MINILBXDIR) -L$(LIBFTDIR)
 override define VPATH
 	$(SRCDIR)
 	$(SRCDIR)/vectors
+	$(SRCDIR)/ray
 	$(TESTDIR)
 endef
 
@@ -37,6 +38,7 @@ override define SRC
 	determinants_and_cofactors.c
 	inverse_matrix.c
 	transformations.c
+	raycast.c
 endef
 
 override define SRC_TEST
@@ -45,6 +47,7 @@ override define SRC_TEST
 	tst_matrix.c
 	tst_tranformations.c
 	utils_tests.c
+	tst_raycast.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

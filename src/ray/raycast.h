@@ -6,15 +6,14 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 14:50:57 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/11 16:06:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:38:06 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYCAST_H
 # define RAYCAST_H
 
-# include "tuples_utils.h"
-# include "matrix.h"
+# include "../vectors/vectors.h"
 
 typedef struct s_ray
 {
