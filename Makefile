@@ -25,6 +25,7 @@ override define VPATH
 	$(SRCDIR)
 	$(SRCDIR)/vectors
 	$(SRCDIR)/ray
+	$(SRCDIR)/canvas
 	$(TESTDIR)
 endef
 
@@ -39,6 +40,8 @@ override define SRC
 	inverse_matrix.c
 	transformations.c
 	raycast.c
+	canvas.c
+	colors.c
 endef
 
 override define SRC_TEST
@@ -48,6 +51,7 @@ override define SRC_TEST
 	tst_tranformations.c
 	utils_tests.c
 	tst_raycast.c
+	tst_canvas.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

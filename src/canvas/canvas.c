@@ -6,14 +6,13 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 20:45:42 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 11:20:29 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/29 19:55:24 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "utils_canvas.h"
 #include <stdlib.h>
-#include "utils_colors.h"
+#include "canvas.h"
 
 struct s_canvas	*canvas(int width, int height)
 {
@@ -22,8 +21,7 @@ struct s_canvas	*canvas(int width, int height)
 	img = malloc(sizeof(struct s_canvas));
 	if (!img)
 		return (NULL);
-	img->img = ft_memset(malloc(sizeof(unsigned int) * width * height),
-			0, sizeof(unsigned int) * width * height);
+	img->img = ft_calloc(sizeof(unsigned int), width * height);
 	if (!img->img)
 	{
 		free(img);

@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "../src/utils_canvas.h"
+#include "../src/canvas/canvas.h"
 #include <stdio.h>
 
 Test(write_pixel, expected_the_pixel_with_color_red) {
