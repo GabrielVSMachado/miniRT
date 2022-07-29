@@ -6,13 +6,13 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:07:06 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/05/30 15:07:07 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/28 23:33:22 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples_utils.h"
 #include <stdlib.h>
 #include <math.h>
+#include "vectors.h"
 
 t_tuple	add_tuples(t_tuple t1, t_tuple t2)
 {
@@ -36,5 +36,5 @@ t_tuple	scalar_multiplication(t_tuple t, double n)
 
 double	magnitude(t_tuple v)
 {
-	return (sqrtf(powf(v[0], 2) + powf(v[1], 2) + powf(v[2], 2)));
+	return (sqrt(pow(v[0], 2) + pow(v[1], 2) + pow(v[2], 2)));
 }

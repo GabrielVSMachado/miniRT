@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 15:56:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/28 23:49:45 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/28 00:04:23 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/28 22:43:33 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#ifndef UTILS_H
+# define UTILS_H
 
-t_xs	*init_xs(void)
+struct s_utils_submatrix
 {
-	t_xs	*head;
+	int				line;
+	int				column;
+	unsigned int	s_line;
+	unsigned int	s_col;
+};
 
-	head = malloc(sizeof(struct s_xs));
-	if (!head)
-		return (NULL);
-	head->count = 0;
-	head->fnode = NULL;
-	return (head);
-}
+#endif

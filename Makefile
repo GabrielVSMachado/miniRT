@@ -23,55 +23,28 @@ override LDFLAGS = -L$(MINILBXDIR) -L$(LIBFTDIR)
 
 override define VPATH
 	$(SRCDIR)
+	$(SRCDIR)/vectors
 	$(TESTDIR)
 endef
 
 override define SRC
 	main.c
 	tuples.c
-	render.c
 	tuples_operations.c
-	cross_product_tuples.c
-	view_transformation.c
-	colors.c
-	canvas.c
-	computations.c
 	matrix.c
-	utils.c
-	utils_matrices.c
+	matrices_operations.c
+	more_tuples_operations.c
+	determinants_and_cofactors.c
 	inverse_matrix.c
 	transformations.c
-	shearing.c
-	raycast.c
-	sphere.c
-	intersections.c
-	utils_intersection.c
-	reflection.c
-	lights.c
-	material.c
-	world.c
-	bubblesort.c
-	camera.c
-	shadows.c
 endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
-	tst_view_transformation.c
-	tst_computations.c
 	tst_tuples.c
-	tst_bubblesort.c
-	tst_colors.c
-	tst_canvas.c
 	tst_matrix.c
 	tst_tranformations.c
-	tst_raycast.c
-	tst_normals.c
-	tst_reflection.c
-	tst_lights.c
-	tst_world.c
-	tst_camera.c
-	tst_shadows.c
+	utils_tests.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

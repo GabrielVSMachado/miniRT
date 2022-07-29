@@ -1,6 +1,6 @@
 #include <criterion/criterion.h>
 #include <criterion/internal/assert.h>
-#include "../src/tuples_utils.h"
+#include "../src/vectors/vectors.h"
 #include <math.h>
 
 #define EPSILON 0.00001
