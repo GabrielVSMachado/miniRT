@@ -59,169 +59,162 @@ Test(position, expected_position_4f5_3_4, .init=init_position, .fini=finish){
 	}
 }
 
-// static	t_sphere	*s;
-// static	t_xs		*head;
+#include "../src/intersections/intersections.h"
 
-// void	init_intersect(void){
-// 	s = sphere();
-// 	s->inverse_transform = inverse(s->transform);
-// 	head = malloc(sizeof(struct s_xs));
-// 	head->count = 0;
-// 	head->fnode = NULL;
-// }
+static	t_obj	*s;
+static struct s_intersect	*head;
 
-// void	finish_intersect(void) {
-// 	if (r)
-// 		destroy_ray(&r);
-// 	destroy_intersections(&head);
-// }
+void	init_intersect(void){
+	s = new_object(SPHERE);
+	s->inversed_transform = inverse(s->transform);
+	head = NULL;
+}
 
-// Test(intersect, expected_values_4_and_6_in_struct_xs, .init=init_intersect,.fini=finish_intersect){
-// 	r = ray(point(0, 0, -5), vector(0, 0, 1));
-// 	intersect(s, r, head);
-// 	cr_assert_eq(head->count, 2);
-// 	cr_assert_float_eq(head->fnode->t, 4.0, EPISLON);
-// 	cr_assert_float_eq(head->fnode->next->t, 6.0, EPISLON);
-// }
+void	finish_intersect(void) {
+	if (r)
+		destroy_ray(&r);
+	destroy_intersect(&head);
+}
 
-// Test(intersect, ray_instersects_a_sphere_at_a_tangent, .init=init_intersect, .fini=finish_intersect) {
-// 	r = ray(point(0, 1, -5), vector(0, 0, 1));
-// 	intersect(s, r, head);
-// 	cr_assert_float_eq(head->fnode->t, 5.0, EPISLON);
-// 	cr_assert_null(head->fnode->next);
-// }
+Test(intersect, expected_values_4_and_6_in_struct_xs, .init=init_intersect,.fini=finish_intersect){
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	add_back(&head, intersect(s, r));
+	cr_assert_float_eq(head->t, 4.0, EPISLON);
+	cr_assert_float_eq(head->next->t, 6.0, EPISLON);
+}
 
-// Test(intersect, ray_misses_a_sphere, .init=init_intersect, .fini=finish_intersect) {
-// 	r = ray(point(0, 2, -5), vector(0, 0, 1));
-// 	intersect(s, r, head);
-// 	cr_assert_null(head->fnode);
-// }
+Test(intersect, ray_instersects_a_sphere_at_a_tangent, .init=init_intersect, .fini=finish_intersect) {
+	r = ray(point(0, 1, -5), vector(0, 0, 1));
+	add_back(&head, intersect(s, r));
+	cr_assert_float_eq(head->t, 5.0, EPISLON);
+	cr_assert_null(head->next);
+}
 
-// Test(intersect, ray_originates_inside_a_sphere, .init=init_intersect, .fini=finish_intersect) {
-// 	r = ray(point(0, 0, 0), vector(0, 0, 1));
-// 	intersect(s, r, head);
-// 	cr_assert_eq(head->count, 2);
-// 	cr_assert_float_eq(head->fnode->t, -1.0, EPISLON);
-// 	cr_assert_float_eq(head->fnode->next->t, 1.0, EPISLON);
-// }
+Test(intersect, ray_misses_a_sphere, .init=init_intersect, .fini=finish_intersect) {
+	r = ray(point(0, 2, -5), vector(0, 0, 1));
+	add_back(&head, intersect(s, r));
+	cr_assert_null(head);
+}
 
-// Test(intersect, ray_originates_after_a_sphere, .init=init_intersect, .fini=finish_intersect) {
-// 	r = ray(point(0, 0, 5), vector(0, 0, 1));
-// 	intersect(s, r, head);
-// 	cr_assert_float_eq(head->fnode->t, -6.0, EPISLON);
-// 	cr_assert_float_eq(head->fnode->next->t, -4.0, EPISLON);
-// }
+Test(intersect, ray_originates_inside_a_sphere, .init=init_intersect, .fini=finish_intersect) {
+	r = ray(point(0, 0, 0), vector(0, 0, 1));
+	add_back(&head, intersect(s, r));
+	cr_assert_float_eq(head->t, -1.0, EPISLON);
+	cr_assert_float_eq(head->next->t, 1.0, EPISLON);
+}
 
-// Test(intersections, expected_a_list_with_two_intersections,
-// 		.init=init_intersect, .fini=finish_intersect) {
-// 	t_sphere	*s2 = sphere();
-// 	s2->inverse_transform = inverse(s2->transform);
-// 	intersections(head, intersection(1.0, s));
-// 	intersections(head, intersection(2.5, s2));
-// 	cr_assert_not_null(head->fnode);
-// 	cr_assert_not_null(head->fnode->next);
-// }
+Test(intersect, ray_originates_after_a_sphere, .init=init_intersect, .fini=finish_intersect) {
+	r = ray(point(0, 0, 5), vector(0, 0, 1));
+	add_back(&head, intersect(s, r));
+	cr_assert_float_eq(head->t, -6.0, EPISLON);
+	cr_assert_float_eq(head->next->t, -4.0, EPISLON);
+}
 
-// Test(hit, expected_the_first_value_of_the_list, .init=init_intersect, .fini=finish_intersect) {
-// 	intersections(head, intersection(1.0, s));
-// 	intersections(head, intersection(2.0, s));
-// 	t_intersect	*result = hit(head);
-// 	cr_assert_float_eq(result->t, 1.0, EPISLON);
-// }
+Test(intersections, expected_a_list_with_two_intersections,
+		.init=init_intersect, .fini=finish_intersect) {
+	t_obj	*s2 = new_object(SPHERE);
+	s2->inversed_transform = inverse(s2->transform);
+	add_back(&head, new_intersect(1.0, s));
+	add_back(&head, new_intersect(2.5, s2));
+	cr_assert_not_null(head);
+	cr_assert_not_null(head->next);
+}
 
-// Test(hit, expected_the_second_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
-// 	intersections(head, intersection(-1.0, s));
-// 	intersections(head, intersection(1.0, s));
-// 	t_intersect	*result = hit(head);
-// 	cr_assert_float_eq(result->t, 1.0, EPISLON);
-// }
+Test(hit, expected_the_first_value_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	add_back(&head, new_intersect(1.0, s));
+	add_back(&head, new_intersect(2.0, s));
+	struct s_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 1.0, EPISLON);
+}
 
-// Test(hit, expected_the_last_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
-// 	intersections(head, intersection(-1.0, s));
-// 	intersections(head, intersection(-2.0, s));
-// 	t_intersect	*result = hit(head);
-// 	cr_assert_null(result);
-// }
+Test(hit, expected_the_second_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	add_back(&head, new_intersect(-1.0, s));
+	add_back(&head, new_intersect(1.0, s));
+	struct s_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 1.0, EPISLON);
+}
 
-// Test(hit, hit_the_lowest_non_negative, .init=init_intersect, .fini=finish_intersect) {
-// 	intersections(head, intersection(4.0, s));
-// 	intersections(head, intersection(5.0, s));
-// 	intersections(head, intersection(-1.0, s));
-// 	intersections(head, intersection(3.0, s));
-// 	t_intersect	*result = hit(head);
-// 	cr_assert_float_eq(result->t, 3.0, EPISLON);
-// }
+Test(hit, expected_the_last_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
+	add_back(&head, new_intersect(-1.0, s));
+	add_back(&head, new_intersect(-2.0, s));
+	struct s_intersect	*result = hit(head);
+	cr_assert_null(result);
+}
 
-// static t_ray	*r;
+Test(hit, hit_the_lowest_non_negative, .init=init_intersect, .fini=finish_intersect) {
+	add_back(&head, new_intersect(4.0, s));
+	add_back(&head, new_intersect(5.0, s));
+	add_back(&head, new_intersect(-1.0, s));
+	add_back(&head, new_intersect(3.0, s));
+	struct s_intersect	*result = hit(head);
+	cr_assert_float_eq(result->t, 3.0, EPISLON);
+}
 
-// void	init_raytranform(void) {
-// 	r = ray(point(1, 2, 3), vector(0, 1, 0));
-// }
+static t_ray	*r;
 
-// void	fini_raytransform(void) {
-// 	destroy_ray(&r);
-// }
+void	init_raytranform(void) {
+	r = ray(point(1, 2, 3), vector(0, 1, 0));
+}
 
-// Test(transform_ray, translating_ray, .init=init_raytranform, .fini=fini_raytransform) {
-// 	t_matrix	*t = translate(3, 4, 5);
-// 	t_ray		*result = transform(r, t);
-// 	t_point		expected_value =  point(4, 6, 8);
-// 	for (int i = 0; i < 3; i++) {
-// 		cr_assert_float_eq(result->origin[i], expected_value[i], EPISLON);
-// 	}
-// 	destroy_matrix(&t);
-// 	destroy_ray(&result);
-// }
+void	fini_raytransform(void) {
+	destroy_ray(&r);
+}
 
-// Test(transform_ray, scaling_ray, .init=init_raytranform, .fini=fini_raytransform)
-// {
-// 	t_matrix	*t = scale(2, 3, 4);
-// 	t_ray		*result = transform(r, t);
-// 	t_ray		*expected_value = ray(point(2, 6, 12), vector(0, 3, 0));
-// 	for (int i = 0; i < 3; i++) {
-// 		cr_assert_float_eq(result->origin[i],
-// 				expected_value->origin[i], EPISLON);
-// 		cr_assert_float_eq(result->direction[i],
-// 				expected_value->direction[i], EPISLON);
-// 	}
-// 	destroy_matrix(&t);
-// 	destroy_ray(&result);
-// 	destroy_ray(&expected_value);
-// }
+Test(transform_ray, translating_ray, .init=init_raytranform, .fini=fini_raytransform) {
+	t_matrix	*t = translate(3, 4, 5);
+	t_ray		*result = transform(r, t);
+	t_point		expected_value =  point(4, 6, 8);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result->origin[i], expected_value[i], EPISLON);
+	}
+	free(t);
+	destroy_ray(&result);
+}
 
-// void	init_final_intersect(void) {
-// 	r = ray(point(0, 0, -5), vector(0, 0, 1));
-// 	s = sphere();
-// 	s->inverse_transform = inverse(s->transform);
-// 	head = malloc(sizeof(struct s_xs));
-// 	head->count = 0;
-// 	head->fnode = NULL;
-// }
+Test(transform_ray, scaling_ray, .init=init_raytranform, .fini=fini_raytransform)
+{
+	t_matrix	*t = scale(2, 3, 4);
+	t_ray		*result = transform(r, t);
+	t_ray		*expected_value = ray(point(2, 6, 12), vector(0, 3, 0));
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(result->origin[i], expected_value->origin[i], EPISLON);
+		cr_assert_float_eq(result->direction[i], expected_value->direction[i], EPISLON);
+	}
+	free(t);
+	destroy_ray(&result);
+	destroy_ray(&expected_value);
+}
 
-// void	fini_final_intersect(void) {
-// 	destroy_sphere(&s);
-// 	destroy_ray(&r);
-// 	destroy_intersections(&head);
-// 	r = NULL;
-// 	s = NULL;
-// 	head = NULL;
-// }
+void	init_final_intersect(void) {
+	r = ray(point(0, 0, -5), vector(0, 0, 1));
+	s = new_object(SPHERE);
+	s->inversed_transform = inverse(s->transform);
+	head = NULL;
+}
 
-// Test(fina_intersect, intersecting_a_scaled_sphere_with_a_ray, .init=init_final_intersect,
-// 		.fini=fini_final_intersect) {
-// 	set_transform(s, scale(2, 2, 2));
-// 	s->inverse_transform = inverse(s->transform);
-// 	intersect(s, r, head);
-// 	cr_assert_eq(head->count, 2);
-// 	cr_assert_float_eq(head->fnode->t, 3., EPISLON);
-// 	cr_assert_float_eq(head->fnode->next->t, 7., EPISLON);
-// }
+void	fini_final_intersect(void) {
+	destroy_ray(&r);
+	destroy_intersect(&head);
+	r = NULL;
+	s = NULL;
+	head = NULL;
+}
 
-// Test(fina_intersect, intersecting_a_translated_sphere_with_a_ray, .init=init_final_intersect,
-// 		.fini=fini_final_intersect) {
-// 	set_transform(s, translate(5, 0, 0));
-// 	s->inverse_transform = inverse(s->transform);
-// 	intersect(s, r, head);
-// 	cr_assert_eq(head->count, 0);
-// 	cr_assert_null(head->fnode);
-// }
+Test(fina_intersect, intersecting_a_scaled_sphere_with_a_ray, .init=init_final_intersect,
+		.fini=fini_final_intersect) {
+	calc_linear_transformation(s, scale(2, 2, 2));
+	free(s->inversed_transform);
+	s->inversed_transform = inverse(s->transform);
+	head = intersect(s, r);
+	cr_assert_float_eq(head->t, 3., EPISLON);
+	cr_assert_float_eq(head->next->t, 7., EPISLON);
+}
+
+Test(fina_intersect, intersecting_a_translated_sphere_with_a_ray, .init=init_final_intersect,
+		.fini=fini_final_intersect) {
+	calc_linear_transformation(s, translate(5, 0, 0));
+	free(s->inversed_transform);
+	s->inversed_transform = inverse(s->transform);
+	head = intersect(s, r);
+	cr_assert_null(head);
+}

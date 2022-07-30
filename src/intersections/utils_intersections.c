@@ -1,42 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_intersection.c                               :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 21:19:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/05 22:44:59 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:21:16 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "intersections.h"
 #include <stdlib.h>
 
-void	destroy_intersections(t_xs **head)
+void	destroy_intersect(struct s_intersect **head)
 {
-	t_intersect	*tmp;
+	struct s_intersect	*tmp;
 
-	while (*head && (*head)->fnode)
+	while (*head)
 	{
-		tmp = (*head)->fnode->next;
-		free((*head)->fnode);
-		(*head)->fnode = NULL;
-		(*head)->fnode = tmp;
+		tmp = (*head)->next;
+		if ((*head)->next)
+		{
+			if ((*head)->obj != (*head)->next->obj)
+				destroy_object(&(*head)->obj);
+		}
+		else
+			destroy_object(&(*head)->obj);
+		free(*head);
+		*head = NULL;
+		*head = tmp;
 	}
-	free(*head);
-	*head = NULL;
 }
 
-t_intersect	*intersection(double t, t_sphere *obj)
+struct s_intersect	*new_intersect(double t, t_obj *obj)
 {
-	t_intersect	*result;
+	struct s_intersect	*result;
 
-	result = malloc(sizeof(t_intersect));
+	result = malloc(sizeof(struct s_intersect));
 	if (!result)
 		return (NULL);
 	result->t = t;
 	result->obj = obj;
 	result->next = NULL;
 	return (result);
+}
+
+static struct s_intersect	*last_instersection(struct s_intersect *head)
+{
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
+void	add_back(struct s_intersect **head, struct s_intersect *new)
+{
+	if (!*head)
+		*head = new;
+	else
+		last_instersection(*head)->next = new;
 }

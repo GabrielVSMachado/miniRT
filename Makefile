@@ -28,6 +28,7 @@ override define VPATH
 	$(SRCDIR)/canvas
 	$(SRCDIR)/camera
 	$(SRCDIR)/objects
+	$(SRCDIR)/intersections
 	$(TESTDIR)
 endef
 
@@ -47,6 +48,8 @@ override define SRC
 	camera.c
 	object.c
 	material.c
+	intersections.c
+	utils.c
 endef
 
 override define SRC_TEST

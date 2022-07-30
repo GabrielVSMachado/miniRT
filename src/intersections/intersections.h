@@ -6,40 +6,28 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:54:19 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/06/16 22:23:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 18:22:34 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERSECTIONS_H
 # define INTERSECTIONS_H
 
-# include "sphere.h"
+# include "../objects/object.h"
+# include "../ray/raycast.h"
 
-typedef struct s_intersect
+struct s_intersect
 {
 	double				t;
-	int					typeobj;
-	t_sphere			*obj;
+	t_obj				*obj;
 	struct s_intersect	*next;
-}	t_intersect;
-
-typedef struct s_xs
-{
-	unsigned int		count;
-	struct s_intersect	*fnode;
-}	t_xs;
-
-enum	e_type_obj
-{
-	PLANE = 1,
-	SPHERE,
-	CYLINDER
 };
 
-void		intersect(t_sphere *s, t_ray *r, t_xs *head);
-t_intersect	*intersection(double t, t_sphere *obj);
-void		intersections(t_xs *head, t_intersect *new);
-void		destroy_intersections(t_xs **head);
-t_intersect	*hit(t_xs *head);
-t_xs		*init_xs(void);
+struct s_intersect	*intersect(t_obj *obj, t_ray *r);
+struct s_intersect	*new_intersect(double t, t_obj *obj);
+void				add_back(
+						struct s_intersect **head, struct s_intersect *new
+						);
+void				destroy_intersect(struct s_intersect **head);
+struct s_intersect	*hit(struct s_intersect *head);
 #endif
