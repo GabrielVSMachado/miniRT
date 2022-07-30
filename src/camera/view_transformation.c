@@ -6,39 +6,45 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 12:03:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/17 12:20:20 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 12:39:18 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "matrix.h"
-#include "tuples_utils.h"
-#include "view_transformation.h"
 #include <stdlib.h>
+#include "camera.h"
+
+static inline void	destroy_utils(struct s_utils_view_transformation *ut)
+{
+	free(ut->orientation);
+	free(ut->translation);
+	free(ut->left);
+	free(ut->true_up);
+	free(ut->forward);
+}
 
 t_matrix	*view_transformation(t_point from, t_point to, t_vector up)
 {
-	struct s_utils_view_transformation	utils;
+	struct s_utils_view_transformation	ut;
 	t_vector							tmp;
 
 	tmp = sub_tuple(to, from);
-	utils.forward = normalize(tmp);
+	ut.forward = normalize(tmp);
 	free(tmp);
 	tmp = normalize(up);
-	utils.left = cross_product(utils.forward, tmp);
+	ut.left = cross_product(ut.forward, tmp);
 	free(tmp);
-	utils.true_up = cross_product(utils.left, utils.forward);
-	tmp = utils.forward;
-	utils.forward = negate_tuple(utils.forward);
+	ut.true_up = cross_product(ut.left, ut.forward);
+	tmp = ut.forward;
+	ut.forward = negate_tuple(ut.forward);
 	free(tmp);
-	utils.orientation = matrix(
-			(t_tuple []){utils.left, utils.true_up, utils.forward,
-			tuple(0, 0, 0, 1)},
-			(unsigned int []){4, 4}
-			);
-	utils.translation = translate(-from[0], -from[1], -from[2]);
-	utils.view_transformed = matrices_product(
-			utils.orientation, utils.translation);
-	destroy_matrix(&utils.orientation);
-	destroy_matrix(&utils.translation);
-	return (utils.view_transformed);
+	ut.orientation = matrix((double [][4]){
+		{ut.left[0], ut.left[1], ut.left[2], ut.left[3]},
+		{ut.true_up[0], ut.true_up[1], ut.true_up[2], ut.true_up[3]},
+		{ut.forward[0], ut.forward[1], ut.forward[2], ut.forward[3]},
+		{0, 0, 0, 1}
+		}, (unsigned int []){4, 4});
+	ut.translation = translate(-from[0], -from[1], -from[2]);
+	ut.view_transformed = matrices_product(ut.orientation, ut.translation);
+	destroy_utils(&ut);
+	return (ut.view_transformed);
 }

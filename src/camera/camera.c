@@ -6,14 +6,11 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:30:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/17 15:40:04 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 12:39:04 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "camera.h"
-#include "matrix.h"
-#include "raycast.h"
-#include "tuples_utils.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -45,11 +42,11 @@ void	transform_camera(t_camera *cam, t_matrix *tranform)
 	t_matrix	*tmp;
 
 	tmp = matrices_product(tranform, cam->tranform);
-	destroy_matrix(&cam->tranform);
+	free(cam->tranform);
 	cam->tranform = tmp;
 }
 
-static t_tuple	fn(t_matrix *m, t_tuple toclean)
+inline static t_tuple	fn(t_matrix *m, t_tuple toclean)
 {
 	t_tuple	result;
 
@@ -63,12 +60,12 @@ t_ray	*ray_for_pixel(t_camera *cam, int x, int y)
 	t_tuple		pixel;
 	t_point		origin;
 	t_vector	direction;
-	t_matrix	*tmp;
+	t_matrix	*inversed_transform;
 	t_point		util;
 
-	tmp = inverse(cam->tranform);
-	origin = fn(tmp, point(0, 0, 0));
-	pixel = fn(tmp,
+	inversed_transform = inverse(cam->tranform);
+	origin = fn(inversed_transform, point(0, 0, 0));
+	pixel = fn(inversed_transform,
 			point(
 				cam->half_width - (x + 0.5) * cam->pixel_size,
 				cam->half_heigh - (y + 0.5) * cam->pixel_size,
@@ -79,6 +76,13 @@ t_ray	*ray_for_pixel(t_camera *cam, int x, int y)
 	direction = normalize(util);
 	free(util);
 	free(pixel);
-	destroy_matrix(&tmp);
+	free(inversed_transform);
 	return (ray(origin, direction));
+}
+
+void	destroy_camera(t_camera **cam)
+{
+	free((*cam)->tranform);
+	free((*cam));
+	*cam = NULL;
 }
