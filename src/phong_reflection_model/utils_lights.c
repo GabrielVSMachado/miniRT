@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reflection.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/02 13:54:00 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 15:10:11 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/07/30 18:24:24 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/07/30 18:24:48 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tuples_utils.h"
+#include "lights.h"
 #include <stdlib.h>
 
-t_vector	reflect(t_vector velocity, t_vector normal)
+t_light	*point_light(t_color intensity, t_point position)
 {
-	t_tuple		tmp;
-	t_vector	result;
+	t_light	*l;
 
-	tmp = scalar_multiplication(normal, 2. * dot_product(velocity, normal));
-	result = sub_tuple(velocity, tmp);
-	free(tmp);
-	return (result);
+	l = malloc(sizeof(struct s_point_light));
+	if (!l)
+		return (NULL);
+	l->intensity = intensity;
+	l->position = position;
+	return (l);
+}
+
+void	destroy_light(t_light **l)
+{
+	if (*l)
+	{
+		free((*l)->intensity);
+		free((*l)->position);
+		free(*l);
+		*l = NULL;
+	}
 }

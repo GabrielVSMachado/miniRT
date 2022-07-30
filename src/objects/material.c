@@ -6,12 +6,12 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 20:55:33 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/02 20:56:04 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 17:48:41 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "object.h"
 #include <stdlib.h>
-#include "material.h"
 
 struct s_material	*material(void)
 {

@@ -6,17 +6,16 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 15:43:22 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/24 13:40:44 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 19:14:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIGHTS_H
 # define LIGHTS_H
 
-# include "tuples_utils.h"
-# include "utils_colors.h"
-# include "material.h"
 # include <stdbool.h>
+# include "../canvas/canvas.h"
+# include "../vectors/vectors.h"
 
 typedef struct s_point_light
 {
@@ -38,7 +37,7 @@ struct s_utils_lighting
 
 struct s_parameters_lighting
 {
-	struct s_material	*m;
+	struct s_material	*material;
 	t_light				*light;
 	t_point				position;
 	t_vector			eyev;
@@ -46,8 +45,9 @@ struct s_parameters_lighting
 	bool				in_shadow;	
 };
 
-t_light				*point_light(t_color intensity, t_point position);
-void				destroy_light(t_light **l);
-t_color				lighting(struct s_parameters_lighting *p);
+void		destroy_light(t_light **l);
+t_vector	reflect(t_vector velocity, t_vector normal);
+t_light		*point_light(t_color intensity, t_point position);
+t_color		lighting(struct s_parameters_lighting *p);
 
 #endif
