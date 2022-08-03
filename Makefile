@@ -30,6 +30,7 @@ override define VPATH
 	$(SRCDIR)/objects
 	$(SRCDIR)/intersections
 	$(SRCDIR)/phong_reflection_model
+	$(SRCDIR)/world
 	$(TESTDIR)
 endef
 
@@ -53,6 +54,9 @@ override define SRC
 	utils_intersections.c
 	utils_lights.c
 	lights.c
+	world.c
+	bubblesort.c
+	computations.c
 endef
 
 override define SRC_TEST
@@ -65,7 +69,11 @@ override define SRC_TEST
 	tst_canvas.c
 	tst_camera.c
 	tst_normals.c
+	tst_reflection.c
+	tst_colors.c
 	tst_lights.c
+	tst_world.c
+	tst_computations.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

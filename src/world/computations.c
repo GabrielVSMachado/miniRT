@@ -6,25 +6,27 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/25 21:13:49 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:29:04 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sphere.h"
-#include "world.h"
-#include <ft_string.h>
 #include <stdlib.h>
+#include "../vectors/vectors.h"
+#include "../intersections/intersections.h"
 
-static void	cpyobjs(struct s_comps *comp, t_intersect *i)
+static void	cpyobjs(struct s_comps *comp, struct s_intersect *i)
 {
 	unsigned int		counter;
 	t_matrix			*tmp;
 
-	comp->obj->m->ambient = i->obj->m->ambient;
-	comp->obj->m->diffuse = i->obj->m->diffuse;
-	comp->obj->m->shininess = i->obj->m->shininess;
-	comp->obj->m->specular = i->obj->m->specular;
-	ft_memcpy(comp->obj->m->c, i->obj->m->c, sizeof(double) * 4);
+	comp->obj->material->ambient = i->obj->material->ambient;
+	comp->obj->material->diffuse = i->obj->material->diffuse;
+	comp->obj->material->shininess = i->obj->material->shininess;
+	comp->obj->material->specular = i->obj->material->specular;
+	comp->obj->material->c[0] = i->obj->material->c[0];
+	comp->obj->material->c[1] = i->obj->material->c[1];
+	comp->obj->material->c[2] = i->obj->material->c[2];
+	comp->obj->material->c[3] = i->obj->material->c[3];
 	counter = 0;
 	tmp = comp->obj->transform;
 	while (counter < i->obj->transform->shape[0])
@@ -37,9 +39,10 @@ static void	cpyobjs(struct s_comps *comp, t_intersect *i)
 	}
 	tmp->shape[0] = i->obj->transform->shape[0];
 	tmp->shape[1] = i->obj->transform->shape[1];
+	comp->obj->inversed_transform = inverse(comp->obj->transform);
 }
 
-struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
+struct s_comps	*prepare_computations(struct s_intersect *i, t_ray *r)
 {
 	struct s_comps	*comput;
 	t_tuple			tmp;
@@ -48,7 +51,7 @@ struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 	if (!comput)
 		return (NULL);
 	comput->t = i->t;
-	comput->obj = sphere();
+	comput->obj = new_object(i->obj->type);
 	cpyobjs(comput, i);
 	comput->point = position(r, comput->t);
 	comput->eyev = negate_tuple(r->direction);
@@ -65,7 +68,7 @@ struct s_comps	*prepare_computations(t_intersect *i, t_ray *r)
 
 void	destroy_comps(struct s_comps **comps)
 {
-	destroy_sphere(&(*comps)->obj);
+	destroy_object(&(*comps)->obj);
 	free((*comps)->eyev);
 	free((*comps)->point);
 	free((*comps)->normalv);
