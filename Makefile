@@ -31,6 +31,7 @@ override define VPATH
 	$(SRCDIR)/intersections
 	$(SRCDIR)/phong_reflection_model
 	$(SRCDIR)/world
+	$(SRCDIR)/shadows
 	$(TESTDIR)
 endef
 
@@ -57,6 +58,7 @@ override define SRC
 	world.c
 	bubblesort.c
 	computations.c
+	shadows.c
 endef
 
 override define SRC_TEST
@@ -72,6 +74,7 @@ override define SRC_TEST
 	tst_reflection.c
 	tst_colors.c
 	tst_lights.c
+	tst_shadows.c
 	tst_world.c
 	tst_computations.c
 endef

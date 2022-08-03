@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/02 22:54:21 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/02 23:04:31 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../phong_reflection_model/lights.h"
 #include "../ray/raycast.h"
 #include "../intersections/intersections.h"
-#include "world.h"
+#include "../shadows/shadows.h"
 
 struct s_world	*init_world(t_light *light, struct s_intersect *head)
 {
@@ -39,7 +39,7 @@ t_color	shade_hit(struct s_world *w, struct s_comps *comps)
 			.position = comps->point,
 			.eyev = comps->eyev,
 			.normalv = comps->normalv,
-			.in_shadow = false})
+			.in_shadow = in_shadowed(w, comps->over_point)})
 			);
 }
 
