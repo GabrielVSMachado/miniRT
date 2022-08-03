@@ -2,7 +2,8 @@
 #include <criterion/internal/test.h>
 #include <math.h>
 #include <stdlib.h>
-#include "../src/miniRT.h"
+#include "../src/vectors/vectors.h"
+#include "../src/phong_reflection_model/lights.h"
 
 #define EPISLON 0.00001
 

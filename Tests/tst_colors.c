@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "../src/utils_colors.h"
+#include "../src/canvas/canvas.h"
 
 Test(colors, expected_tuple_with_values_of_colors) {
 	t_color	cr = color(-0.1, 0.4, 0.7);

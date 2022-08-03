@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_intersections.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 21:19:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 18:21:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/07/30 23:56:44 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,7 @@ void	destroy_intersect(struct s_intersect **head)
 	while (*head)
 	{
 		tmp = (*head)->next;
-		if ((*head)->next)
-		{
-			if ((*head)->obj != (*head)->next->obj)
-				destroy_object(&(*head)->obj);
-		}
-		else
-			destroy_object(&(*head)->obj);
+		destroy_object(&(*head)->obj);
 		free(*head);
 		*head = NULL;
 		*head = tmp;

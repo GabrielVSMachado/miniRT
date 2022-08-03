@@ -2,8 +2,10 @@
 #include <criterion/internal/assert.h>
 #include <criterion/internal/test.h>
 #include <stdio.h>
+#include "../src/intersections/intersections.h"
 #include <stdlib.h>
 #include "../src/ray/raycast.h"
+#include "utils.h"
 
 # define  EPISLON 0.00001
 
@@ -59,7 +61,6 @@ Test(position, expected_position_4f5_3_4, .init=init_position, .fini=finish){
 	}
 }
 
-#include "../src/intersections/intersections.h"
 
 static	t_obj	*s;
 static struct s_intersect	*head;
@@ -122,30 +123,30 @@ Test(intersections, expected_a_list_with_two_intersections,
 
 Test(hit, expected_the_first_value_of_the_list, .init=init_intersect, .fini=finish_intersect) {
 	add_back(&head, new_intersect(1.0, s));
-	add_back(&head, new_intersect(2.0, s));
+	add_back(&head, new_intersect(2.0, cpyobj(s)));
 	struct s_intersect	*result = hit(head);
 	cr_assert_float_eq(result->t, 1.0, EPISLON);
 }
 
 Test(hit, expected_the_second_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
 	add_back(&head, new_intersect(-1.0, s));
-	add_back(&head, new_intersect(1.0, s));
+	add_back(&head, new_intersect(1.0, cpyobj(s)));
 	struct s_intersect	*result = hit(head);
 	cr_assert_float_eq(result->t, 1.0, EPISLON);
 }
 
 Test(hit, expected_the_last_node_of_the_list, .init=init_intersect, .fini=finish_intersect) {
 	add_back(&head, new_intersect(-1.0, s));
-	add_back(&head, new_intersect(-2.0, s));
+	add_back(&head, new_intersect(-2.0, cpyobj(s)));
 	struct s_intersect	*result = hit(head);
 	cr_assert_null(result);
 }
 
 Test(hit, hit_the_lowest_non_negative, .init=init_intersect, .fini=finish_intersect) {
 	add_back(&head, new_intersect(4.0, s));
-	add_back(&head, new_intersect(5.0, s));
-	add_back(&head, new_intersect(-1.0, s));
-	add_back(&head, new_intersect(3.0, s));
+	add_back(&head, new_intersect(5.0, cpyobj(s)));
+	add_back(&head, new_intersect(-1.0, cpyobj(s)));
+	add_back(&head, new_intersect(3.0, cpyobj(s)));
 	struct s_intersect	*result = hit(head);
 	cr_assert_float_eq(result->t, 3.0, EPISLON);
 }

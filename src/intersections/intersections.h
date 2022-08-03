@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:54:19 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 18:22:34 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/02 22:26:55 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../objects/object.h"
 # include "../ray/raycast.h"
+# include "../world/world.h"
 
 struct s_intersect
 {
@@ -28,6 +29,7 @@ struct s_intersect	*new_intersect(double t, t_obj *obj);
 void				add_back(
 						struct s_intersect **head, struct s_intersect *new
 						);
-void				destroy_intersect(struct s_intersect **head);
 struct s_intersect	*hit(struct s_intersect *head);
+void				bubblesort(struct s_intersect *head);
+void				destroy_intersect(struct s_intersect **head);
 #endif
