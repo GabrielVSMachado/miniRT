@@ -6,61 +6,50 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:04:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 23:00:23 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:16:12 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "intersections.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
-static struct s_intersect	*get_prev(
-	struct s_intersect *head, struct s_intersect **node)
+static void	swap(struct s_intersect **p, struct s_intersect **n)
 {
-	while (head != *node && head->next != *node)
-		head = head->next;
-	return (head);
-}
+	t_obj	*tmpo;
+	double	tmpd;
 
-static void	swap(struct s_intersect **p, struct s_intersect **n,
-	struct s_intersect *head)
-{
-	struct s_intersect	*prev;
-	struct s_intersect	*tmp;
-
-	prev = get_prev(head, p);
-	if (prev != *p)
-	{
-		tmp = (*n)->next;
-		(*n)->next = *p;
-		prev->next = *n;
-		(*p)->next = tmp;
-	}
-	else
-	{
-		tmp = (*n)->next;
-		(*n)->next = *p;
-		(*p)->next = tmp;
-	}
+	tmpd = (*p)->t;
+	tmpo = (*p)->obj;
+	(*p)->t = (*n)->t;
+	(*p)->obj = (*n)->obj;
+	(*n)->t = tmpd;
+	(*n)->obj = tmpo;
 }
 
 void	bubblesort(struct s_intersect *head)
 {
 	bool				swaped;
 	struct s_intersect	*tmp;
+	struct s_intersect	*lptr;
 
+	if (!head)
+		return ;
 	swaped = true;
+	lptr = NULL;
 	while (swaped)
 	{
 		swaped = false;
 		tmp = head;
-		while (tmp)
+		while (tmp->next != lptr)
 		{
-			if (tmp->next && tmp->t > tmp->next->t)
+			if (tmp->t > tmp->next->t)
 			{
-				swap(&tmp, &tmp->next, head);
+				swap(&tmp, &tmp->next);
 				swaped = true;
 			}
 			tmp = tmp->next;
 		}
+		lptr = tmp;
 	}
 }

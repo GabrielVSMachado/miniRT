@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../src/view_transformation.h"
+# include "../src/camera/camera.h"
+#include "utils.h"
 
 static t_point from, to;
 static t_vector up;
@@ -12,8 +13,8 @@ static t_matrix *result, *expected;
 
 void fini_view(void)
 {
-	destroy_matrix(&result);
-	destroy_matrix(&expected);
+	free(result);
+	free(expected);
 	free(from);
 	free(to);
 	free(up);
@@ -32,7 +33,7 @@ Test(view_transformation,
 	up = vector(0, 1, 0);
 	result = view_transformation(from, to, up);
 	expected = identity();
-	cr_assert(assert_t_matrix_eq(result, expected) == true);
+	cr_assert(assert_matrices(result->mtx, expected->mtx, expected->shape) == true);
 }
 
 Test(view_transformation,
@@ -44,7 +45,7 @@ Test(view_transformation,
 	up = vector(0, 1, 0);
 	result = view_transformation(from, to, up);
 	expected = scale(-1, 1, -1);
-	cr_assert(assert_t_matrix_eq(result, expected) == true);
+	cr_assert(assert_matrices(result->mtx, expected->mtx, expected->shape) == true);
 }
 
 Test(view_transformation,
@@ -55,7 +56,7 @@ Test(view_transformation,
 	up = vector(0, 1, 0);
 	result = view_transformation(from, to, up);
 	expected = translate(0, 0, -8);
-	cr_assert(assert_t_matrix_eq(result, expected) == true);
+	cr_assert(assert_matrices(result->mtx, expected->mtx, expected->shape) == true);
 }
 
 Test(view_transformation,
@@ -65,11 +66,11 @@ Test(view_transformation,
 	to = point(4, -2, 8);
 	up = vector(1, 1, 0);
 	result = view_transformation(from, to, up);
-	expected = matrix((t_tuple []){
-			tuple(-0.50709, 0.50709, 0.67612, -2.36643),
-			tuple(0.76772, 0.60609, 0.12122, -2.82843),
-			tuple(-0.35857, 0.59761, -0.71714, 0.0),
-			tuple(0, 0, 0, 1)
+	expected = matrix((double [][4]){
+			{-0.50709, 0.50709, 0.67612, -2.36643},
+			{0.76772, 0.60609, 0.12122, -2.82843},
+			{-0.35857, 0.59761, -0.71714, 0.0},
+			{0, 0, 0, 1}
 			}, (unsigned int []){4, 4});
-	cr_assert(assert_t_matrix_eq(result, expected) == true);
+	cr_assert(assert_matrices(result->mtx, expected->mtx, expected->shape) == true);
 }

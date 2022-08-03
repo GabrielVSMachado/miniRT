@@ -42,8 +42,8 @@ t_matrix	*rotation_x(double rd)
 	return (
 		matrix((double [][4]){
 		{1, 0, 0, 0},
-		{0, cosf(rd), -sinf(rd), 0},
-		{0, sinf(rd), cosf(rd), 0},
+		{0, cos(rd), -sin(rd), 0},
+		{0, sin(rd), cos(rd), 0},
 		{0, 0, 0, 1}
 	}, (unsigned int []){4, 4})
 	);
@@ -53,9 +53,9 @@ t_matrix	*rotation_y(double rd)
 {
 	return (
 		matrix((double [][4]){
-		{cosf(rd), 0, sinf(rd), 0},
+		{cos(rd), 0, sin(rd), 0},
 		{0, 1, 0, 0},
-		{-sinf(rd), 0, cosf(rd), 0},
+		{-sin(rd), 0, cos(rd), 0},
 		{0, 0, 0, 1}
 	}, (unsigned int []){4, 4})
 	);
@@ -65,8 +65,8 @@ t_matrix	*rotation_z(double rd)
 {
 	return (
 		matrix((double [][4]){
-		{cosf(rd), -sinf(rd), 0, 0},
-		{sinf(rd), cosf(rd), 0, 0},
+		{cos(rd), -sin(rd), 0, 0},
+		{sin(rd), cos(rd), 0, 0},
 		{0, 0, 1, 0},
 		{0, 0, 0, 1}
 	}, (unsigned int []){4, 4})

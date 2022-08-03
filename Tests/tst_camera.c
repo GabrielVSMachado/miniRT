@@ -32,44 +32,45 @@ Test(camera, the_pixel_size_for_a_vertical_canvas)
 	destroy_camera(&result);
 }
 
-// Test(camera, constructing_a_ray_through_the_center_of_the_canvas)
-// {
-// 	t_camera	*cam = camera(201, 101, M_PI_2);
-// 	t_ray		*r = ray_for_pixel(cam, 100, 50);
-// 	t_tuple		expected_direction = vector(0, 0, -1);
-// 	for (int i = 0; i < 3; i++) {
-// 		cr_assert_float_eq(r->origin[i], 0, EPISLON);
-// 		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
-// 	}
-// 	destroy_matrix(&cam->tranform);
-// 	destroy_ray(&r);
-// 	free(expected_direction);
-// }
+Test(camera, constructing_a_ray_through_the_center_of_the_canvas)
+{
+	t_camera	*cam = camera(201, 101, M_PI_2);
+	t_ray		*r = ray_for_pixel(cam, 100, 50);
+	t_tuple		expected_direction = vector(0, 0, -1);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(r->origin[i], 0, EPISLON);
+		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
+	}
+	destroy_camera(&cam);
+	destroy_ray(&r);
+	free(expected_direction);
+}
 
-// Test(camera, constructing_a_ray_through_a_corner_of_the_canvas)
-// {
-// 	t_camera	*cam = camera(201, 101, M_PI_2);
-// 	t_ray		*r = ray_for_pixel(cam, 0, 0);
-// 	t_tuple		expected_direction = vector(0.66519, 0.33259, -0.66851);
-// 	for (int i = 0; i < 3; i++) {
-// 		cr_assert_float_eq(r->origin[i], 0, EPISLON);
-// 		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
-// 	}
-// 	destroy_matrix(&cam->tranform);
-// 	destroy_ray(&r);
-// 	free(expected_direction);
-// }
+Test(camera, constructing_a_ray_through_a_corner_of_the_canvas)
+{
+	t_camera	*cam = camera(201, 101, M_PI_2);
+	t_ray		*r = ray_for_pixel(cam, 0, 0);
+	t_tuple		expected_direction = vector(0.66519, 0.33259, -0.66851);
+	for (int i = 0; i < 3; i++) {
+		cr_assert_float_eq(r->origin[i], 0, EPISLON);
+		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
+	}
+	destroy_camera(&cam);
+	destroy_ray(&r);
+	free(expected_direction);
+}
 
-// Test(camera, constructing_a_ray_when_the_camera_is_transformed)
-// {
-// 	t_camera	*cam = camera(201, 101, M_PI_2);
-// 	transform_camera(cam, matrices_product(rotation_y(M_PI_4),
-// 				translate(0, -2, 5)));
-// 	t_ray *r = ray_for_pixel(cam, 100, 50);
-// 	double	expected_direction[] = {M_SQRT2 / 2., 0, -M_SQRT2 / 2.};
-// 	double	expected_origin[] = {0, 2, -5};
-// 	for (int i = 0; i < 3; ++i) {
-// 		cr_assert_float_eq(r->origin[i], expected_origin[i], EPISLON);
-// 		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
-// 	}
-// }
+Test(camera, constructing_a_ray_when_the_camera_is_transformed)
+{
+	t_camera	*cam = camera(201, 101, M_PI_2);
+	transform_camera(cam, matrices_product(rotation_y(M_PI_4),
+				translate(0, -2, 5)));
+	t_ray *r = ray_for_pixel(cam, 100, 50);
+	double	expected_direction[] = {M_SQRT2 / 2., 0, -M_SQRT2 / 2.};
+	double	expected_origin[] = {0, 2, -5};
+	for (int i = 0; i < 3; ++i) {
+		cr_assert_float_eq(r->origin[i], expected_origin[i], EPISLON);
+		cr_assert_float_eq(r->direction[i], expected_direction[i], EPISLON);
+	}
+	destroy_camera(&cam);
+}

@@ -1,7 +1,7 @@
 override NAME = miniRT
 TEST = test
 RM = rm -rf
-override CFLAGS = -Wall -Wextra -Werror -g
+override CFLAGS = -Wall -Wextra -Werror -O3
 override CC = gcc
 
 # Libft submodule
@@ -59,6 +59,8 @@ override define SRC
 	bubblesort.c
 	computations.c
 	shadows.c
+	view_transformation.c
+	render.c
 endef
 
 override define SRC_TEST
@@ -77,6 +79,8 @@ override define SRC_TEST
 	tst_shadows.c
 	tst_world.c
 	tst_computations.c
+	tst_view_transformation.c
+	tst_bubblesort.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

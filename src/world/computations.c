@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 23:29:04 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/08 22:46:56 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 
 static void	cpyobjs(struct s_comps *comp, struct s_intersect *i)
 {
-	unsigned int		counter;
-	t_matrix			*tmp;
-
 	comp->obj->material->ambient = i->obj->material->ambient;
 	comp->obj->material->diffuse = i->obj->material->diffuse;
 	comp->obj->material->shininess = i->obj->material->shininess;
@@ -27,19 +24,9 @@ static void	cpyobjs(struct s_comps *comp, struct s_intersect *i)
 	comp->obj->material->c[1] = i->obj->material->c[1];
 	comp->obj->material->c[2] = i->obj->material->c[2];
 	comp->obj->material->c[3] = i->obj->material->c[3];
-	counter = 0;
-	tmp = comp->obj->transform;
-	while (counter < i->obj->transform->shape[0])
-	{
-		tmp->mtx[counter][0] = i->obj->transform->mtx[counter][0];
-		tmp->mtx[counter][1] = i->obj->transform->mtx[counter][1];
-		tmp->mtx[counter][2] = i->obj->transform->mtx[counter][2];
-		tmp->mtx[counter][3] = i->obj->transform->mtx[counter][3];
-		++counter;
-	}
-	tmp->shape[0] = i->obj->transform->shape[0];
-	tmp->shape[1] = i->obj->transform->shape[1];
-	comp->obj->inversed_transform = inverse(comp->obj->transform);
+	cpymatrices(comp->obj->transform, i->obj->transform);
+	comp->obj->inversed_transform = malloc(sizeof(t_matrix));
+	cpymatrices(comp->obj->inversed_transform, i->obj->inversed_transform);
 }
 
 struct s_comps	*prepare_computations(struct s_intersect *i, t_ray *r)

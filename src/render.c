@@ -6,13 +6,12 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 22:41:35 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/23 18:36:22 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/03 00:21:32 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
-#include "utils_canvas.h"
 #include <stdlib.h>
+#include "miniRT.h"
 
 struct s_canvas	*render(t_camera *cam, struct s_world *w)
 {

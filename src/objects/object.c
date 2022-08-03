@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 14:05:40 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/08 22:22:15 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	calc_linear_transformation(t_obj *obj, t_matrix *transform)
 {
 	t_matrix	*new_linear_transform;
 
-	new_linear_transform = matrices_product(obj->transform, transform);
+	new_linear_transform = matrices_product(transform, obj->transform);
 	free(obj->transform);
 	free(transform);
 	obj->transform = new_linear_transform;

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:53:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/02 22:56:02 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/08 22:46:34 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,25 @@
 #include "../ray/raycast.h"
 #include "../world/world.h"
 
+void	cpymatrices(t_matrix *dst, t_matrix *src)
+{
+	int	counter;
+
+	counter = -1;
+	while (++counter < (int)src->shape[0])
+	{
+		dst->mtx[counter][0] = src->mtx[counter][0];
+		dst->mtx[counter][1] = src->mtx[counter][1];
+		dst->mtx[counter][2] = src->mtx[counter][2];
+		dst->mtx[counter][3] = src->mtx[counter][3];
+	}
+	dst->shape[0] = src->shape[0];
+	dst->shape[1] = src->shape[1];
+}
+
 static t_obj	*cpyobj(t_obj *src)
 {
 	t_obj	*cpy;
-	int		counter;
 
 	cpy = new_object(src->type);
 	cpy->material->ambient = src->material->ambient;
@@ -30,17 +45,9 @@ static t_obj	*cpyobj(t_obj *src)
 	cpy->material->c[1] = src->material->c[1];
 	cpy->material->c[2] = src->material->c[2];
 	cpy->material->c[3] = src->material->c[3];
-	counter = -1;
-	while (++counter < (int)src->transform->shape[0])
-	{
-		cpy->transform->mtx[counter][0] = src->transform->mtx[counter][0];
-		cpy->transform->mtx[counter][1] = src->transform->mtx[counter][1];
-		cpy->transform->mtx[counter][2] = src->transform->mtx[counter][2];
-		cpy->transform->mtx[counter][3] = src->transform->mtx[counter][3];
-	}
-	cpy->transform->shape[0] = src->transform->shape[0];
-	cpy->transform->shape[1] = src->transform->shape[1];
-	cpy->inversed_transform = inverse(cpy->transform);
+	cpymatrices(cpy->transform, src->transform);
+	cpy->inversed_transform = malloc(sizeof(t_matrix));
+	cpymatrices(cpy->inversed_transform, src->inversed_transform);
 	return (cpy);
 }
 
@@ -51,7 +58,7 @@ static double	calc_discriminant(double *a, double *b, t_ray *r)
 	*a = dot_product(r->direction, r->direction);
 	*b = 2 * dot_product(r->direction, r->origin);
 	c = dot_product(r->origin, r->origin) - 1;
-	return (powf(*b, 2) - 4 * (*a) * c);
+	return (pow(*b, 2) - 4 * (*a) * c);
 }
 
 // TODO: Thinking as solve de problem to destroy objects without create copys
@@ -69,7 +76,7 @@ struct s_intersect	*intersect(t_obj *obj, t_ray *r)
 	destroy_ray(&tmp);
 	if (discriminant < 0)
 		return (NULL);
-	discriminant = sqrtf(discriminant);
+	discriminant = sqrt(discriminant);
 	add_back(&head, new_intersect((-b - discriminant) / (2 * a), cpyobj(obj)));
 	if (discriminant)
 		add_back(&head, new_intersect(

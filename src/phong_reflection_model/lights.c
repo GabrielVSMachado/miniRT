@@ -76,7 +76,7 @@ static void	calc_diffuse_and_specular(struct s_utils_lighting *util,
 		free(util->specular);
 		util->specular = scalar_multiplication(
 				p->light->intensity,
-				powf(util->reflect_dot_eye, p->material->shininess)
+				pow(util->reflect_dot_eye, p->material->shininess)
 				* p->material->specular
 				);
 	}
