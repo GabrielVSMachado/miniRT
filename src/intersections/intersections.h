@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:54:19 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/08 22:44:23 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:44:34 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct s_intersect
 	struct s_intersect	*next;
 };
 
+t_obj				*cpyobj(t_obj *src);
 void				cpymatrices(t_matrix *dst, t_matrix *src);
 struct s_intersect	*intersect(t_obj *obj, t_ray *r);
 struct s_intersect	*new_intersect(double t, t_obj *obj);

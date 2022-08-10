@@ -6,12 +6,13 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:16:29 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:38:42 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "object.h"
 #include <stdlib.h>
+#include "../intersections/intersections.h"
 
 t_obj	*new_object(unsigned int type)
 {
@@ -28,6 +29,11 @@ t_obj	*new_object(unsigned int type)
 	{
 		new->_normal_at = plane_normal_at;
 		new->_intersect = plane_intersect;
+	}
+	else if (type == SPHERE)
+	{
+		new->_intersect = intersect;
+		new->_normal_at = normal_at;
 	}
 	return (new);
 }

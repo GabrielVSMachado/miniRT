@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:53:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/08 22:46:34 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:44:23 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	cpymatrices(t_matrix *dst, t_matrix *src)
 	dst->shape[1] = src->shape[1];
 }
 
-static t_obj	*cpyobj(t_obj *src)
+t_obj	*cpyobj(t_obj *src)
 {
 	t_obj	*cpy;
 
@@ -48,6 +48,8 @@ static t_obj	*cpyobj(t_obj *src)
 	cpymatrices(cpy->transform, src->transform);
 	cpy->inversed_transform = malloc(sizeof(t_matrix));
 	cpymatrices(cpy->inversed_transform, src->inversed_transform);
+	cpy->_intersect = src->_intersect;
+	cpy->_normal_at = src->_normal_at;
 	return (cpy);
 }
 
