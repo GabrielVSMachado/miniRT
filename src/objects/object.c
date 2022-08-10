@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/08 22:22:15 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/09 23:16:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ t_obj	*new_object(unsigned int type)
 	new->transform = identity();
 	new->inversed_transform = NULL;
 	new->material = material();
+	if (type == PLANE)
+	{
+		new->_normal_at = plane_normal_at;
+		new->_intersect = plane_intersect;
+	}
 	return (new);
 }
 
