@@ -6,11 +6,10 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:53:29 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:44:23 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/12 00:39:14 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
 #include <stdlib.h>
 #include "intersections.h"
 #include "../ray/raycast.h"
@@ -48,41 +47,21 @@ t_obj	*cpyobj(t_obj *src)
 	cpymatrices(cpy->transform, src->transform);
 	cpy->inversed_transform = malloc(sizeof(t_matrix));
 	cpymatrices(cpy->inversed_transform, src->inversed_transform);
-	cpy->_intersect = src->_intersect;
-	cpy->_normal_at = src->_normal_at;
+	cpy->local_intersect = src->local_intersect;
+	cpy->local_normal_at = src->local_normal_at;
 	return (cpy);
 }
 
-static double	calc_discriminant(double *a, double *b, t_ray *r)
-{
-	double	c;
-
-	*a = dot_product(r->direction, r->direction);
-	*b = 2 * dot_product(r->direction, r->origin);
-	c = dot_product(r->origin, r->origin) - 1;
-	return (pow(*b, 2) - 4 * (*a) * c);
-}
-
-// TODO: Thinking as solve de problem to destroy objects without create copys
 struct s_intersect	*intersect(t_obj *obj, t_ray *r)
 {
-	double				discriminant;
-	double				a;
-	double				b;
-	t_ray				*tmp;
+	t_ray				*transformed_ray;
 	struct s_intersect	*head;
 
-	head = NULL;
-	tmp = transform(r, obj->inversed_transform);
-	discriminant = calc_discriminant(&a, &b, tmp);
-	destroy_ray(&tmp);
-	if (discriminant < 0)
+	if (!obj->inversed_transform)
 		return (NULL);
-	discriminant = sqrt(discriminant);
-	add_back(&head, new_intersect((-b - discriminant) / (2 * a), cpyobj(obj)));
-	if (discriminant)
-		add_back(&head, new_intersect(
-				(-b + discriminant) / (2 * a), cpyobj(obj)));
+	transformed_ray = transform(r, obj->inversed_transform);
+	head = obj->local_intersect(obj, transformed_ray);
+	destroy_ray(&transformed_ray);
 	return (head);
 }
 
@@ -103,4 +82,25 @@ struct s_intersect	*hit(struct s_intersect *head)
 	if (lower_non_negative->t < 0)
 		return (NULL);
 	return (lower_non_negative);
+}
+
+t_vector	normal_at(t_obj *obj, t_point p)
+{
+	t_point		local_point;
+	t_vector	local_normal;
+	t_matrix	*transposed_inverse;
+	t_vector	world_normal;
+	t_tuple		tmp;
+
+	local_point = prod_matrix_tuple(obj->inversed_transform, p);
+	local_normal = obj->local_normal_at(obj, local_point);
+	transposed_inverse = tranposing(obj->inversed_transform);
+	tmp = prod_matrix_tuple(transposed_inverse, local_normal);
+	world_normal = normalize(tmp);
+	free(local_point);
+	free(local_normal);
+	free(transposed_inverse);
+	free(tmp);
+	world_normal[3] = 0;
+	return (world_normal);
 }

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:31:53 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:34:08 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,9 @@ struct s_intersect	*intersect_world(struct s_world *world, t_ray *r)
 	tmp = world->intersections;
 	while (tmp)
 	{
-		add_back(&head, tmp->obj->_intersect(tmp->obj, r));
+		add_back(&head, intersect(tmp->obj, r));
 		tmp = tmp->next;
 	}
-	bubblesort(head);
 	return (head);
 }
 

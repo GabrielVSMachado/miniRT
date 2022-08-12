@@ -28,7 +28,7 @@ Test(plane_intersect, intersect_with_a_ray_parallel_to_the_plane)
 {
 	t_obj	*p	= new_object(PLANE);
 	t_ray	*r = ray(point(0, 10, 0), vector(0, 0, 1));
-	struct s_intersect	*head = p->_intersect(p, r);
+	struct s_intersect	*head = p->local_intersect(p, r);
 	cr_assert_null(head);
 	destroy_object(&p);
 	destroy_ray(&r);
@@ -38,7 +38,7 @@ Test(plane_intersect, intersect_with_a_coplanar_ray)
 {
 	t_obj	*p	= new_object(PLANE);
 	t_ray	*r = ray(point(0, 0, 0), vector(0, 0, 1));
-	struct s_intersect	*head = p->_intersect(p, r);
+	struct s_intersect	*head = p->local_intersect(p, r);
 	cr_assert_null(head);
 	destroy_object(&p);
 	destroy_ray(&r);
@@ -47,8 +47,9 @@ Test(plane_intersect, intersect_with_a_coplanar_ray)
 Test(plane_intersect, a_ray_intersect_the_plane_from_above)
 {
 	t_obj	*p = new_object(PLANE);
+	p->inversed_transform = identity();
 	t_ray	*r = ray(point(0, 1, 0), vector(0, -1, 0));
-	struct s_intersect	*head = p->_intersect(p, r);
+	struct s_intersect	*head = p->local_intersect(p, r);
 	cr_assert_float_eq(head->t, 1., EPISLON);
 	cr_assert_eq(head->obj->type, PLANE);
 	assert_matrices(p->transform->mtx, head->obj->transform->mtx, p->transform->shape);
@@ -64,8 +65,9 @@ Test(plane_intersect, a_ray_intersect_the_plane_from_above)
 Test(plane_intersect, a_ray_intersect_the_plane_from_below)
 {
 	t_obj	*p = new_object(PLANE);
+	p->inversed_transform = identity();
 	t_ray	*r = ray(point(0, -1, 0), vector(0, 1, 0));
-	struct s_intersect	*head = p->_intersect(p, r);
+	struct s_intersect	*head = p->local_intersect(p, r);
 	cr_assert_float_eq(head->t, 1., EPISLON);
 	cr_assert_eq(head->obj->type, PLANE);
 	assert_matrices(p->transform->mtx, head->obj->transform->mtx, p->transform->shape);

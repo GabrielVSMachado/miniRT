@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:44:01 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:27:13 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ struct s_comps	*prepare_computations(struct s_intersect *i, t_ray *r)
 	comput->obj = cpyobj(i->obj);
 	comput->point = position(r, comput->t);
 	comput->eyev = negate_tuple(r->direction);
-	comput->normalv = comput->obj->_normal_at(comput->obj, comput->point);
+	comput->normalv = normal_at(i->obj, comput->point);
 	comput->inside = dot_product(comput->normalv, comput->eyev) < 0;
 	comput->normalv[0] += -2.0 * comput->normalv[0] * (comput->inside == true);
 	comput->normalv[1] += -2.0 * comput->normalv[1] * (comput->inside == true);

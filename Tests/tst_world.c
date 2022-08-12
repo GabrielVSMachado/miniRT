@@ -49,17 +49,17 @@ Test(world, default_world, .init=default_world, .fini=fini_world) {
 	cr_assert_not_null(world->light_src);
 }
 
-Test(world, intersect_world, .init=default_world, .fini=fini_world)
-{
-	t_ray	*r = ray(point(0, 0, -5), vector(0, 0, 1));
-	struct s_intersect	*result = intersect_world(world, r);
-	double	expected_values[] = {4, 4.5, 5.5, 6};
-	struct s_intersect *tmp = result;
-	for (int i = 0; i < 4; i++) {
-		cr_assert_float_eq(tmp->t, expected_values[i], EPISLON);
-		tmp = tmp->next;
-	}
-}
+// Test(world, intersect_world, .init=default_world, .fini=fini_world)
+// {
+// 	t_ray	*r = ray(point(0, 0, -5), vector(0, 0, 1));
+// 	struct s_intersect	*result = intersect_world(world, r);
+// 	double	expected_values[] = {4, 4.5, 5.5, 6};
+// 	struct s_intersect *tmp = result;
+// 	for (int i = 0; i < 4; i++) {
+// 		cr_assert_float_eq(tmp->t, expected_values[i], EPISLON);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 Test(prepare_computations, shading_an_intersection, .init=default_world, .fini=fini_world)
 {

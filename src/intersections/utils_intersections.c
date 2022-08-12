@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 21:19:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 23:56:44 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/11 08:57:45 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static struct s_intersect	*last_instersection(struct s_intersect *head)
 
 void	add_back(struct s_intersect **head, struct s_intersect *new)
 {
+	if (!new)
+		return ;
 	if (!*head)
 		*head = new;
 	else

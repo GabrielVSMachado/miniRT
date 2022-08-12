@@ -3,7 +3,9 @@
 #include <criterion/internal/test.h>
 #include <stdlib.h>
 #include "../src/objects/object.h"
+#include "../src/intersections/intersections.h"
 #include <math.h>
+#include <stdio.h>
 
 #define EPISLON 0.00001
 
@@ -88,4 +90,15 @@ Test(normal, compute_the_normal_on_a_translated_sphere_2, .init=init_normal, .fi
 	expected_value = vector(0, 0.97014, -0.24254);
 	for (int i = 0; i < 0; i++)
 		cr_assert_float_eq(result[i], expected_value[i], EPISLON);
+}
+
+Test(refactory, computing_the_normal_on_a_translated_shape)
+{
+	t_obj	*s = new_object(SPHERE);
+	calc_linear_transformation(s, translate(0, 1, 0));
+	s->inversed_transform = inverse(s->transform);
+	t_vector	n = normal_at(s, point(0, 1.70711, -0.70711));
+	double	expected[] = {0, 0.70711, -0.70711};
+	for (int i = 0; i < 3; i++)
+		cr_assert_float_eq(n[i], expected[i], EPISLON);
 }

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 13:54:19 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:44:34 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:26:18 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void				add_back(
 						struct s_intersect **head, struct s_intersect *new
 						);
 struct s_intersect	*hit(struct s_intersect *head);
+t_vector			normal_at(t_obj *obj, t_point p);
 void				bubblesort(struct s_intersect *head);
 void				destroy_intersect(struct s_intersect **head);
 #endif

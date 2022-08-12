@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:38:42 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/11 23:28:46 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ t_obj	*new_object(unsigned int type)
 	new->material = material();
 	if (type == PLANE)
 	{
-		new->_normal_at = plane_normal_at;
-		new->_intersect = plane_intersect;
+		new->local_normal_at = plane_normal_at;
+		new->local_intersect = plane_intersect;
 	}
 	else if (type == SPHERE)
 	{
-		new->_intersect = intersect;
-		new->_normal_at = normal_at;
+		new->local_intersect = sphere_intersect;
+		new->local_normal_at = sphere_normal_at;
 	}
 	return (new);
 }
@@ -55,23 +55,4 @@ void	calc_linear_transformation(t_obj *obj, t_matrix *transform)
 	free(obj->transform);
 	free(transform);
 	obj->transform = new_linear_transform;
-}
-
-t_vector	normal_at(t_obj *obj, t_point world_point)
-{
-	t_vector	obj_normal;
-	t_vector	world_normal;
-	t_matrix	*transposed_im;
-	t_vector	normal;
-
-	obj_normal = prod_matrix_tuple(obj->inversed_transform, world_point);
-	obj_normal[3] = 0;
-	transposed_im = tranposing(obj->inversed_transform);
-	world_normal = prod_matrix_tuple(transposed_im, obj_normal);
-	world_normal[3] = 0;
-	normal = normalize(world_normal);
-	free(transposed_im);
-	free(world_normal);
-	free(obj_normal);
-	return (normal);
 }
