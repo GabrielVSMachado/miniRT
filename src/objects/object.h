@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 00:20:41 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/13 19:04:18 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/14 16:03:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,23 @@ struct s_material
 	double		shininess;
 };
 
+typedef struct s_cylinder
+{
+	double	min;
+	double	max;
+	bool	closed;
+}	t_cylinder;
+
 typedef struct s_object
 {
 	unsigned int		type;
 	t_matrix			*transform;
 	t_matrix			*inversed_transform;
 	struct s_material	*material;
+	union
+	{
+		t_cylinder	attributes_cy;
+	};
 	struct s_intersect	*(*local_intersect)(struct s_object *obj, t_ray *r);
 	double				*(*local_normal_at)(struct s_object *obj, t_point p);
 }	t_obj;
@@ -54,4 +65,6 @@ t_vector			cylinder_normal_at(t_obj *cylinder, t_point point);
 struct s_intersect	*plane_intersect(t_obj *plane, t_ray *r);
 struct s_intersect	*sphere_intersect(t_obj *obj, t_ray *r);
 struct s_intersect	*cylinder_intersect(t_obj *cylinder, t_ray *r);
+t_obj				*new_cylinder(void);
+struct s_intersect	*intersect_caps(t_obj *cylinder, t_ray *r);
 #endif

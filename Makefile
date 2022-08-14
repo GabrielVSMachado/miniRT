@@ -64,6 +64,7 @@ override define SRC
 	plane_methods.c
 	sphere_methods.c
 	cylinders_methods.c
+	cylinders_methods_2.c
 endef
 
 override define SRC_TEST
