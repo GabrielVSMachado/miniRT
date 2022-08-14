@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/11 23:28:46 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 21:07:50 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ t_obj	*new_object(unsigned int type)
 	{
 		new->local_intersect = sphere_intersect;
 		new->local_normal_at = sphere_normal_at;
+	}
+	else
+	{
+		new->local_intersect = cylinder_intersect;
+		new->local_normal_at = cylinder_normal_at;
 	}
 	return (new);
 }

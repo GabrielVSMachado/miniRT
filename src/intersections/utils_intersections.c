@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 21:19:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/11 08:57:45 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 21:42:35 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	destroy_intersect(struct s_intersect **head)
 	while (*head)
 	{
 		tmp = (*head)->next;
-		destroy_object(&(*head)->obj);
 		free(*head);
 		*head = NULL;
 		*head = tmp;

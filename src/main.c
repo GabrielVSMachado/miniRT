@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 20:24:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/08 22:26:06 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:22:18 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,49 +17,40 @@
 #include <string.h>
 #include "miniRT.h"
 
-static void	copy_material(struct s_material *dst, struct s_material *src)
-{
-	dst->ambient = src->ambient;
-	dst->diffuse = src->diffuse;
-	dst->shininess = src->shininess;
-	dst->specular = src->specular;
-	memcpy(dst->c, src->c, sizeof(double) * 4);
-}
-
 static t_obj	*my_floor(void)
 {
-	t_obj	*f = new_object(SPHERE);
-	calc_linear_transformation(f, scale(10, 0.1, 10));
+	t_obj	*f = new_object(PLANE);
 	f->material->specular = 0;
-	f->material->c[1] = 0.9;
-	f->material->c[2] = 0.9;
-	f->inversed_transform = inverse(f->transform);
+	f->material->c[1] = 0.5;
+	f->material->c[2] = 0.5;
+	f->inversed_transform = identity();
 	return f;
 }
 
-static	t_obj	*left_wall(struct s_material *m)
+static t_obj	*backdrop(void)
 {
-	t_obj	*lwall = new_object(SPHERE);
-	calc_linear_transformation(lwall, scale(10, 0.1, 10));
-	calc_linear_transformation(lwall, rotation_x(M_PI_2));
-	calc_linear_transformation(lwall, rotation_y(-M_PI_4));
-	calc_linear_transformation(lwall, translate(0, 0, 5));
-	copy_material(lwall->material, m);
+	t_obj	*lwall = new_object(PLANE);
+	calc_linear_transformation(lwall, rotation_x(-M_PI / 2.));
+	calc_linear_transformation(lwall, translate(0, 0, 10));
 	lwall->inversed_transform = inverse(lwall->transform);
+	lwall->material->c[1] = 0.9;
+	lwall->material->c[2] = 0.9;
+	lwall->material->specular = 0;
 	return lwall;
 }
 
-static	t_obj	*right_wall(struct s_material *m)
-{
-	t_obj	*rwall = new_object(SPHERE);
-	calc_linear_transformation(rwall, scale(10, 0.1, 10));
-	calc_linear_transformation(rwall, rotation_x(M_PI_2));
-	calc_linear_transformation(rwall, rotation_y(M_PI_4));
-	calc_linear_transformation(rwall, translate(0, 0, 5));
-	copy_material(rwall->material, m);
-	rwall->inversed_transform = inverse(rwall->transform);
-	return rwall;
-}
+// static t_obj	*right_wall(void)
+// {
+// 	t_obj	*rwall = new_object(PLANE);
+// 	calc_linear_transformation(rwall, rotation_x(M_PI_2));
+// 	calc_linear_transformation(rwall, rotation_y(M_PI / 4));
+// 	calc_linear_transformation(rwall, translate(5, 0, 0));
+// 	rwall->inversed_transform = inverse(rwall->transform);
+// 	rwall->material->c[1] = 0.9;
+// 	rwall->material->c[2] = 0.9;
+// 	rwall->material->specular = 0;
+// 	return rwall;
+// }
 
 static t_obj	*middle_sphere(void)
 {
@@ -99,14 +90,33 @@ static t_obj	*left_obj(void)
 	return lsphere;
 }
 
+static t_obj	*cylinder(void)
+{
+	t_obj	*cylinder = new_object(CYLINDER);
+	calc_linear_transformation(cylinder, scale(0.33, 0.33, 0.33));
+	calc_linear_transformation(cylinder, translate(-1.5, 0.33, -0.75));
+	cylinder->material->diffuse = 0.7;
+	cylinder->material->specular = 0.3;
+	cylinder->material->c[1] = 0.8;
+	cylinder->material->c[2] = 0.1;
+	cylinder->inversed_transform = inverse(cylinder->transform);
+	return cylinder;
+}
+
 static t_camera	*cam(void)
 {
-	t_camera	*c = camera(800, 600, M_PI / 3.);
-	transform_camera(c, view_transformation(
-		point(0, 1.5, -5),
-		point(0, 1, 0),
+	t_tuple		ftu[] = {
+		point(0, 1.5, -7),
+		point(2, 1, 0),
 		vector(0, 1, 0)
-	));
+	};
+	t_matrix	*view = view_transformation(ftu[0], ftu[1], ftu[2]);
+	free(ftu[0]);
+	free(ftu[1]);
+	free(ftu[2]);
+	t_camera	*c = camera(800, 600, M_PI / 3.);
+	transform_camera(c, view);
+	free(view);
 	return c;
 }
 
@@ -146,12 +156,10 @@ static	void	pass_to_mlx_image(struct data *dst, struct s_canvas *src)
 int	main(void)
 {
 	t_obj	*f = my_floor();
-	t_obj	*rwall = right_wall(f->material);
-	t_obj	*lwall = left_wall(f->material);
 	t_obj	*rsphere = right_obj();
 	t_obj	*lsphere = left_obj();
 	t_obj	*middle = middle_sphere();
-	struct s_intersect		*head = add_to_world((t_obj *[]){f, rwall, lwall, lsphere, middle, rsphere}, 6);
+	struct s_intersect		*head = add_to_world((t_obj *[]){backdrop(), f, cylinder(), lsphere, rsphere, middle}, 3);
 	t_light		*light = point_light(color(1, 1, 1), point(-10, 10, -10));
 	t_camera	*_camera  = cam();
 	struct	s_world		*world = init_world(light, head);
@@ -165,5 +173,12 @@ int	main(void)
 	pass_to_mlx_image(&dt, image);
 	mlx_put_image_to_window(dt.mlx, dt.win, dt.img, 0, 0);
 	mlx_loop(dt.mlx);
+	destroy_world(&world);
+	destroy_canvas(&image);
+	destroy_camera(&_camera);
+	mlx_destroy_image(dt.mlx, dt.img);
+	mlx_destroy_window(dt.mlx, dt.img);
+	mlx_destroy_display(dt.mlx);
+	free(dt.mlx);
 	return 0;
 }

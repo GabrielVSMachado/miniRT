@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:38:10 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/11 23:27:13 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:28:03 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct s_comps	*prepare_computations(struct s_intersect *i, t_ray *r)
 	if (!comput)
 		return (NULL);
 	comput->t = i->t;
-	comput->obj = cpyobj(i->obj);
+	comput->obj = i->obj;
 	comput->point = position(r, comput->t);
 	comput->eyev = negate_tuple(r->direction);
 	comput->normalv = normal_at(i->obj, comput->point);
@@ -39,7 +39,6 @@ struct s_comps	*prepare_computations(struct s_intersect *i, t_ray *r)
 
 void	destroy_comps(struct s_comps **comps)
 {
-	destroy_object(&(*comps)->obj);
 	free((*comps)->eyev);
 	free((*comps)->point);
 	free((*comps)->normalv);
