@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 22:07:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/11 23:34:08 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 21:42:59 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "../ray/raycast.h"
 #include "../intersections/intersections.h"
 #include "../shadows/shadows.h"
+#include "../objects/object.h"
 
 struct s_world	*init_world(t_light *light, struct s_intersect *head)
 {
@@ -81,6 +82,14 @@ struct s_intersect	*intersect_world(struct s_world *world, t_ray *r)
 
 void	destroy_world(struct s_world **world)
 {
+	struct s_intersect	*tmp;
+
+	tmp = (*world)->intersections;
+	while (tmp)
+	{
+		destroy_object(&tmp->obj);
+		tmp = tmp->next;
+	}
 	destroy_intersect(&(*world)->intersections);
 	destroy_light(&(*world)->light_src);
 	free(*world);

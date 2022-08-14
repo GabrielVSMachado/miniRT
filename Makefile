@@ -63,6 +63,7 @@ override define SRC
 	render.c
 	plane_methods.c
 	sphere_methods.c
+	cylinders_methods.c
 endef
 
 override define SRC_TEST
@@ -84,6 +85,7 @@ override define SRC_TEST
 	tst_view_transformation.c
 	tst_bubblesort.c
 	tst_plane.c
+	tst_cylinders.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

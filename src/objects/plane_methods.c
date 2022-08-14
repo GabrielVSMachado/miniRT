@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 22:16:34 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/09 23:46:18 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 21:40:17 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ struct s_intersect	*plane_intersect(t_obj *plane, t_ray *r)
 	if (fabs(r->direction[1]) < EPSILON)
 		return (NULL);
 	t = -r->origin[1] / r->direction[1];
-	return (new_intersect(t, cpyobj(plane)));
+	return (new_intersect(t, plane));
 }

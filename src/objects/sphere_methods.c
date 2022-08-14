@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 22:42:35 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/12 00:02:43 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 22:34:00 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,20 @@ struct s_intersect	*sphere_intersect(t_obj *obj, t_ray *r)
 	if (discriminant < 0)
 		return (NULL);
 	discriminant = sqrt(discriminant);
-	add_back(&head, new_intersect((-b - discriminant) / (2 * a), cpyobj(obj)));
+	add_back(&head, new_intersect((-b - discriminant) / (2 * a), obj));
 	if (discriminant)
 		add_back(&head, new_intersect(
-				(-b + discriminant) / (2 * a), cpyobj(obj)));
+				(-b + discriminant) / (2 * a), obj));
 	return (head);
 }
 
-t_vector	sphere_normal_at(t_obj *obj, t_point world_point)
+t_vector	sphere_normal_at(t_obj *sphere, t_point world_point)
 {
 	t_tuple	normal;
 	t_tuple	sub;
 	t_point	origin;
 
-	obj = (t_obj *)obj;
+	sphere = (t_obj *)sphere;
 	origin = point(0, 0, 0);
 	sub = sub_tuple(world_point, origin);
 	normal = normalize(world_point);

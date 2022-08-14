@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 00:20:41 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/12 00:38:51 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/13 19:04:18 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void				destroy_material(struct s_material **m);
 t_obj				*new_object(unsigned int type);
 void				destroy_object(t_obj **obj);
 void				calc_linear_transformation(t_obj *obj, t_matrix *transform);
-t_vector			sphere_normal_at(t_obj *obj, t_point world_point);
+t_vector			sphere_normal_at(t_obj *sphere, t_point point);
 t_vector			plane_normal_at(t_obj *plane, t_point point);
+t_vector			cylinder_normal_at(t_obj *cylinder, t_point point);
 struct s_intersect	*plane_intersect(t_obj *plane, t_ray *r);
 struct s_intersect	*sphere_intersect(t_obj *obj, t_ray *r);
+struct s_intersect	*cylinder_intersect(t_obj *cylinder, t_ray *r);
 #endif
