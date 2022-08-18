@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 00:20:41 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/14 16:03:29 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:09:11 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 struct s_material
 {
-	t_color		c;
+	t_color		objc;
+	t_color		envc;
 	double		ambient;
 	double		diffuse;
 	double		specular;
@@ -39,10 +40,7 @@ typedef struct s_object
 	t_matrix			*transform;
 	t_matrix			*inversed_transform;
 	struct s_material	*material;
-	union
-	{
-		t_cylinder	attributes_cy;
-	};
+	t_cylinder			attributes_cy;
 	struct s_intersect	*(*local_intersect)(struct s_object *obj, t_ray *r);
 	double				*(*local_normal_at)(struct s_object *obj, t_point p);
 }	t_obj;
@@ -54,9 +52,10 @@ enum	e_type_obj
 	CYLINDER
 };
 
-struct s_material	*material(void);
+struct s_material	*material(
+	t_color obj_color, t_color env_color, double ambient);
+t_obj				*new_object(unsigned int type, struct s_material *material);
 void				destroy_material(struct s_material **m);
-t_obj				*new_object(unsigned int type);
 void				destroy_object(t_obj **obj);
 void				calc_linear_transformation(t_obj *obj, t_matrix *transform);
 t_vector			sphere_normal_at(t_obj *sphere, t_point point);

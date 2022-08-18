@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:51:33 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/14 16:56:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/17 23:16:15 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_obj	*new_cylinder(void)
 {
 	t_obj	*new;
 
-	new = new_object(CYLINDER);
+	new = new_object(CYLINDER, material(color(1, 1, 1), color(0.5, 1, 1), 0.1));
 	if (!new)
 		return (NULL);
 	new->attributes_cy.max = INFINITY;
