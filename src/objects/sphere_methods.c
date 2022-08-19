@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 22:42:35 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/13 22:34:00 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/19 00:15:35 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,14 @@ t_vector	sphere_normal_at(t_obj *sphere, t_point world_point)
 	free(sub);
 	free(origin);
 	return (normal);
+}
+
+t_obj	*new_sphere(void)
+{
+	t_obj	*new;
+
+	new = new_object(SPHERE);
+	if (!new)
+		return (NULL);
+	return (new);
 }
