@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 00:20:41 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/17 23:09:11 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/19 00:16:05 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_cylinder
 {
 	double	min;
 	double	max;
-	bool	closed;
 }	t_cylinder;
 
 typedef struct s_object
@@ -53,8 +52,8 @@ enum	e_type_obj
 };
 
 struct s_material	*material(
-	t_color obj_color, t_color env_color, double ambient);
-t_obj				*new_object(unsigned int type, struct s_material *material);
+						t_color obj_color, t_color env_color, double ambient);
+t_obj				*new_object(unsigned int type);
 void				destroy_material(struct s_material **m);
 void				destroy_object(t_obj **obj);
 void				calc_linear_transformation(t_obj *obj, t_matrix *transform);
@@ -65,5 +64,7 @@ struct s_intersect	*plane_intersect(t_obj *plane, t_ray *r);
 struct s_intersect	*sphere_intersect(t_obj *obj, t_ray *r);
 struct s_intersect	*cylinder_intersect(t_obj *cylinder, t_ray *r);
 t_obj				*new_cylinder(void);
+t_obj				*new_sphere(void);
+t_obj				*new_plane(void);
 struct s_intersect	*intersect_caps(t_obj *cylinder, t_ray *r);
 #endif

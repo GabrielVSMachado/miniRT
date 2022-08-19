@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 22:16:34 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/13 21:40:17 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/19 00:08:47 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ struct s_intersect	*plane_intersect(t_obj *plane, t_ray *r)
 		return (NULL);
 	t = -r->origin[1] / r->direction[1];
 	return (new_intersect(t, plane));
+}
+
+t_obj	*new_plane(void)
+{
+	t_obj	*new;
+
+	new = new_object(PLANE);
+	if (!new)
+		return (NULL);
+	return (new);
 }

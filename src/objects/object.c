@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 22:53:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/17 23:08:54 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/18 23:29:05 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "../intersections/intersections.h"
 
-t_obj	*new_object(unsigned int type, struct s_material *material)
+t_obj	*new_object(unsigned int type)
 {
 	t_obj	*new;
 
@@ -24,7 +24,7 @@ t_obj	*new_object(unsigned int type, struct s_material *material)
 	new->type = type;
 	new->transform = identity();
 	new->inversed_transform = NULL;
-	new->material = material;
+	new->material = NULL;
 	if (type == PLANE)
 	{
 		new->local_normal_at = plane_normal_at;
