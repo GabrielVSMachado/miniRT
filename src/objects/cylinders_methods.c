@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/13 18:51:33 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/14 16:56:16 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/18 23:35:46 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ struct s_intersect	*cylinder_intersect(t_obj *cylinder, t_ray *r)
 				(-b + discriminant) / (2. * a)
 				);
 	}
-	if (cylinder->attributes_cy.closed)
-		add_back(&head, intersect_caps(cylinder, r));
+	add_back(&head, intersect_caps(cylinder, r));
 	return (head);
 }
 
@@ -96,6 +95,5 @@ t_obj	*new_cylinder(void)
 		return (NULL);
 	new->attributes_cy.max = INFINITY;
 	new->attributes_cy.min = -INFINITY;
-	new->attributes_cy.closed = false;
 	return (new);
 }
