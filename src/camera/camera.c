@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:30:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 12:39:04 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/22 21:54:56 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	transform_camera(t_camera *cam, t_matrix *tranform)
 
 	tmp = matrices_product(tranform, cam->tranform);
 	free(cam->tranform);
+	free(tranform);
 	cam->tranform = tmp;
 }
 

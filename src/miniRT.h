@@ -6,12 +6,15 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:06:06 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 19:54:26 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/22 20:00:06 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+
+# define HSIZE 800
+# define VSIZE 800
 
 # include "canvas/canvas.h"
 # include "world/world.h"

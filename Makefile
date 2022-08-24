@@ -69,29 +69,17 @@ override define SRC
 	get_next_line.c
 	parser_rt_files.c
 	utils_parser.c
+	validate_inputs_values.c
+	utils_check_values.c
+	check_values.c
+	utils_fill_values.c
+	utils_fill_values_2.c
 endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
-	tst_tuples.c
-	tst_matrix.c
-	tst_tranformations.c
-	utils_tests.c
-	tst_raycast.c
-	tst_canvas.c
-	tst_camera.c
-	tst_normals.c
-	tst_reflection.c
-	tst_colors.c
-	tst_lights.c
-	tst_shadows.c
-	tst_world.c
-	tst_computations.c
-	tst_view_transformation.c
-	tst_bubblesort.c
-	tst_plane.c
-	tst_cylinders.c
 	tst_parser.c
+	utils_tests.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

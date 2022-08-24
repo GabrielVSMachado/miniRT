@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/15 23:02:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/16 00:59:02 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/20 21:26:17 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,15 @@
 void	destroy_content(void *content)
 {
 	char	**tmp;
+	int		_;
 
 	if (!content)
 		return ;
-	tmp = (char **)content;
-	while (*tmp)
-	{
-		free(*tmp);
-		++(*tmp);
-	}
-	free(content);
+	tmp = content;
+	_ = -1;
+	while (tmp[++_])
+		free(tmp[_]);
+	free((char **)content);
 }
 
 static bool	is_valid_word(const char *word)
@@ -38,9 +37,9 @@ static bool	is_valid_word(const char *word)
 		(word[0] == 'A' && word[1] == '\0')
 		|| (word[0] == 'C' && word[1] == '\0')
 		|| (word[0] == 'L' && word[1] == '\0')
-		|| !ft_strncmp(word, "sp", 2)
-		|| !ft_strncmp(word, "pl", 2)
-		|| !ft_strncmp(word, "cy", 2)
+		|| !ft_strcmp(word, "sp")
+		|| !ft_strcmp(word, "pl")
+		|| !ft_strcmp(word, "cy")
 	);
 }
 
