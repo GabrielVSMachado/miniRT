@@ -1,7 +1,7 @@
 override NAME = miniRT
 TEST = test
 RM = rm -rf
-override CFLAGS = -Wall -Wextra -Werror -g3
+override CFLAGS = -Wall -Wextra -Werror -g3 -D BUFFER_SIZE=10
 override CC = gcc
 
 # Libft submodule
@@ -32,6 +32,7 @@ override define VPATH
 	$(SRCDIR)/phong_reflection_model
 	$(SRCDIR)/world
 	$(SRCDIR)/shadows
+	$(SRCDIR)/parser
 	$(TESTDIR)
 endef
 
@@ -65,28 +66,20 @@ override define SRC
 	sphere_methods.c
 	cylinders_methods.c
 	cylinders_methods_2.c
+	get_next_line.c
+	parser_rt_files.c
+	utils_parser.c
+	validate_inputs_values.c
+	utils_check_values.c
+	check_values.c
+	utils_fill_values.c
+	utils_fill_values_2.c
 endef
 
 override define SRC_TEST
 	$(filter-out main.c,$(SRC))
-	tst_tuples.c
-	tst_matrix.c
-	tst_tranformations.c
+	tst_parser.c
 	utils_tests.c
-	tst_raycast.c
-	tst_canvas.c
-	tst_camera.c
-	tst_normals.c
-	tst_reflection.c
-	tst_colors.c
-	tst_lights.c
-	tst_shadows.c
-	tst_world.c
-	tst_computations.c
-	tst_view_transformation.c
-	tst_bubblesort.c
-	tst_plane.c
-	tst_cylinders.c
 endef
 
 override OBJ = $(SRC:%.c=$(OBJDIR)/%.o)

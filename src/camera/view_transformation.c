@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 12:03:18 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 12:39:18 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/22 23:58:29 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ t_matrix	*view_transformation(t_point from, t_point to, t_vector up)
 	ut.left = cross_product(ut.forward, tmp);
 	free(tmp);
 	ut.true_up = cross_product(ut.left, ut.forward);
-	tmp = ut.forward;
-	ut.forward = negate_tuple(ut.forward);
-	free(tmp);
 	ut.orientation = matrix((double [][4]){
-		{ut.left[0], ut.left[1], ut.left[2], ut.left[3]},
-		{ut.true_up[0], ut.true_up[1], ut.true_up[2], ut.true_up[3]},
-		{ut.forward[0], ut.forward[1], ut.forward[2], ut.forward[3]},
+		{ut.left[0], ut.left[1], ut.left[2], 0},
+		{ut.true_up[0], ut.true_up[1], ut.true_up[2], 0},
+		{-ut.forward[0], -ut.forward[1], -ut.forward[2], 0},
 		{0, 0, 0, 1}
 		}, (unsigned int []){4, 4});
 	ut.translation = translate(-from[0], -from[1], -from[2]);
