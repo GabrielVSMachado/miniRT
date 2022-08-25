@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/02 16:20:48 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/17 22:58:59 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 00:38:06 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	init_variables(struct s_utils_lighting *util, t_light *light,
 	util->light_dot_normal = 0;
 	util->reflect_dot_eye = 0;
 	util->effective_color = color(
-		light->intensity[0] * material->objc[0] *  material->envc[0],
-		light->intensity[1] * material->objc[1] *  material->envc[1],
-		light->intensity[2] * material->objc[2] *  material->envc[2]);
+			light->intensity[0] * material->objc[0] * material->envc[0],
+			light->intensity[1] * material->objc[1] * material->envc[1],
+			light->intensity[2] * material->objc[2] * material->envc[2]);
 	util->ambient = scalar_multiplication(
-		util->effective_color, material->ambient);
+			util->effective_color, material->ambient);
 	util->diffuse = color(0, 0, 0);
 	util->specular = color(0, 0, 0);
 }
@@ -87,11 +87,7 @@ t_color	lighting(struct s_parameters_lighting *p)
 	t_color					result;
 
 	if (p->in_shadow)
-		return (color(
-			p->material->ambient * p->material->objc[0] * p->material->envc[0],
-			p->material->ambient * p->material->objc[1] * p->material->envc[1],
-			p->material->ambient * p->material->objc[2] * p->material->envc[2])
-		);
+		return (color_when_in_shadown(p));
 	init_variables(&util, p->light, p->material);
 	tmp = sub_tuple(p->light->position, p->position);
 	util.lightv = normalize(tmp);

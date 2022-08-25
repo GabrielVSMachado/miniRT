@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_mlx.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/28 20:24:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 00:20:39 by gvitor-s         ###   ########.fr       */
+/*   Created: 2022/08/24 22:43:06 by gvitor-s          #+#    #+#             */
+/*   Updated: 2022/08/25 00:22:50 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef UTILS_MLX_H
+# define UTILS_MLX_H
 
-int	main(void)
+typedef struct s_img
 {
-	return (0);
-}
+	void	*img;
+	int		endian;
+	int		line_lenght;
+	int		bpp;
+	char	*addr;
+}	t_img;
+
+struct s_data
+{
+	void	*mlx;
+	void	*window;
+	t_img	dimg;
+};
+
+void	mlx_generate(void *pg);
+#endif
