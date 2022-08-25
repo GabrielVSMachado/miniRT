@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 21:58:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/23 23:38:24 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 00:32:14 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_camera	*get_values_camera(char **content)
 	to = get_vector(content[2]);
 	tmp = cross_product((double []){0, 1, 0, 0}, to);
 	up = cross_product(tmp, to);
-	cam = camera(HSIZE, VSIZE, ft_atod(content[3]) * (M_PI / 180.));
+	cam = camera(WIDTH, HEIGHT, ft_atod(content[3]) * (M_PI / 180.));
 	transform_camera(cam, view_transformation(from, to, up));
 	free(from);
 	free(tmp);
