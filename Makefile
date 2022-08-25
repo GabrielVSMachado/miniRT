@@ -33,6 +33,7 @@ override define VPATH
 	$(SRCDIR)/world
 	$(SRCDIR)/shadows
 	$(SRCDIR)/parser
+	$(SRCDIR)/mlx_functions
 	$(TESTDIR)
 endef
 
@@ -74,6 +75,8 @@ override define SRC
 	check_values.c
 	utils_fill_values.c
 	utils_fill_values_2.c
+	hooks.c
+	mlx_gen_img.c
 endef
 
 override define SRC_TEST
