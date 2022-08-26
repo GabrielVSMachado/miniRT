@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:30:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/22 21:54:56 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:25:11 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_camera	*camera(int hsize, int vsize, double field_of_view)
 		+ (aspect < 1) * (aspect * half_view);
 	new->pixel_size = (new->half_width * 2) / new->hsize;
 	new->tranform = identity();
+	new->inversed = NULL;
 	return (new);
 }
 
@@ -84,6 +85,7 @@ t_ray	*ray_for_pixel(t_camera *cam, int x, int y)
 void	destroy_camera(t_camera **cam)
 {
 	free((*cam)->tranform);
+	free((*cam)->inversed);
 	free((*cam));
 	*cam = NULL;
 }

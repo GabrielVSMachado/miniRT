@@ -6,11 +6,12 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 21:37:48 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/23 23:39:29 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:31:46 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils_parser.h"
+#include "ft_stdlib.h"
 #include "../camera/camera.h"
 #include "../phong_reflection_model/lights.h"
 #include "../intersections/intersections.h"
@@ -26,6 +27,7 @@ static t_list	*get_environment_light_line(t_list *lines)
 			return (lines);
 		lines = lines->next;
 	}
+	return (lines);
 }
 
 static void	fill_values_for_environment_light(
@@ -65,7 +67,7 @@ static struct s_intersect	*iterate_through_lines(
 		head = head->next;
 	}
 	free(envc);
-	return (head);
+	return (objects);
 }
 
 struct s_world	*transform_values_from_file(const char *path, t_camera **cam)
@@ -74,6 +76,7 @@ struct s_world	*transform_values_from_file(const char *path, t_camera **cam)
 	struct s_intersect	*head;
 	t_light				*light;
 
+	light = NULL;
 	lines_file = get_values_from_file(path);
 	if (!lines_file)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:30:52 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/07/30 11:49:28 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:24:57 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_camera
 	double		field_of_view;
 	double		pixel_size;
 	t_matrix	*tranform;
+	t_matrix	*inversed;
 }	t_camera;
 
 struct s_utils_view_transformation
