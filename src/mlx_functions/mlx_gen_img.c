@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 23:18:24 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 00:48:55 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:44:58 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	register_hooks(struct s_global *g);
 
 static void	generate_img(struct s_global *g)
 {
-	g->data.dimg.img = mlx_new_image(g->data.dimg.img, WIDTH, HEIGHT);
+	g->data.dimg.img = mlx_new_image(g->data.mlx, WIDTH, HEIGHT);
 	if (!g->data.dimg.img)
 	{
 		mlx_destroy_display(g->data.mlx);
@@ -52,7 +52,7 @@ static void	fill_img(struct s_data *data, struct s_canvas *rendered_img)
 					i * data->dimg.line_lenght + j * (data->dimg.bpp / 8)
 					);
 			*(unsigned int *)dstf = rendered_img->img[
-				i * rendered_img->height + j
+				i * rendered_img->width + j
 			];
 		}
 	}

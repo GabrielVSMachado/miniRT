@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 21:58:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 21:51:22 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/26 00:25:20 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ t_camera	*get_values_camera(char **content)
 	to = get_vector(content[2]);
 	tmp = cross_product((double []){0, 1, 0, 0}, to);
 	up = cross_product(tmp, to);
+	free(tmp);
+	tmp = to;
+	to = add_tuples(from, to);
 	cam = camera(WIDTH, HEIGHT, ft_atod(content[3]) * (M_PI / 180.));
 	transform_camera(cam, view_transformation(from, to, up));
+	cam->inversed = inverse(cam->tranform);
 	free(from);
 	free(tmp);
 	free(to);
@@ -95,11 +99,11 @@ struct s_intersect	*get_values_sphere(
 	new->material = material(
 			get_color(content[3]),
 			color(envc[0], envc[1], envc[2]), intensity_env);
-	calc_linear_transformation(new, scale(r, r, r));
 	calc_linear_transformation(new,
 		translate(
 			ft_atod(content[1]), ft_atod(content[2]), ft_atod(content[3]))
 		);
+	calc_linear_transformation(new, scale(r, r, r));
 	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }
