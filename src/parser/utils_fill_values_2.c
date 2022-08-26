@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 22:14:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 21:53:20 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 23:27:53 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ struct s_intersect	*get_values_cylinder(
 	new->attributes_cy.max = center[1] + ft_atod(content[4]) / 2.;
 	new->attributes_cy.min = center[1] - ft_atod(content[4]) / 2.;
 	xy_lenght = sqrt(pow(nv[0], 2) + pow(nv[1], 2));
+	calc_linear_transformation(new,
+		translate(center[0], center[1], center[2]));
 	calc_linear_transformation(new, scale(r, 1, r));
 	calc_linear_transformation(new,
 		rotation_x(acos(xy_lenght / magnitude(nv))));
 	calc_linear_transformation(new, rotation_z(-acos(nv[1] / xy_lenght)));
-	calc_linear_transformation(new,
-		translate(center[0], center[1], center[2]));
 	free(nv);
+	free(center);
 	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }
@@ -62,10 +63,10 @@ struct s_intersect	*get_values_plane(
 	center = get_vector(content[1]);
 	nv = get_vector(content[2]);
 	xy_lenght = sqrt(pow(nv[0], 2) + pow(nv[1], 2));
+	calc_linear_transformation(new, translate(center[0], center[1], center[2]));
 	calc_linear_transformation(new,
 		rotation_x(acos(xy_lenght / magnitude(nv))));
 	calc_linear_transformation(new, rotation_z(-acos(nv[1] / xy_lenght)));
-	calc_linear_transformation(new, translate(center[0], center[1], center[2]));
 	free(nv);
 	free(center);
 	new->inversed_transform = inverse(new->transform);

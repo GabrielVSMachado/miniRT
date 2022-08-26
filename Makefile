@@ -77,6 +77,7 @@ override define SRC
 	utils_fill_values_2.c
 	hooks.c
 	mlx_gen_img.c
+	fill_values_of_world.c
 endef
 
 override define SRC_TEST

@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 17:03:49 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/20 21:45:56 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:30:20 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static t_list	*get_lines_from_file(int fd)
 	head = NULL;
 	if (fd < 0)
 		return (NULL);
+	gnl_return = 1;
+	splited_line = NULL;
 	while (gnl_return)
 	{
 		gnl_return = get_next_line(fd, &line);

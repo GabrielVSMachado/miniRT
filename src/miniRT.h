@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:06:06 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 00:33:07 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 22:22:47 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct s_global
 	struct s_canvas	*final_img;
 };
 
-struct s_canvas	*render(t_camera *cam, struct s_world *w);
-void			error(struct s_global *g);
-void			destroy_global(struct s_global *g);
+void	render(struct s_global *g);
+void	error(struct s_global *g);
+void	destroy_global(struct s_global *g);
 #endif
