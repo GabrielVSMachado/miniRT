@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 21:58:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/25 00:32:14 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 21:51:22 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ struct s_intersect	*get_values_sphere(
 		translate(
 			ft_atod(content[1]), ft_atod(content[2]), ft_atod(content[3]))
 		);
+	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }

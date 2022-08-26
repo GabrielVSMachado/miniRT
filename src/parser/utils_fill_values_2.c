@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 22:14:04 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/23 23:34:42 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/25 21:53:20 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct s_intersect	*get_values_cylinder(
 	calc_linear_transformation(new,
 		translate(center[0], center[1], center[2]));
 	free(nv);
+	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }
 
@@ -67,5 +68,6 @@ struct s_intersect	*get_values_plane(
 	calc_linear_transformation(new, translate(center[0], center[1], center[2]));
 	free(nv);
 	free(center);
+	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }
