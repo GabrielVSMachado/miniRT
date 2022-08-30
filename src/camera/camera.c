@@ -6,7 +6,7 @@
 /*   By: gvitor-s <gvitor-s@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 13:30:37 by gvitor-s          #+#    #+#             */
-/*   Updated: 2022/08/26 00:25:11 by gvitor-s         ###   ########.fr       */
+/*   Updated: 2022/08/26 16:43:42 by gvitor-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ t_ray	*ray_for_pixel(t_camera *cam, int x, int y)
 	t_tuple		pixel;
 	t_point		origin;
 	t_vector	direction;
-	t_matrix	*inversed_transform;
 	t_point		util;
 
-	inversed_transform = inverse(cam->tranform);
-	origin = fn(inversed_transform, point(0, 0, 0));
-	pixel = fn(inversed_transform,
+	origin = fn(cam->inversed, point(0, 0, 0));
+	pixel = fn(cam->inversed,
 			point(
 				cam->half_width - (x + 0.5) * cam->pixel_size,
 				cam->half_heigh - (y + 0.5) * cam->pixel_size,
@@ -78,7 +76,6 @@ t_ray	*ray_for_pixel(t_camera *cam, int x, int y)
 	direction = normalize(util);
 	free(util);
 	free(pixel);
-	free(inversed_transform);
 	return (ray(origin, direction));
 }
 

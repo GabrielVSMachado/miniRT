@@ -1,7 +1,7 @@
 override NAME = miniRT
 TEST = test
 RM = rm -rf
-override CFLAGS = -Wall -Wextra -Werror -g3 -D BUFFER_SIZE=10
+override CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=10
 override CC = gcc
 
 # Libft submodule

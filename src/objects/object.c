@@ -52,7 +52,7 @@ void	destroy_object(t_obj **obj)
 	*obj = NULL;
 }
 
-void	calc_linear_transformation(t_obj *obj, t_matrix *transform)
+void	get_l_transformation(t_obj *obj, t_matrix *transform)
 {
 	t_matrix	*new_linear_transform;
 

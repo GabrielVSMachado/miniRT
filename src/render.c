@@ -43,13 +43,10 @@ void	render(struct s_global *g)
 		while (++x < g->cam->hsize)
 		{
 			r = ray_for_pixel(g->cam, x, y);
-			if (r)
-			{
-				pixel_color = color_at(g->world, r);
-				write_pixel(g->final_img, x, y, pixel_color);
-				free(pixel_color);
-				destroy_ray(&r);
-			}
+			pixel_color = color_at(g->world, r);
+			write_pixel(g->final_img, x, y, pixel_color);
+			free(pixel_color);
+			destroy_ray(&r);
 		}
 	}
 	mlx_generate(g);
