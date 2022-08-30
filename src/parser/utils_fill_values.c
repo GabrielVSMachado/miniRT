@@ -99,11 +99,11 @@ struct s_intersect	*get_values_sphere(
 	new->material = material(
 			get_color(content[3]),
 			color(envc[0], envc[1], envc[2]), intensity_env);
-	calc_linear_transformation(new,
+	get_l_transformation(new,
 		translate(
 			ft_atod(content[1]), ft_atod(content[2]), ft_atod(content[3]))
 		);
-	calc_linear_transformation(new, scale(r, r, r));
+	get_l_transformation(new, scale(r, r, r));
 	new->inversed_transform = inverse(new->transform);
 	return (new_intersect(0, new));
 }

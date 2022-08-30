@@ -56,7 +56,7 @@ struct s_material	*material(
 t_obj				*new_object(unsigned int type);
 void				destroy_material(struct s_material **m);
 void				destroy_object(t_obj **obj);
-void				calc_linear_transformation(t_obj *obj, t_matrix *transform);
+void				get_l_transformation(t_obj *obj, t_matrix *transform);
 t_vector			sphere_normal_at(t_obj *sphere, t_point point);
 t_vector			plane_normal_at(t_obj *plane, t_point point);
 t_vector			cylinder_normal_at(t_obj *cylinder, t_point point);

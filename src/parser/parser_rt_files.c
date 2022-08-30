@@ -14,12 +14,49 @@
 #include "utils_parser.h"
 #include "ft_string.h"
 #include <stdlib.h>
+#include <unistd.h>
 
-static void	clear_on_error(t_list **head, char **splited_line, int fd)
+static void	*clear_on_error(t_list **head, char **splited_line)
 {
 	ft_lstclear(head, destroy_content);
 	destroy_content(splited_line);
-	close(fd);
+	return (NULL);
+}
+
+static void	switch_tokens(char **line)
+{
+	int		i;
+	bool	coma_founded;
+
+	coma_founded = false;
+	i = -1;
+	while ((*line)[++i])
+	{
+		while (coma_founded && (*line)[i] == ' ')
+		{
+			(*line)[i] = -1;
+			++i;
+		}
+		coma_founded = (*line)[i] == ',';
+	}
+}
+
+static void	switch_back(char **splited_line)
+{
+	int		i;
+	int		j;
+	char	tmp;
+
+	i = 0;
+	while (splited_line[++i])
+	{
+		j = -1;
+		while (splited_line[i][++j])
+		{
+			tmp = splited_line[i][j];
+			splited_line[i][j] = ' ' * (tmp == -1) + tmp * (tmp != -1);
+		}
+	}
 }
 
 static t_list	*get_lines_from_file(int fd)
@@ -30,25 +67,24 @@ static t_list	*get_lines_from_file(int fd)
 	char	**splited_line;
 
 	head = NULL;
-	if (fd < 0)
-		return (NULL);
 	gnl_return = 1;
-	splited_line = NULL;
+	line = NULL;
 	while (gnl_return)
 	{
+		free(line);
 		gnl_return = get_next_line(fd, &line);
 		if (gnl_return < 0)
-			return (clear_on_error(&head, splited_line, fd), NULL);
+			return (clear_on_error(&head, NULL));
 		if (!*line)
-		{
-			free(line);
 			continue ;
-		}
+		switch_tokens(&line);
 		splited_line = ft_split(line, ' ');
-		if (free(line), !splited_line || !is_valid_line(splited_line))
-			return (clear_on_error(&head, splited_line, fd), NULL);
+		switch_back(splited_line);
+		if (!splited_line || !is_valid_line(splited_line))
+			return (clear_on_error(&head, splited_line));
 		ft_lstadd_back(&head, ft_lstnew(splited_line));
 	}
+	free(line);
 	return (head);
 }
 
@@ -61,6 +97,7 @@ t_list	*get_values_from_file(const char *path)
 	if (fd < 0)
 		return (NULL);
 	head = get_lines_from_file(fd);
+	close(fd);
 	if (!head)
 		return (NULL);
 	if (!validate_inputs(head))

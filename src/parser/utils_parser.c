@@ -47,7 +47,11 @@ static bool	is_valid_number(char *word)
 {
 	while (*word)
 	{
-		if (*word != '-' && !ft_isdigit(*word) && *word != ',' && *word != '.')
+		if (*word != '-'
+			&& !ft_isdigit(*word)
+			&& *word != ','
+			&& *word != '.'
+			&& *word != ' ')
 			return (false);
 		++word;
 	}

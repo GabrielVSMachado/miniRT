@@ -21,6 +21,8 @@
 # include "../camera/camera.h"
 # include "../phong_reflection_model/lights.h"
 
+# define TOKEN -1
+
 t_color				get_color(char *_color);
 t_list				*get_values_from_file(const char *path);
 t_list				*validate_lines(const char *path);

@@ -13,8 +13,8 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 800
-# define WIDTH 800
+# define HEIGHT 1000
+# define WIDTH 1000
 
 # include "canvas/canvas.h"
 # include "world/world.h"
